@@ -21,11 +21,11 @@
 **************************************************/
 Disk::Disk(void)
 {
-	VHD vhd();
-	DAT dat();
-	RootDir rootdir();
+	/*VHD vhd();
+	DAT dat();*/
+	//RootDir rootdir();
 	bool mounted = false;
-	fstream dskfl();
+	//fstream dskfl();
 	unsigned int currDiskSectorNr = 0;
 	//char buffer[sizeof(Sector)] = NULL;
 }
@@ -103,17 +103,20 @@ void Disk::createDisk(string & dn, string & dow)
 			char rawData[1020] = { 0 };
 			for (int i = 0; i < 3200; i++)
 			{
-				Sector sec = Sector(i, rawData);
+				Sector sec(i, rawData);
 				dskfl.write((char*)& sec, sizeof(Sector));
 			}
 			dskfl.seekp(0);
-
+			//VHD Initialization.
 			string fd = "00/00/000";
 			char date[10];
 			_strdate(date);
 			vhd = VHD(0, dn.c_str(), dow.c_str(), date, 1600, 1596, 1, 2, 800, 1000, 3, fd.c_str(), false);
 			dskfl.write((char*)& vhd, sizeof(Sector));
-
+			//DAT Initialization
+			this->dat.dat.set();
+			for (int i = 0; i < 4; i++)
+				this->dat.dat[i] = 0;
 			dskfl.flush();
 		}
 		else
@@ -129,7 +132,9 @@ void Disk::mountDisk(string & fn)
 {
 	try
 	{
-		dskfl.open(fn, ios::in, ios::binary);
+		if (mounted)
+			throw "Disk already mounted";
+		dskfl.open(fn+".fms", ios::in, ios::binary);
 		if (dskfl.is_open() == true)
 		{
 			mounted = true;
@@ -138,6 +143,8 @@ void Disk::mountDisk(string & fn)
 			dskfl.read((char*)& rootdir, 2048);
 			currDiskSectorNr = 3;
 		}
+		else
+			throw "File Problem!";
 	}
 	catch (const std::exception&)
 	{
