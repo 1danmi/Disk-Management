@@ -27,7 +27,7 @@ Disk::Disk(void)
 	bool mounted = false;
 	fstream dskfl();
 	unsigned int currDiskSectorNr = 0;
-	//char buffer[sizeof(Sector)] = NULL;
+	//char buffer[sizeof(Sector)] = NULL;ffhkjhj
 }
 
 /*************************************************
