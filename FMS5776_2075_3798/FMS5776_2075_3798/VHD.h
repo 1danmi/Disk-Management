@@ -35,7 +35,7 @@ private:
 	unsigned int addrDataStart;
 	char formatDate[10];
 	bool isFormated;
-	char emptyArea[947] = { 0 };
-	
+	char emptyArea[944];
+	friend class TestLevel_0;;
 	friend class Disk;
 };

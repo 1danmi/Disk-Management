@@ -2,6 +2,28 @@
 #include "Disk.h"
 #include <ctime>
 
+void Disk::seekToSector(unsigned int num)
+{
+	try
+	{
+		if (!dskfl.is_open())
+		{
+			throw "Disk file is not open!";
+		}
+		currDiskSectorNr = num;
+		this->dskfl.seekp(currDiskSectorNr * 1024);
+		this->dskfl.seekg(currDiskSectorNr * 1024);
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown error";
+	}
+}
+
 /*************************************************
 * FUNCTION
 *	defu=ault Ctor
@@ -21,13 +43,8 @@
 **************************************************/
 Disk::Disk(void)
 {
-	/*VHD vhd();
-	DAT dat();*/
-	//RootDir rootdir();
 	bool mounted = false;
-	//fstream dskfl();
 	unsigned int currDiskSectorNr = 0;
-	//char buffer[sizeof(Sector)] = NULL;
 }
 
 /*************************************************
@@ -75,10 +92,11 @@ Disk::Disk(string & dn, string & dow, char flag)
 
 Disk::~Disk(void)
 {
-	if(mounted)
-		unmountDisk();
+	//if(mounted)
+		//unmountDisk();
 	//dskfl.close();
 }
+
 /*************************************************
 * FUNCTION
 *	createDisk
@@ -152,38 +170,54 @@ void Disk::mountDisk(string & fn)
 	}
 }
 
-void Disk::unmountDisk(void)
-{
-	
-	dskfl.close();
-	mounted = false;
-}
-
-void Disk::recreateDisk(string &)
-{
-}
-
-fstream * Disk::getDskFl()
-{
-	return nullptr;
-}
-
-void Disk::seekToSector(unsigned int)
-{
-}
-
-void Disk::writeSector(unsigned int, Sector *)
-{
-}
-
-void Disk::writeSector(Sector *)
-{
-}
-
-void Disk::readSector(int, Sector *)
-{
-}
-
-void Disk::readSector(Sector *)
-{
-}
+//void Disk::unmountDisk(void)
+//{
+//	try
+//	{
+//		if (dskfl.is_open)
+//		{
+//
+//			dskfl.close();
+//			mounted = false;
+//		}
+//		else
+//			throw "File is not open!";
+//	}
+//	catch (const char* str)
+//	{
+//		throw str;
+//	}
+//	catch (const std::exception&)
+//	{
+//		throw "Unknown Problem!";
+//	}
+//}
+//
+//void Disk::recreateDisk(string &)
+//{
+//}
+//
+//fstream * Disk::getDskFl()
+//{
+//	return nullptr;
+//}
+//
+//void Disk::seekToSector(unsigned int)
+//{
+//}
+//
+//void Disk::writeSector(unsigned int, Sector *)
+//{
+//}
+//
+//void Disk::writeSector(Sector *)
+//{
+//}
+//
+//void Disk::readSector(int, Sector *)
+//{
+//}
+//
+//void Disk::readSector(Sector *)
+//{
+//}
