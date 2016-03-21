@@ -21,13 +21,12 @@
 **************************************************/
 Disk::Disk(void)
 {
-	VHD vhd = VHD();
-	DAT dat = DAT();
-	RootDir rootdir = RootDir();
+	VHD vhd();
+	DAT dat();
+	RootDir rootdir();
 	bool mounted = false;
-	fstream dskfl = fstream();
+	fstream dskfl();
 	unsigned int currDiskSectorNr = 0;
-
 	//char buffer[sizeof(Sector)] = NULL;
 }
 
@@ -64,6 +63,10 @@ Disk::Disk(string & dn, string & dow, char flag)
 			throw "Invalid parameters!";
 		}
 	}
+	catch (const char* str)
+	{
+		throw str;
+	}
 	catch (const std::exception&)
 	{
 		throw "File Problem!";
@@ -72,9 +75,9 @@ Disk::Disk(string & dn, string & dow, char flag)
 
 Disk::~Disk(void)
 {
-	unmountDisk();
+	if(mounted)
+		unmountDisk();
 	//dskfl.close();
-	
 }
 /*************************************************
 * FUNCTION
@@ -91,21 +94,35 @@ Disk::~Disk(void)
 **************************************************/
 void Disk::createDisk(string & dn, string & dow)
 {
-	char rawData[1020] = { 0 };
-	for (int i = 0; i < 3200; i++)
+	try
 	{
-		Sector sec = Sector(i,rawData);
-		dskfl.write((char*)& sec, sizeof(Sector));
+		string fileName = dn + ".fms";
+		dskfl.open(fileName, ios::in | ios::out);
+		if (dskfl.is_open())
+		{
+			char rawData[1020] = { 0 };
+			for (int i = 0; i < 3200; i++)
+			{
+				Sector sec = Sector(i, rawData);
+				dskfl.write((char*)& sec, sizeof(Sector));
+			}
+			dskfl.seekp(0);
+
+			string fd = "00/00/000";
+			char date[10];
+			_strdate(date);
+			vhd = VHD(0, dn.c_str(), dow.c_str(), date, 1600, 1596, 1, 2, 800, 1000, 3, fd.c_str(), false);
+			dskfl.write((char*)& vhd, sizeof(Sector));
+
+			dskfl.flush();
+		}
+		else
+			throw "File Problem!";
 	}
-	dskfl.seekp(0);
-
-	string fd= "00/00/000";
-	char date[10];
-	_strdate(date);
-	vhd = VHD(0,dn.c_str(),dow.c_str(),date,1600, 1596, 1, 2, 800, 1000, 3,fd.c_str(), false);
-	dskfl.write((char*)& vhd, sizeof(Sector));
-
-	dskfl.flush();
+	catch (const char* str)
+	{
+		throw str;
+	}
 }
 
 void Disk::mountDisk(string & fn)

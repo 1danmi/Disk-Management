@@ -19,4 +19,9 @@ DAT::DAT()
 
 DAT::~DAT() {}
 
+bool DAT::operator==(DAT const& dat)
+{
+	return this->dat == dat.dat;
+}
+
 

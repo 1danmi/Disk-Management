@@ -13,7 +13,16 @@ using namespace std;
 
 int main()
 {
-	Disk disk((string)"Disk1", (string)"Owner", 'c');
-	cin.get();
+	try
+	{
+		Disk disk((string)"Disk1", (string)"Owner", 'c');
+		cin.get();
+	}
+	catch (const char* str)
+	{
+		cout << str << endl;
+	}
+
 	return 0;
+
 }
