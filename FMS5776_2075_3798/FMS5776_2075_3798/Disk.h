@@ -37,7 +37,7 @@ public:
 	void createDisk(string&, string&);
 	void mountDisk(string&);
 	void unmountDisk(void);
-	//void recreateDisk(string&);
+	void recreateDisk(string&);
 
 	/*fstream * getDskFl();
 

@@ -204,11 +204,11 @@ void Disk::unmountDisk(void)
 		throw "Unknown Problem!";
 	}
 }
-//
-//void Disk::recreateDisk(string &)
-//{
-//}
-//
+
+void Disk::recreateDisk(string &)
+{
+}
+
 //fstream * Disk::getDskFl()
 //{
 //	return nullptr;
