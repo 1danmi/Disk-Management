@@ -58,7 +58,7 @@ class TestLevel_0
 		d.mountDisk(diskName);
 		cout << "post mountdisk: " << endl;
 		printDiskInfo(d);
-		/*d.unmountDisk();*/
+		d.unmountDisk();
 	}
 
 
@@ -85,7 +85,7 @@ public:
 			string ownerName = "oshri";
 
 			printStructSize();
-			test_create(diskName, ownerName);
+			//test_create(diskName, ownerName);
 			test_mount(diskName);
 		}
 		catch (exception ex)

@@ -13,7 +13,6 @@ public:
 	DATtype dat;
 private:
 	unsigned int sectorNr = 1;
-	
 	char emptyArea[820];
 	
 };

@@ -17,8 +17,11 @@ class Disk
 {
 private:
 	VHD vhd;
+	bool vhdUpdate;
 	DAT dat;
-	RootDir rootdir;
+	bool datUpdate;
+	RootDir rootDir;
+	bool rootDirUpdate;
 	bool mounted;
 	fstream dskfl;
 	unsigned int currDiskSectorNr;
@@ -33,12 +36,12 @@ public:
 	void seekToSector(unsigned int);
 	void createDisk(string&, string&);
 	void mountDisk(string&);
-	/*void unmountDisk(void);
-	void recreateDisk(string&);
+	void unmountDisk(void);
+	//void recreateDisk(string&);
 
-	fstream * getDskFl();
+	/*fstream * getDskFl();
 
-	void seekToSector(unsigned int);
+	
 	
 	void writeSector(unsigned int, Sector*);
 	void writeSector(Sector*);

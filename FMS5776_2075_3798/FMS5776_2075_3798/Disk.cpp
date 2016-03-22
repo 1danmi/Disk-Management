@@ -45,6 +45,7 @@ Disk::Disk(void)
 {
 	bool mounted = false;
 	unsigned int currDiskSectorNr = 0;
+	//char buffer[sizeof(Sector)] = NULL;
 }
 
 /*************************************************
@@ -115,7 +116,7 @@ void Disk::createDisk(string & dn, string & dow)
 	try
 	{
 		string fileName = dn + ".fms";
-		dskfl.open(fileName, ios::in | ios::out);
+		dskfl.open(fileName, ios::binary | ios::out);
 		if (dskfl.is_open())
 		{
 			char rawData[1020] = { 0 };
@@ -131,11 +132,13 @@ void Disk::createDisk(string & dn, string & dow)
 			_strdate(date);
 			vhd = VHD(0, dn.c_str(), dow.c_str(), date, 1600, 1596, 1, 2, 800, 1000, 3, fd.c_str(), false);
 			dskfl.write((char*)& vhd, sizeof(Sector));
+			vhdUpdate = 0;
 			//DAT Initialization
 			this->dat.dat.set();
 			for (int i = 0; i < 4; i++)
 				this->dat.dat[i] = 0;
-			dskfl.flush();
+			dskfl.close();
+			datUpdate = 0;
 		}
 		else
 			throw "File Problem!";
@@ -158,8 +161,11 @@ void Disk::mountDisk(string & fn)
 			mounted = true;
 			dskfl.read((char*)& vhd, 1024);
 			dskfl.read((char*)& dat, 1024);
-			dskfl.read((char*)& rootdir, 2048);
+			dskfl.read((char*)& rootDir, 2048);
 			currDiskSectorNr = 3;
+			vhdUpdate = 0;
+			datUpdate = 0;
+			rootDirUpdate = 0;
 		}
 		else
 			throw "File Problem!";
@@ -170,28 +176,34 @@ void Disk::mountDisk(string & fn)
 	}
 }
 
-//void Disk::unmountDisk(void)
-//{
-//	try
-//	{
-//		if (dskfl.is_open)
-//		{
-//
-//			dskfl.close();
-//			mounted = false;
-//		}
-//		else
-//			throw "File is not open!";
-//	}
-//	catch (const char* str)
-//	{
-//		throw str;
-//	}
-//	catch (const std::exception&)
-//	{
-//		throw "Unknown Problem!";
-//	}
-//}
+void Disk::unmountDisk(void)
+{
+	try
+	{
+		if (dskfl.is_open())
+		{
+			dskfl.seekp(0);
+			if(vhdUpdate)
+				dskfl.write((char*)& vhd, sizeof(Sector));
+			if(datUpdate)
+				dskfl.write((char*)& rootDir, sizeof(Sector));
+			if(rootDirUpdate)
+				dskfl.write((char*)& rootDir, sizeof(Sector)*2);
+			dskfl.close();
+			mounted = false;
+		}
+		else
+			throw "File is open!";
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Problem!";
+	}
+}
 //
 //void Disk::recreateDisk(string &)
 //{
