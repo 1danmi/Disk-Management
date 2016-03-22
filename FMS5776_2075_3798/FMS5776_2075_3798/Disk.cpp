@@ -2,27 +2,7 @@
 #include "Disk.h"
 #include <ctime>
 
-void Disk::seekToSector(unsigned int num)
-{
-	try
-	{
-		if (!dskfl.is_open())
-		{
-			throw "Disk file is not open!";
-		}
-		currDiskSectorNr = num;
-		this->dskfl.seekp(currDiskSectorNr * 1024);
-		this->dskfl.seekg(currDiskSectorNr * 1024);
-	}
-	catch (const char* str)
-	{
-		throw str;
-	}
-	catch (const std::exception&)
-	{
-		throw "Unknown error";
-	}
-}
+
 
 /*************************************************
 * FUNCTION
@@ -209,27 +189,86 @@ void Disk::recreateDisk(string &)
 {
 }
 
-//fstream * Disk::getDskFl()
-//{
-//	return nullptr;
-//}
-//
-//void Disk::seekToSector(unsigned int)
-//{
-//}
-//
-//void Disk::writeSector(unsigned int, Sector *)
-//{
-//}
-//
-//void Disk::writeSector(Sector *)
-//{
-//}
-//
-//void Disk::readSector(int, Sector *)
-//{
-//}
-//
-//void Disk::readSector(Sector *)
-//{
-//}
+fstream * Disk::getDskFl()
+{
+	if(dskfl.is_open())
+		return &dskfl;
+	return NULL;
+}
+
+void Disk::seekToSector(unsigned int num)
+{
+	try
+	{
+		if (!dskfl.is_open())
+		{
+			throw "Disk file is not open!";
+		}
+		currDiskSectorNr = num;
+		this->dskfl.seekp(currDiskSectorNr * 1024);
+		this->dskfl.seekg(currDiskSectorNr * 1024);
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown error";
+	}
+}
+
+void Disk::writeSector(unsigned int num, Sector* sec)
+{
+	try
+	{
+		if (num > 1600)
+			throw "Sector number is to big!";
+		if (dskfl.is_open())
+		{
+			this->seekToSector(num);
+			dskfl.write((char*)sec, sizeof(Sector));
+			this->seekToSector(num + 1);
+			this->currDiskSectorNr = num + 1;
+		}
+		else
+			throw "File problem!";
+	}
+	catch(const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Problem!";
+	}
+}
+
+void Disk::writeSector(Sector* sec)
+{
+	if (!dskfl.is_open())
+		throw "File problem!";
+	if (currDiskSectorNr > 1600)
+		throw "Disk is full!";
+	seekToSector(currDiskSectorNr);
+	dskfl.write((char*)sec, sizeof(Sector));
+	if (currDiskSectorNr < 1600)
+	{
+		currDiskSectorNr++;
+		seekToSector(currDiskSectorNr);
+	}
+	else
+	{
+		currDiskSectorNr++;
+		seekToSector(0);
+	}
+	
+}
+
+void Disk::readSector(int, Sector *)
+{
+}
+
+void Disk::readSector(Sector *)
+{
+}

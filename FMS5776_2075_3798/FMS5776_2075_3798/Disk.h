@@ -39,14 +39,10 @@ public:
 	void unmountDisk(void);
 	void recreateDisk(string&);
 
-	/*fstream * getDskFl();
-
-	
-	
+	fstream * getDskFl();
 	void writeSector(unsigned int, Sector*);
 	void writeSector(Sector*);
-	
 	void readSector(int, Sector*);
-	void readSector(Sector*);*/
+	void readSector(Sector*);
 	friend class TestLevel_0;
 };
