@@ -222,8 +222,8 @@ void Disk::writeSector(unsigned int num, Sector* sec)
 {
 	try
 	{
-		if (num > 1600)
-			throw "Sector number is to big!";
+		if (num > 1600 || num <0)
+			throw "Sector number is incorrect!";
 		if (dskfl.is_open())
 		{
 			this->seekToSector(num);
@@ -246,29 +246,89 @@ void Disk::writeSector(unsigned int num, Sector* sec)
 
 void Disk::writeSector(Sector* sec)
 {
-	if (!dskfl.is_open())
-		throw "File problem!";
-	if (currDiskSectorNr > 1600)
-		throw "Disk is full!";
-	seekToSector(currDiskSectorNr);
-	dskfl.write((char*)sec, sizeof(Sector));
-	if (currDiskSectorNr < 1600)
+	try
 	{
-		currDiskSectorNr++;
+		if (!dskfl.is_open())
+			throw "File problem!";
+		if (currDiskSectorNr > 1600)
+			throw "Disk is full!";
 		seekToSector(currDiskSectorNr);
+		dskfl.write((char*)sec, sizeof(Sector));
+		if (currDiskSectorNr < 1600)
+		{
+			currDiskSectorNr++;
+			seekToSector(currDiskSectorNr);
+		}
+		else
+		{
+			currDiskSectorNr++;
+			seekToSector(0);
+		}
 	}
-	else
+	catch (const char* str)
 	{
-		currDiskSectorNr++;
-		seekToSector(0);
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Problem!";
 	}
 	
 }
 
-void Disk::readSector(int, Sector *)
+void Disk::readSector(int num, Sector* sec)
 {
+	try
+	{
+		if (num > 1600 || num < 0)
+			throw "Sector number is incorrect!";
+		if (dskfl.is_open())
+		{
+			this->seekToSector(num);
+			dskfl.read((char*)sec, sizeof(Sector));
+			this->seekToSector(num + 1);
+			this->currDiskSectorNr = num + 1;
+		}
+		else
+			throw "File problem!";
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Problem!";
+	}
 }
 
-void Disk::readSector(Sector *)
+void Disk::readSector(Sector* sec)
 {
+	try
+	{
+		if (!dskfl.is_open())
+			throw "File problem!";
+		if (currDiskSectorNr > 1600)
+			throw "Current disk sector is out of range!";
+		seekToSector(currDiskSectorNr);
+		dskfl.read((char*)sec, sizeof(Sector));
+		if (currDiskSectorNr < 1600)
+		{
+			currDiskSectorNr++;
+			seekToSector(currDiskSectorNr);
+		}
+		else
+		{
+			currDiskSectorNr++;
+			seekToSector(0);
+		}
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Problem!";
+	}
 }
