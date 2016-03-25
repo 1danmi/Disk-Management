@@ -11,7 +11,8 @@ public:
 		unsigned int, unsigned int, unsigned int, char, unsigned int, unsigned int, 
 		char[2], unsigned char);
 	~DirEntry() {};
-
+	unsigned char getEntryStatus();
+	void setEntryStatus(unsigned char);
 private:
 	char fileName[12];
 	char fileOwner[12];

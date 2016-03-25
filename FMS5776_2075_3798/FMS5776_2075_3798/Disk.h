@@ -45,4 +45,11 @@ public:
 	void readSector(int, Sector*);
 	void readSector(Sector*);
 	friend class TestLevel_0;
+
+#pragma region Level1
+	void format(string&);
+	int howMuchEmpty();
+#pragma endregion
+
+	
 };

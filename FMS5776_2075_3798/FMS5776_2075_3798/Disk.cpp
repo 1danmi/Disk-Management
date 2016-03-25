@@ -332,3 +332,38 @@ void Disk::readSector(Sector* sec)
 		throw "Unknown Problem!";
 	}
 }
+
+void Disk::format(string& name)
+{
+	if (strcmp(vhd.diskOwner, name.c_str()))
+		throw "Only the disk owner can format the disk!";
+	if (!mounted)
+		throw "No disk is mounted!";
+	if (!dskfl.is_open())
+		throw "File problem!";
+	dat.dat.set();
+	this->dat.dat.set();
+	for (int i = 0; i < 4; i++)
+		this->dat.dat[i] = 0;
+	datUpdate = 1;
+	for (int i = 0; i < 14; i++)
+	{
+		rootDir.lsbSector.dirEntry[i].setEntryStatus('0');
+		rootDir.msbSector.dirEntry[i].setEntryStatus('0');
+	}
+	rootDirUpdate = 1;
+	_strdate(vhd.formatDate);
+	vhdUpdate = 1;
+
+}
+
+int Disk::howMuchEmpty()
+{
+	int count = 0;
+	for (int i = 4; i < 1600; i++)
+		if (dat.dat[i])
+			count++;
+	return count;
+}
+
+
