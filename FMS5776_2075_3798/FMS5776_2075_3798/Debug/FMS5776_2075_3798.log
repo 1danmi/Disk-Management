@@ -1,12 +1,13 @@
-﻿  Disk.cpp
-  DirEntry.cpp
-  Generating Code...
-  Compiling...
+﻿  VHD.cpp
+  Sector.cpp
   Main.cpp
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
-  Generating Code...
-  Skipping... (no relevant changes detected)
+c:\users\stesh\documents\visual studio 2015\projects\fms5776_2075_3798\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
   FileHeader.cpp
+  Disk.cpp
+c:\users\stesh\documents\visual studio 2015\projects\fms5776_2075_3798\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(371): warning C4018: '<': signed/unsigned mismatch
+c:\users\stesh\documents\visual studio 2015\projects\fms5776_2075_3798\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(392): warning C4018: '<': signed/unsigned mismatch
+c:\users\stesh\documents\visual studio 2015\projects\fms5776_2075_3798\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(405): error C2059: syntax error: '}'
+  DirEntry.cpp
   Dir.cpp
-  FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
-  FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)
+  DAT.cpp
+  Generating Code...
