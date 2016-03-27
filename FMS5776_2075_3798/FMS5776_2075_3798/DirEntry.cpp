@@ -46,4 +46,17 @@ DirEntry::DirEntry(char fn[12], char fo[12], unsigned int fa, unsigned int fs,
 	entryStatus = es; //empty
 }
 
+unsigned char DirEntry::getEntryStatus()
+{
+	return this->entryStatus;
+}
+
+void DirEntry::setEntryStatus(unsigned char es)
+{
+	if (es != '0' || es != '1' || es != '2')
+		throw "Entry status can be either 0(empty), 1(full) or 2(deleted)";
+	entryStatus = es;
+
+}
+
 

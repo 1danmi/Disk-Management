@@ -2,6 +2,8 @@
 #include "Disk.h"
 #include <ctime>
 
+
+
 /*************************************************
 * FUNCTION
 *	defu=ault Ctor
@@ -21,13 +23,9 @@
 **************************************************/
 Disk::Disk(void)
 {
-	VHD vhd();
-	DAT dat();
-	RootDir rootdir();
 	bool mounted = false;
-	fstream dskfl();
 	unsigned int currDiskSectorNr = 0;
-	//char buffer[sizeof(Sector)] = NULL;ffhkjhj
+	//char buffer[sizeof(Sector)] = NULL;
 }
 
 /*************************************************
@@ -75,10 +73,11 @@ Disk::Disk(string & dn, string & dow, char flag)
 
 Disk::~Disk(void)
 {
-	if(mounted)
-		unmountDisk();
+	//if(mounted)
+		//unmountDisk();
 	//dskfl.close();
 }
+
 /*************************************************
 * FUNCTION
 *	createDisk
@@ -97,24 +96,29 @@ void Disk::createDisk(string & dn, string & dow)
 	try
 	{
 		string fileName = dn + ".fms";
-		dskfl.open(fileName, ios::in | ios::out);
+		dskfl.open(fileName, ios::binary | ios::out);
 		if (dskfl.is_open())
 		{
 			char rawData[1020] = { 0 };
 			for (int i = 0; i < 3200; i++)
 			{
-				Sector sec = Sector(i, rawData);
+				Sector sec(i, rawData);
 				dskfl.write((char*)& sec, sizeof(Sector));
 			}
 			dskfl.seekp(0);
-
+			//VHD Initialization.
 			string fd = "00/00/000";
 			char date[10];
 			_strdate(date);
 			vhd = VHD(0, dn.c_str(), dow.c_str(), date, 1600, 1596, 1, 2, 800, 1000, 3, fd.c_str(), false);
 			dskfl.write((char*)& vhd, sizeof(Sector));
-
-			dskfl.flush();
+			vhdUpdate = 0;
+			//DAT Initialization
+			this->dat.dat.set();
+			for (int i = 0; i < 4; i++)
+				this->dat.dat[i] = 0;
+			dskfl.close();
+			datUpdate = 0;
 		}
 		else
 			throw "File Problem!";
@@ -129,15 +133,22 @@ void Disk::mountDisk(string & fn)
 {
 	try
 	{
-		dskfl.open(fn, ios::in, ios::binary);
+		if (mounted)
+			throw "Disk already mounted";
+		dskfl.open(fn+".fms", ios::in, ios::binary);
 		if (dskfl.is_open() == true)
 		{
 			mounted = true;
 			dskfl.read((char*)& vhd, 1024);
 			dskfl.read((char*)& dat, 1024);
-			dskfl.read((char*)& rootdir, 2048);
+			dskfl.read((char*)& rootDir, 2048);
 			currDiskSectorNr = 3;
+			vhdUpdate = 0;
+			datUpdate = 0;
+			rootDirUpdate = 0;
 		}
+		else
+			throw "File Problem!";
 	}
 	catch (const std::exception&)
 	{
@@ -147,9 +158,31 @@ void Disk::mountDisk(string & fn)
 
 void Disk::unmountDisk(void)
 {
-	
-	dskfl.close();
-	mounted = false;
+	try
+	{
+		if (dskfl.is_open())
+		{
+			dskfl.seekp(0);
+			if(vhdUpdate)
+				dskfl.write((char*)& vhd, sizeof(Sector));
+			if(datUpdate)
+				dskfl.write((char*)& rootDir, sizeof(Sector));
+			if(rootDirUpdate)
+				dskfl.write((char*)& rootDir, sizeof(Sector)*2);
+			dskfl.close();
+			mounted = false;
+		}
+		else
+			throw "File is open!";
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Problem!";
+	}
 }
 
 void Disk::recreateDisk(string &)
@@ -158,25 +191,221 @@ void Disk::recreateDisk(string &)
 
 fstream * Disk::getDskFl()
 {
-	return nullptr;
+	if(dskfl.is_open())
+		return &dskfl;
+	return NULL;
 }
 
-void Disk::seekToSector(unsigned int)
+void Disk::seekToSector(unsigned int num)
 {
+	try
+	{
+		if (!dskfl.is_open())
+		{
+			throw "Disk file is not open!";
+		}
+		currDiskSectorNr = num;
+		this->dskfl.seekp(currDiskSectorNr * 1024);
+		this->dskfl.seekg(currDiskSectorNr * 1024);
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown error";
+	}
 }
 
-void Disk::writeSector(unsigned int, Sector *)
+void Disk::writeSector(unsigned int num, Sector* sec)
 {
+	try
+	{
+		if (num > 1600 || num <0)
+			throw "Sector number is incorrect!";
+		if (dskfl.is_open())
+		{
+			this->seekToSector(num);
+			dskfl.write((char*)sec, sizeof(Sector));
+			this->seekToSector(num + 1);
+			this->currDiskSectorNr = num + 1;
+		}
+		else
+			throw "File problem!";
+	}
+	catch(const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Problem!";
+	}
 }
 
-void Disk::writeSector(Sector *)
+void Disk::writeSector(Sector* sec)
 {
+	try
+	{
+		if (!dskfl.is_open())
+			throw "File problem!";
+		if (currDiskSectorNr > 1600)
+			throw "Disk is full!";
+		seekToSector(currDiskSectorNr);
+		dskfl.write((char*)sec, sizeof(Sector));
+		if (currDiskSectorNr < 1600)
+		{
+			currDiskSectorNr++;
+			seekToSector(currDiskSectorNr);
+		}
+		else
+		{
+			currDiskSectorNr++;
+			seekToSector(0);
+		}
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Problem!";
+	}
+	
 }
 
-void Disk::readSector(int, Sector *)
+void Disk::readSector(int num, Sector* sec)
 {
+	try
+	{
+		if (num > 1600 || num < 0)
+			throw "Sector number is incorrect!";
+		if (dskfl.is_open())
+		{
+			this->seekToSector(num);
+			dskfl.read((char*)sec, sizeof(Sector));
+			this->seekToSector(num + 1);
+			this->currDiskSectorNr = num + 1;
+		}
+		else
+			throw "File problem!";
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Problem!";
+	}
 }
 
-void Disk::readSector(Sector *)
+void Disk::readSector(Sector* sec)
 {
+	try
+	{
+		if (!dskfl.is_open())
+			throw "File problem!";
+		if (currDiskSectorNr > 1600)
+			throw "Current disk sector is out of range!";
+		seekToSector(currDiskSectorNr);
+		dskfl.read((char*)sec, sizeof(Sector));
+		if (currDiskSectorNr < 1600)
+		{
+			currDiskSectorNr++;
+			seekToSector(currDiskSectorNr);
+		}
+		else
+		{
+			currDiskSectorNr++;
+			seekToSector(0);
+		}
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Problem!";
+	}
 }
+
+void Disk::format(string& name)
+{
+	if (strcmp(vhd.diskOwner, name.c_str()))
+		throw "Only the disk owner can format the disk!";
+	if (!mounted)
+		throw "No disk is mounted!";
+	if (!dskfl.is_open())
+		throw "File problem!";
+	dat.dat.set();
+	this->dat.dat.set();
+	for (int i = 0; i < 4; i++)
+		this->dat.dat[i] = 0;
+	datUpdate = 1;
+	for (int i = 0; i < 14; i++)
+	{
+		rootDir.lsbSector.dirEntry[i].setEntryStatus('0');
+		rootDir.msbSector.dirEntry[i].setEntryStatus('0');
+	}
+	rootDirUpdate = 1;
+	_strdate(vhd.formatDate);
+	vhdUpdate = 1;
+
+}
+
+int Disk::howMuchEmpty()
+{
+	int count = 0;
+	for (int i = 4; i < 1600; i++)
+		if (dat.dat[i])
+			count++;
+	return count;
+}
+
+bool Disk::firstFit(DATtype& fat, unsigned int clusters)
+{
+	if (this->howMuchEmpty() < clusters)
+		throw "Not enough space in disk";
+	fat.reset();
+	int i = 0;
+	while (clusters > 0 && i < 1600)
+	{
+		if (dat.dat[i] == 1)
+		{
+			dat.dat[i] = 0;
+			fat[i] = 1;
+			clusters--;
+		}
+		i++;
+	}
+	if (i >= 1600 && clusters > 0)
+		throw "Oops, something went wrong";
+	return true;
+}
+
+bool Disk::bestFit(DATtype& fat, unsigned int clusters)
+{
+	if (howMuchEmpty() < clusters)
+		throw "Not enough space in disk!";
+	int bFitSize = -1;
+	int bFitIndex = -1;
+	int tmpBestfit = 0;
+	for (int i = 0; i < 1600; i++)
+	{
+		if (dat.dat[i])
+			tmpBestfit++;
+		else
+		{
+			if(tmpBestfit>bFitSize)
+
+		}
+	}
+}
+
+
+
+

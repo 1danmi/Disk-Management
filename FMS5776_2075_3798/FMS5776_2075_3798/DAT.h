@@ -10,9 +10,9 @@ public:
 	DAT();
 	~DAT();
 	bool operator==(DAT const& dat);
+	DATtype dat;
 private:
 	unsigned int sectorNr = 1;
-	DATtype dat;
 	char emptyArea[820];
 	
 };
