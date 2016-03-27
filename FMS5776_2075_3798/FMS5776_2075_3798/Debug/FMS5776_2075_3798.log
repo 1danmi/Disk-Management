@@ -1,4 +1,12 @@
-﻿  Main.cpp
+﻿  Disk.cpp
+  DirEntry.cpp
+  Generating Code...
+  Compiling...
+  Main.cpp
 d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  FileHeader.cpp
+  Dir.cpp
   FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
   FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)

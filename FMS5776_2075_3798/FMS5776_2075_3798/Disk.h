@@ -49,6 +49,9 @@ public:
 #pragma region Level1
 	void format(string&);
 	int howMuchEmpty();
+	bool firstFit(DATtype&, unsigned int);
+	bool bestFit(DATtype&, unsigned int);
+	void alloc(DATtype&, unsigned int, unsigned int);
 #pragma endregion
 
 	

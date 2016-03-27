@@ -366,4 +366,46 @@ int Disk::howMuchEmpty()
 	return count;
 }
 
+bool Disk::firstFit(DATtype& fat, unsigned int clusters)
+{
+	if (this->howMuchEmpty() < clusters)
+		throw "Not enough space in disk";
+	fat.reset();
+	int i = 0;
+	while (clusters > 0 && i < 1600)
+	{
+		if (dat.dat[i] == 1)
+		{
+			dat.dat[i] = 0;
+			fat[i] = 1;
+			clusters--;
+		}
+		i++;
+	}
+	if (i >= 1600 && clusters > 0)
+		throw "Oops, something went wrong";
+	return true;
+}
+
+bool Disk::bestFit(DATtype& fat, unsigned int clusters)
+{
+	if (howMuchEmpty() < clusters)
+		throw "Not enough space in disk!";
+	int bFitSize = -1;
+	int bFitIndex = -1;
+	int tmpBestfit = 0;
+	for (int i = 0; i < 1600; i++)
+	{
+		if (dat.dat[i])
+			tmpBestfit++;
+		else
+		{
+			if(tmpBestfit>bFitSize)
+
+		}
+	}
+}
+
+
+
 
