@@ -136,7 +136,7 @@ void Disk::mountDisk(string & fn)
 		if (mounted)
 			throw "Disk already mounted";
 		dskfl.open(fn+".fms", ios::in, ios::binary);
-		if (dskfl.is_open() == true)
+		if (dskfl.is_open())
 		{
 			mounted = true;
 			dskfl.read((char*)& vhd, 1024);
@@ -189,7 +189,7 @@ void Disk::recreateDisk(string &)
 {
 }
 
-fstream * Disk::getDskFl()
+fstream* Disk::getDskFl()
 {
 	if(dskfl.is_open())
 		return &dskfl;
@@ -222,7 +222,7 @@ void Disk::writeSector(unsigned int num, Sector* sec)
 {
 	try
 	{
-		if (num > 1600 || num <0)
+		if (num > 3200 || num <0)
 			throw "Sector number is incorrect!";
 		if (dskfl.is_open())
 		{
@@ -250,11 +250,11 @@ void Disk::writeSector(Sector* sec)
 	{
 		if (!dskfl.is_open())
 			throw "File problem!";
-		if (currDiskSectorNr > 1600)
+		if (currDiskSectorNr > 3200)
 			throw "Disk is full!";
 		seekToSector(currDiskSectorNr);
 		dskfl.write((char*)sec, sizeof(Sector));
-		if (currDiskSectorNr < 1600)
+		if (currDiskSectorNr < 3200)
 		{
 			currDiskSectorNr++;
 			seekToSector(currDiskSectorNr);
@@ -280,7 +280,7 @@ void Disk::readSector(int num, Sector* sec)
 {
 	try
 	{
-		if (num > 1600 || num < 0)
+		if (num > 3200 || num < 0)
 			throw "Sector number is incorrect!";
 		if (dskfl.is_open())
 		{
@@ -308,11 +308,11 @@ void Disk::readSector(Sector* sec)
 	{
 		if (!dskfl.is_open())
 			throw "File problem!";
-		if (currDiskSectorNr > 1600)
+		if (currDiskSectorNr > 3200)
 			throw "Current disk sector is out of range!";
 		seekToSector(currDiskSectorNr);
 		dskfl.read((char*)sec, sizeof(Sector));
-		if (currDiskSectorNr < 1600)
+		if (currDiskSectorNr < 3200)
 		{
 			currDiskSectorNr++;
 			seekToSector(currDiskSectorNr);
@@ -342,7 +342,6 @@ void Disk::format(string& name)
 	if (!dskfl.is_open())
 		throw "File problem!";
 	dat.dat.set();
-	this->dat.dat.set();
 	for (int i = 0; i < 4; i++)
 		this->dat.dat[i] = 0;
 	datUpdate = 1;
@@ -374,7 +373,7 @@ bool Disk::firstFit(DATtype& fat, unsigned int clusters)
 	int i = 0;
 	while (clusters > 0 && i < 1600)
 	{
-		if (dat.dat[i] == 1)
+		if (dat.dat[i])
 		{
 			dat.dat[i] = 0;
 			fat[i] = 1;
@@ -398,11 +397,11 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters)
 	{
 		if (dat.dat[i])
 			tmpBestfit++;
-		else
+		/*else
 		{
 			if(tmpBestfit>bFitSize)
 
-		}
+		}*/
 	}
 }
 
