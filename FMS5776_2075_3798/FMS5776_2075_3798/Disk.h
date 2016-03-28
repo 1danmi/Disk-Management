@@ -51,6 +51,7 @@ public:
 	int howMuchEmpty();
 	bool firstFit(DATtype&, unsigned int);
 	bool bestFit(DATtype&, unsigned int);
+	bool worstFit(DATtype&, unsigned int);
 	void alloc(DATtype&, unsigned int, unsigned int);
 #pragma endregion
 
