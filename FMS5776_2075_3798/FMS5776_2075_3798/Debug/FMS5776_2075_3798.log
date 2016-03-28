@@ -1,1 +1,4 @@
-﻿
+﻿  Main.cpp
+c:\users\stesh\documents\visual studio 2015\projects\fms5776_2075_3798\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
+  FMS5776_2075_3798.vcxproj -> C:\Users\Stesh\Documents\Visual Studio 2015\Projects\FMS5776_2075_3798\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
+  FMS5776_2075_3798.vcxproj -> C:\Users\Stesh\Documents\Visual Studio 2015\Projects\FMS5776_2075_3798\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)

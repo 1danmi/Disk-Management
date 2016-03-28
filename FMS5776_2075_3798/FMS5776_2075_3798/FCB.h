@@ -16,7 +16,6 @@ public:
 	FCB(Disk*);
 	~FCB();
 
-	//FCB* openfile(string&, string&, string&);
 	void closefile();
 	void flushfile();
 	void readRecord(char*, unsigned int=0);
