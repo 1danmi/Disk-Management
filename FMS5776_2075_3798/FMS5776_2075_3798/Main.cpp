@@ -85,7 +85,7 @@ public:
 			string ownerName = "oshri";
 
 			printStructSize();
-			//test_create(diskName, ownerName);
+			test_create(diskName, ownerName);
 			test_mount(diskName);
 		}
 		catch (exception ex)
