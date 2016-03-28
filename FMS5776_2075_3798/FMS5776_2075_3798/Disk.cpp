@@ -387,6 +387,7 @@ void Disk::format(string& name)
 	_strdate(vhd.formatDate);
 	vhdUpdate = 1;
 
+
 }
 
 int Disk::howMuchEmpty()
