@@ -8,7 +8,7 @@
 #include "FileHeader.h"
 #include "Sector.h"
 #include "DAT.h"
-#include "Today.h"
+#include "FCB.h"
 
 using namespace std;
 class TestLevel_0;
@@ -54,6 +54,10 @@ public:
 	bool worstFit(DATtype&, unsigned int);
 	void alloc(DATtype&, unsigned int, unsigned int);
 #pragma endregion
+#pragma region Level3
+//	FCB* openfile(string&, string&, string&);
+#pragma endregion
+
 
 	
 };

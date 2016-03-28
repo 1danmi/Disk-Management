@@ -99,5 +99,6 @@ int main()
 {
 	TestLevel_0 test;
 	test.test_0();
+	system("pause");
 	return 0;
 }

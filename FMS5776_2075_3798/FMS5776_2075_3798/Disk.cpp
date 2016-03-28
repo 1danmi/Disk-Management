@@ -228,7 +228,18 @@ fstream* Disk::getDskFl()
 		return &dskfl;
 	return NULL;
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 void Disk::seekToSector(unsigned int num)
 {
 	try
@@ -250,7 +261,18 @@ void Disk::seekToSector(unsigned int num)
 		throw "Unknown error";
 	}
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 void Disk::writeSector(unsigned int num, Sector* sec)
 {
 	try
@@ -276,7 +298,18 @@ void Disk::writeSector(unsigned int num, Sector* sec)
 		throw "Unknown Problem!";
 	}
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 void Disk::writeSector(Sector* sec)
 {
 	try
@@ -308,7 +341,18 @@ void Disk::writeSector(Sector* sec)
 	}
 	
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 void Disk::readSector(int num, Sector* sec)
 {
 	try
@@ -334,7 +378,18 @@ void Disk::readSector(int num, Sector* sec)
 		throw "Unknown Problem!";
 	}
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 void Disk::readSector(Sector* sec)
 {
 	try
@@ -365,9 +420,21 @@ void Disk::readSector(Sector* sec)
 		throw "Unknown Problem!";
 	}
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 void Disk::format(string& name)
 {
+	if (vhd.isFormated) throw "already formated";
 	if (strcmp(vhd.diskOwner, name.c_str()))
 		throw "Only the disk owner can format the disk!";
 	if (!mounted)
@@ -386,9 +453,21 @@ void Disk::format(string& name)
 	rootDirUpdate = 1;
 	_strdate(vhd.formatDate);
 	vhdUpdate = 1;
+	vhd.isFormated = 1;
 
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 int Disk::howMuchEmpty()
 {
 	int count = 0;
@@ -397,7 +476,18 @@ int Disk::howMuchEmpty()
 			count++;
 	return count;
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 bool Disk::firstFit(DATtype& fat, unsigned int clusters)
 {
 	if (this->howMuchEmpty() < clusters)
@@ -418,7 +508,18 @@ bool Disk::firstFit(DATtype& fat, unsigned int clusters)
 		throw "Oops, something went wrong";
 	return true;
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 bool Disk::bestFit(DATtype& fat, unsigned int clusters)
 {
 	if (howMuchEmpty() < clusters)
@@ -437,12 +538,34 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters)
 		}*/
 	}
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 bool Disk::worstFit(DATtype & fat, unsigned int clusters)
 {
 	return false;
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo)
 {
 	unsigned int clusters;
@@ -464,6 +587,11 @@ void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo)
 	}
 
 }
+
+//FCB * Disk::openfile(string &, string &, string &)
+//{
+//	return nullptr;
+//}
 
 
 
