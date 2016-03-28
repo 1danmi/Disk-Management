@@ -10,6 +10,7 @@ class FCB
 	unsigned int currRecNr;
 	unsigned int currSecNr;
 	unsigned int currRecNrInBuff;
+	bool updateMode;
 public:
 	FCB();
 	FCB(Disk*);
@@ -18,11 +19,11 @@ public:
 	//FCB* openfile(string&, string&, string&);
 	void closefile();
 	void flushfile();
-	void read(char*, [unsigned int]);
-	void write(char*);
+	void readRecord(char*, unsigned int=0);
+	void writeRecord(char*);
 	void seek(unsigned int, int);
 	void updateCancel();
-	void Delete();
-	void update(char *);
+	void deleteRecord();
+	void updateRecord(char *);
 };
 
