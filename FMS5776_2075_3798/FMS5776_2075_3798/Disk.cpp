@@ -443,7 +443,18 @@ bool Disk::worstFit(DATtype & fat, unsigned int clusters)
 {
 	return false;
 }
-
+/*************************************************
+* FUNCTION
+*
+* PARAMETERS
+*    int –
+* RETURN VALUE
+*
+* MEANING
+*     This function
+* SEE ALSO
+*
+**************************************************/
 void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo)
 {
 	unsigned int clusters;
