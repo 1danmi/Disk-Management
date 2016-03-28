@@ -185,8 +185,41 @@ void Disk::unmountDisk(void)
 	}
 }
 
-void Disk::recreateDisk(string &)
+void Disk::recreateDisk(string & dow)
 {
+	try
+	{
+		if (mounted) return;
+		if (dskfl.is_open())
+		{
+			char rawData[1020] = { 0 };
+			for (int i = 0; i < 3200; i++)
+			{
+				Sector sec(i, rawData);
+				dskfl.write((char*)& sec, sizeof(Sector));
+			}
+			dskfl.seekp(0);
+			//VHD Initialization.
+			string fd = "00/00/000";
+			char date[10];
+			_strdate(date);
+			vhd = VHD(0, vhd.diskName, dow.c_str(), date, 1600, 1596, 1, 2, 800, 1000, 3, fd.c_str(), false);
+			dskfl.write((char*)& vhd, sizeof(Sector));
+			vhdUpdate = 0;
+			//DAT Initialization
+			this->dat.dat.set();
+			for (int i = 0; i < 4; i++)
+				this->dat.dat[i] = 0;
+			dskfl.close();
+			datUpdate = 0;
+		}
+		else
+			throw "Disk doesn't exist";
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
 }
 
 fstream* Disk::getDskFl()
@@ -403,6 +436,33 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters)
 
 		}*/
 	}
+}
+
+bool Disk::worstFit(DATtype & fat, unsigned int clusters)
+{
+	return false;
+}
+
+void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo)
+{
+	unsigned int clusters;
+	if (numOfSecs % 2 == 0) clusters = numOfSecs / 2;
+	else clusters = (numOfSecs / 2) + 1;
+	switch (algo)
+	{
+	case 0:
+		firstFit(fat, clusters);
+		break;
+	case 1:
+		bestFit(fat, clusters);
+		break;
+	case 2:
+		worstFit(fat, clusters);
+		break;
+	default:
+		break;
+	}
+
 }
 
 
