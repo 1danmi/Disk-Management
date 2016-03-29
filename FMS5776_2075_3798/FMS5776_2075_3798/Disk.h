@@ -53,6 +53,7 @@ public:
 	bool bestFit(DATtype&, unsigned int);
 	bool worstFit(DATtype&, unsigned int);
 	void alloc(DATtype&, unsigned int, unsigned int);
+	void allocExtend(DATtype&, unsigned int, unsigned int);
 #pragma endregion
 #pragma region Level3
 //	FCB* openfile(string&, string&, string&);
