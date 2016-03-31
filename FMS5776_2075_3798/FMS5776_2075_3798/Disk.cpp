@@ -6,7 +6,7 @@
 
 /*************************************************
 * FUNCTION
-*	defu=ault Ctor
+*	default Ctor
 * PARAMETERS
 *   VHD - creates a disk header;
 *	DAT - creates a disk DAT map;
@@ -129,6 +129,18 @@ void Disk::createDisk(string & dn, string & dow)
 	}
 }
 
+/*************************************************
+* FUNCTION
+*	mountDisk
+* PARAMETERS
+*    string& - file name.
+* RETURN VALUE
+*	---
+* MEANING
+*     This function mounts the disk
+* SEE ALSO
+*	---
+**************************************************/
 void Disk::mountDisk(string & fn)
 {
 	try
@@ -156,6 +168,18 @@ void Disk::mountDisk(string & fn)
 	}
 }
 
+/*************************************************
+* FUNCTION
+*	unmountDisk
+* PARAMETERS
+*	---
+* RETURN VALUE
+*	---
+* MEANING
+*     This function unmounts the disk
+* SEE ALSO
+*
+**************************************************/
 void Disk::unmountDisk(void)
 {
 	try
@@ -185,6 +209,20 @@ void Disk::unmountDisk(void)
 	}
 }
 
+/*************************************************
+* FUNCTION
+*	recreateDisk
+* PARAMETERS
+*	string& - name of disk owner
+* RETURN VALUE
+*	---
+* MEANING
+*   This function recreates the disk. 
+*	does the same then creating disk but doen't create a new file, instead just reinitializes the values.
+*	conditions: a) file exists. b) wasn't mounted.
+* SEE ALSO
+*
+**************************************************/
 void Disk::recreateDisk(string & dow)
 {
 	try
@@ -222,21 +260,34 @@ void Disk::recreateDisk(string & dow)
 	}
 }
 
+/*************************************************
+* FUNCTION
+*	getDskF1()
+* PARAMETERS
+*    ---
+* RETURN VALUE
+*	fstream*
+* MEANING
+*   This function 
+* SEE ALSO
+*
+**************************************************/
 fstream* Disk::getDskFl()
 {
 	if(dskfl.is_open())
 		return &dskfl;
 	return NULL;
 }
+
 /*************************************************
 * FUNCTION
-*
+*	seekToSector
 * PARAMETERS
-*    int –
+*   unsigned int – number of sector to go to.
 * RETURN VALUE
-*
+*	---
 * MEANING
-*     This function
+*   This function moves the I/O head to the wanted sector
 * SEE ALSO
 *
 **************************************************/
@@ -261,17 +312,19 @@ void Disk::seekToSector(unsigned int num)
 		throw "Unknown error";
 	}
 }
+
 /*************************************************
 * FUNCTION
-*
+*	writeSector
 * PARAMETERS
-*    int –
+*   unsigned int - sector number to write on.
+*	Sector* - sector to write.
 * RETURN VALUE
-*
+*	---
 * MEANING
-*     This function
+*   This function writes a sector to the disk.
 * SEE ALSO
-*
+*	---
 **************************************************/
 void Disk::writeSector(unsigned int num, Sector* sec)
 {
@@ -298,17 +351,18 @@ void Disk::writeSector(unsigned int num, Sector* sec)
 		throw "Unknown Problem!";
 	}
 }
+
 /*************************************************
 * FUNCTION
-*
+*	writeSector
 * PARAMETERS
-*    int –
+*	Sector* - sector to write.
 * RETURN VALUE
-*
+*	---
 * MEANING
-*     This function
+*   This function writes a sector to the disk.
 * SEE ALSO
-*
+*	---
 **************************************************/
 void Disk::writeSector(Sector* sec)
 {
@@ -341,17 +395,19 @@ void Disk::writeSector(Sector* sec)
 	}
 	
 }
+
 /*************************************************
 * FUNCTION
-*
+*	readSector
 * PARAMETERS
-*    int –
+*   int - sector number to write on.
+*	Sector* - sector to write.
 * RETURN VALUE
-*
+*	---
 * MEANING
-*     This function
+*   This function reads a sector on the disk.
 * SEE ALSO
-*
+*	---
 **************************************************/
 void Disk::readSector(int num, Sector* sec)
 {
@@ -378,17 +434,18 @@ void Disk::readSector(int num, Sector* sec)
 		throw "Unknown Problem!";
 	}
 }
+
 /*************************************************
 * FUNCTION
-*
+*	readSector
 * PARAMETERS
-*    int –
+*	Sector* - sector to write.
 * RETURN VALUE
-*
+*	---
 * MEANING
-*     This function
+*   This function reads a sector on the disk.
 * SEE ALSO
-*
+*	---
 **************************************************/
 void Disk::readSector(Sector* sec)
 {
@@ -420,22 +477,26 @@ void Disk::readSector(Sector* sec)
 		throw "Unknown Problem!";
 	}
 }
+
 /*************************************************
 * FUNCTION
-*
+*	format
 * PARAMETERS
-*    int –
+*   string& - name of user
 * RETURN VALUE
-*
+*	---
 * MEANING
-*     This function
+*   This function formats the disk
+*	conditions: user name == disk owner name
+*				not formated.
+*				is mounted.
+*				disk exists.
 * SEE ALSO
 *
 **************************************************/
 void Disk::format(string& name)
 {
-	if (vhd.isFormated)
-		throw "already formated";
+	if (vhd.isFormated) throw "already formated";
 	if (strcmp(vhd.diskOwner, name.c_str()))
 		throw "Only the disk owner can format the disk!";
 	if (!mounted)
@@ -455,16 +516,19 @@ void Disk::format(string& name)
 	_strdate(vhd.formatDate);
 	vhdUpdate = 1;
 	vhd.isFormated = 1;
+
+
 }
+
 /*************************************************
 * FUNCTION
-*
+*	howMuchEmpty()
 * PARAMETERS
-*    int –
+*   --–
 * RETURN VALUE
-*
+*	int - number of free/empty clusters
 * MEANING
-*     This function
+*     This function checks how many clusters are empty. (in the dat map)
 * SEE ALSO
 *
 **************************************************/
@@ -476,6 +540,7 @@ int Disk::howMuchEmpty()
 			count++;
 	return count;
 }
+
 /*************************************************
 * FUNCTION
 *
@@ -508,6 +573,7 @@ bool Disk::firstFit(DATtype& fat, unsigned int clusters)
 		throw "Oops, something went wrong";
 	return true;
 }
+
 /*************************************************
 * FUNCTION
 *
@@ -538,6 +604,7 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters)
 		}*/
 	}
 }
+
 /*************************************************
 * FUNCTION
 *
@@ -554,6 +621,7 @@ bool Disk::worstFit(DATtype & fat, unsigned int clusters)
 {
 	return false;
 }
+
 /*************************************************
 * FUNCTION
 *
