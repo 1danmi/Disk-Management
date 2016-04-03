@@ -1,6 +1,7 @@
 #pragma warning (disable:4996)
 #include "Disk.h"
 #include <ctime>
+#include <cmath>
 
 
 
@@ -592,16 +593,60 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters)
 		throw "Not enough space in disk!";
 	int bFitSize = -1;
 	int bFitIndex = -1;
-	int tmpBestfit = 0;
+	int tmpBestFit = 0;
+	int tmpBestFitIndex;
+	bool count = 0;
 	for (int i = 0; i < 1600; i++)
 	{
 		if (dat.dat[i])
-			tmpBestfit++;
-		/*else
 		{
-			if(tmpBestfit>bFitSize)
-
-		}*/
+			if (!count)
+			{
+				tmpBestFit = 0;
+				count = 1;
+				tmpBestFitIndex = i;
+			}
+			tmpBestFit++;
+		}
+		else
+		{
+			count = 0;
+			if (tmpBestFit == -1)
+			{
+				bFitSize = tmpBestFit;
+				bFitIndex = tmpBestFitIndex;
+			}
+			else
+			{
+				if (abs((int)clusters - tmpBestFit) < abs((int)clusters - bFitSize))
+				{
+					bFitSize = tmpBestFit;
+					bFitIndex = tmpBestFitIndex;
+				}
+			}
+			tmpBestFit = 0;
+			tmpBestFitIndex = -1;
+		}
+		if (tmpBestFit == -1)
+		{
+			bFitSize = tmpBestFit;
+			bFitIndex = tmpBestFitIndex;
+		}
+		else
+		{
+			if (abs((int)clusters - tmpBestFit) < abs((int)clusters - bFitSize))
+			{
+				bFitSize = tmpBestFit;
+				bFitIndex = tmpBestFitIndex;
+			}
+		}
+		for (int i = 0; i < bFitSize && i<clusters; i++)
+		{
+			dat.dat[bFitIndex + i] = 0;
+			fat[bFitIndex + i] = 1;
+		}
+		if (clusters < bFitSize)
+			bestFit(fat, clusters - bFitSize);
 	}
 }
 
