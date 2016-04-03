@@ -2,8 +2,7 @@
 #include "Disk.h"
 #include <ctime>
 #include <cmath>
-
-
+#include <algorithm>
 
 /*************************************************
 * FUNCTION
@@ -590,64 +589,57 @@ bool Disk::firstFit(DATtype& fat, unsigned int clusters)
 bool Disk::bestFit(DATtype& fat, unsigned int clusters)
 {
 	if (howMuchEmpty() < clusters)
-		throw "Not enough space in disk!";
-	int bFitSize = -1;
-	int bFitIndex = -1;
-	int tmpBestFit = 0;
-	int tmpBestFitIndex;
-	bool count = 0;
-	for (int i = 0; i < 1600; i++)
+		return false;
+	int i = 0;
+	int bFitSize = 0;
+	int bFitIndex = 0;
+	int tmpBFitSize = 0;
+	int tmpBFitIndex = 0;
+	while (i < 1600)
 	{
+		tmpBFitSize = 0;
 		if (dat.dat[i])
 		{
-			if (!count)
+			tmpBFitIndex = i;
+			while (dat.dat[i])
 			{
-				tmpBestFit = 0;
-				count = 1;
-				tmpBestFitIndex = i;
+				tmpBFitSize++;
+				i++;
 			}
-			tmpBestFit++;
-		}
-		else
-		{
-			count = 0;
-			if (tmpBestFit == -1)
+			if (clusters == tmpBFitSize)
 			{
-				bFitSize = tmpBestFit;
-				bFitIndex = tmpBestFitIndex;
+				bFitIndex = tmpBFitIndex;
+				bFitSize = tmpBFitSize;
+				break;
 			}
-			else
+			else if (clusters>tmpBFitSize)
 			{
-				if (abs((int)clusters - tmpBestFit) < abs((int)clusters - bFitSize))
+				if (tmpBFitSize > bFitSize)
 				{
-					bFitSize = tmpBestFit;
-					bFitIndex = tmpBestFitIndex;
+					bFitIndex = tmpBFitIndex;
+					bFitSize = tmpBFitSize;
 				}
 			}
-			tmpBestFit = 0;
-			tmpBestFitIndex = -1;
-		}
-		if (tmpBestFit == -1)
-		{
-			bFitSize = tmpBestFit;
-			bFitIndex = tmpBestFitIndex;
-		}
-		else
-		{
-			if (abs((int)clusters - tmpBestFit) < abs((int)clusters - bFitSize))
+			else if (clusters < tmpBFitSize)
 			{
-				bFitSize = tmpBestFit;
-				bFitIndex = tmpBestFitIndex;
+				if (tmpBFitSize < bFitSize || bFitSize < clusters)
+				{
+					bFitIndex = tmpBFitIndex;
+					bFitSize = tmpBFitSize;
+				}
 			}
 		}
-		for (int i = 0; i < bFitSize && i<clusters; i++)
-		{
-			dat.dat[bFitIndex + i] = 0;
-			fat[bFitIndex + i] = 1;
-		}
-		if (clusters < bFitSize)
-			bestFit(fat, clusters - bFitSize);
+		else
+			i++;
 	}
+	for (int i = 0; i < min(bFitSize, (int)clusters); i++)
+	{
+		dat.dat[i + bFitIndex] = 0;
+		fat[i + bFitIndex] = 1;
+	}
+	if (clusters > bFitSize)
+		bestFit(fat, clusters - bFitSize);
+	return true;
 }
 
 /*************************************************
@@ -664,7 +656,43 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters)
 **************************************************/
 bool Disk::worstFit(DATtype & fat, unsigned int clusters)
 {
-	return false;
+	if (howMuchEmpty() < clusters)
+		return false;
+	int maxLength = 0;
+	int maxLengthIndex = 0;
+	int tmpMaxLength = 0;
+	int tmpMaxLengthIndex = 0;
+	int i = 0;
+	while (i < 1600)
+	{
+		tmpMaxLength = 0;
+		if (dat.dat[i])
+		{
+			tmpMaxLengthIndex = i;
+			while (dat.dat[i])
+			{
+				tmpMaxLength++;
+				i++;
+			}
+			if (tmpMaxLength> maxLength)
+			{
+				maxLength = tmpMaxLength;
+				maxLengthIndex = tmpMaxLengthIndex;
+				if (clusters == maxLength)
+					break;
+			}
+		}
+		else
+			i++;
+	}
+	for (int i = 0; i < min(maxLength, (int)clusters); i++)
+	{
+		dat.dat[i + maxLengthIndex] = 0;
+		fat[i + maxLengthIndex] = 1;
+	}
+	if (clusters > maxLength)
+		bestFit(fat, clusters - maxLength);
+	return true;
 }
 
 /*************************************************
