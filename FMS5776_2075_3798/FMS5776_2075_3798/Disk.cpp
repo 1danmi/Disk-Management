@@ -733,7 +733,7 @@ bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 		fat[i + maxLengthIndex] = 1;
 	}
 	if (clusters > maxLength)
-		bestFit(fat, clusters - maxLength);
+		worstFit(fat, clusters - maxLength);
 	return true;
 }
 
@@ -789,17 +789,17 @@ void Disk::allocExtend(DATtype& fat, unsigned int sectors, unsigned int algo)
 		throw "Not enough space in disk!";
 	switch (algo)
 	{
-	case 0:
-		firstFit(fat, clusters, lAlloc+1);
-		break;
-	case 1:
-		bestFit(fat, clusters, lAlloc + 1);
-		break;
-	case 2:
-		worstFit(fat, clusters, lAlloc + 1);
-		break;
-	default:
-		break;
+		case 0:
+			firstFit(fat, clusters, lAlloc+1);
+			break;
+		case 1:
+			bestFit(fat, clusters, lAlloc + 1);
+			break;
+		case 2:
+			worstFit(fat, clusters, lAlloc + 1);
+			break;
+		default:
+			break;
 	}
 }
 
