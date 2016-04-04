@@ -3,6 +3,9 @@
 #include <ctime>
 #include <cmath>
 #include <algorithm>
+#include <cstring>
+#include <iostream>
+using namespace std;
 
 #pragma region Level0
 
@@ -810,9 +813,49 @@ void Disk::dealloc(DATtype& fat)
 #pragma endregion
 
 #pragma region Level2
-void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen, unsigned int numOfSecs, string & kt, unsigned int ko, unsigned int ks)
+void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen, unsigned int numOfSecs, string & kt, unsigned int ko, unsigned int ks, unsigned int algo)
 {
-	
+	try
+	{
+		int path =-1;
+		for (int i = 0; i < 14; i++)
+		{
+			if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()) || !strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
+				throw "File name in use";
+			if (path == -1 && (rootDir.lsbSector.dirEntry[i].getEntryStatus() == 0 || rootDir.lsbSector.dirEntry[i].getEntryStatus() == 2))
+				path = i;
+			else if (path == -1 && (rootDir.msbSector.dirEntry[i].getEntryStatus() == 0 || rootDir.msbSector.dirEntry[i].getEntryStatus() == 2))
+				path = i+14;
+		}
+		if (path == -1)
+			throw "To many files in the disk";
+		DATtype fat;
+		alloc(fat, numOfSecs, algo);
+		int i = 0;
+		unsigned int firstSector = -1;
+		while (firstSector == -1 && i < 1600)
+			if (fat[i])
+				firstSector = i;
+		DirEntry de(fn.c_str(), fo.c_str(), firstSector, numOfSecs, firstSector + numOfSecs - 1, 
+			recLen, recLen, ft.c_str()[0], ko, ks, kt.c_str(), '1');
+		
+		/*FileHeader fh(firstSector, de, fat);*/
+		if (path >= 14 && path < 28)
+			rootDir.msbSector.dirEntry[i - 14] = de;
+		else if (path >= 0 && path < 14)
+			rootDir.lsbSector.dirEntry[i] = de;
+		else
+			throw "Unknown Error!";
+		
+	}
+	catch (char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception& ex)
+	{
+
+	}
 }
 
 void Disk::delFile(string &, string &)

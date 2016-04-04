@@ -25,9 +25,9 @@
 * SEE ALSO
 *	---
 **************************************************/
-DirEntry::DirEntry(char fn[12], char fo[12], unsigned int fa, unsigned int fs,
+DirEntry::DirEntry(const char fn[12], const char fo[12], unsigned int fa, unsigned int fs,
 	unsigned int eorn, unsigned int mrs, unsigned int ars, char rf, unsigned int ko, 
-	unsigned int ks, char kt[2], unsigned char es)
+	unsigned int ks, const char kt[2], unsigned char es)
 {
 	strcpy_s(fileName, fn);
 	strcpy_s(fileOwner, fo);
@@ -57,6 +57,11 @@ void DirEntry::setEntryStatus(unsigned char es)
 		throw "Entry status can be either 0(empty), 1(full) or 2(deleted)";
 	entryStatus = es;
 
+}
+
+char * DirEntry::getFileName()
+{
+	return this->fileName;
 }
 
 

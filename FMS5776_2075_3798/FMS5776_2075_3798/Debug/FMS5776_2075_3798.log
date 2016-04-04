@@ -1,19 +1,23 @@
-﻿  Disk.cpp
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(600): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(633): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(657): warning C4018: '>': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(665): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(667): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(682): warning C4018: '>': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(701): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(735): warning C4018: '>': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(757): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(788): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Compiling...
+﻿  VHD.cpp
+  Sector.cpp
   Main.cpp
 d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
+  FileHeader.cpp
   FCB.cpp
+  Disk.cpp
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(601): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(634): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(658): warning C4018: '>': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(666): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(668): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(683): warning C4018: '>': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(702): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(736): warning C4018: '>': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(758): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(789): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(832): error C2440: '<function-style-cast>': cannot convert from 'initializer list' to 'DirEntry'
+  d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(832): note: No constructor could take the source type, or constructor overload resolution was ambiguous
+  DirEntry.cpp
+  Dir.cpp
+  DAT.cpp
   Generating Code...
-  FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
-  FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)

@@ -7,12 +7,13 @@ class DirEntry
 {
 public:
 	DirEntry() {};
-	DirEntry(char[12], char[12] ,unsigned int, unsigned int,
+	DirEntry(const char[12], const char[12] ,unsigned int, unsigned int,
 		unsigned int, unsigned int, unsigned int, char, unsigned int, unsigned int, 
-		char[2], unsigned char);
+		const char[2], unsigned char);
 	~DirEntry() {};
 	unsigned char getEntryStatus();
 	void setEntryStatus(unsigned char);
+	char* getFileName();
 private:
 	char fileName[12];
 	char fileOwner[12];
