@@ -540,6 +540,14 @@ int Disk::howMuchEmpty()
 			count++;
 	return count;
 }
+int Disk::howMuchEmpty(unsigned int start)
+{
+	int count = 0;
+	for (int i = start; i < 1600; i++)
+		if (dat.dat[i])
+			count++;
+	return count;
+}
 
 /*************************************************
 * FUNCTION
@@ -553,12 +561,12 @@ int Disk::howMuchEmpty()
 * SEE ALSO
 *
 **************************************************/
-bool Disk::firstFit(DATtype& fat, unsigned int clusters)
+bool Disk::firstFit(DATtype& fat, unsigned int clusters, unsigned int start)
 {
-	if (this->howMuchEmpty() < clusters)
+	if (this->howMuchEmpty(start) < clusters)
 		throw "Not enough space in disk";
 	fat.reset();
-	int i = 0;
+	int i = start;
 	while (clusters > 0 && i < 1600)
 	{
 		if (dat.dat[i])
@@ -586,11 +594,11 @@ bool Disk::firstFit(DATtype& fat, unsigned int clusters)
 * SEE ALSO
 *
 **************************************************/
-bool Disk::bestFit(DATtype& fat, unsigned int clusters)
+bool Disk::bestFit(DATtype& fat, unsigned int clusters, unsigned int start)
 {
-	if (howMuchEmpty() < clusters)
-		return false;
-	int i = 0;
+	if (howMuchEmpty(start) < clusters)
+		throw "Not enough space in disk";
+	int i = start;
 	int bFitSize = 0;
 	int bFitIndex = 0;
 	int tmpBFitSize = 0;
@@ -654,15 +662,15 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters)
 * SEE ALSO
 *
 **************************************************/
-bool Disk::worstFit(DATtype & fat, unsigned int clusters)
+bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 {
 	if (howMuchEmpty() < clusters)
-		return false;
+		throw "Not enough space in disk";
 	int maxLength = 0;
 	int maxLengthIndex = 0;
 	int tmpMaxLength = 0;
 	int tmpMaxLengthIndex = 0;
-	int i = 0;
+	int i = start;
 	while (i < 1600)
 	{
 		tmpMaxLength = 0;
@@ -712,21 +720,53 @@ void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo)
 	unsigned int clusters;
 	if (numOfSecs % 2 == 0) clusters = numOfSecs / 2;
 	else clusters = (numOfSecs / 2) + 1;
+	if (howMuchEmpty() < clusters)
+		throw "Not enough space in disk!";
 	switch (algo)
 	{
 	case 0:
-		firstFit(fat, clusters);
+		firstFit(fat, clusters,0);
 		break;
 	case 1:
-		bestFit(fat, clusters);
+		bestFit(fat, clusters,0);
 		break;
 	case 2:
-		worstFit(fat, clusters);
+		worstFit(fat, clusters,0);
 		break;
 	default:
 		break;
 	}
 
+}
+
+void Disk::allocExtend(DATtype& fat, unsigned int sectors, unsigned int algo)
+{
+	//Finding last allocated index;
+	int lAlloc = 0;
+	for (int i = 0; i < 1600; i++)
+		if (fat[i])
+			lAlloc = i;
+	
+	unsigned int clusters;
+	if (sectors % 2 == 0) clusters = sectors / 2;
+	else clusters = (sectors / 2) + 1;
+
+	if (howMuchEmpty(lAlloc + 1) < clusters)
+		throw "Not enough space in disk!";
+	switch (algo)
+	{
+	case 0:
+		firstFit(fat, clusters, lAlloc+1);
+		break;
+	case 1:
+		bestFit(fat, clusters, lAlloc + 1);
+		break;
+	case 2:
+		worstFit(fat, clusters, lAlloc + 1);
+		break;
+	default:
+		break;
+	}
 }
 
 //FCB * Disk::openfile(string &, string &, string &)

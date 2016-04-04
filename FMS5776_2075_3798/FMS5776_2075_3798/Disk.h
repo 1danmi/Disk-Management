@@ -49,10 +49,12 @@ public:
 #pragma region Level1
 	void format(string&);
 	int howMuchEmpty();
-	bool firstFit(DATtype&, unsigned int);
-	bool bestFit(DATtype&, unsigned int);
-	bool worstFit(DATtype&, unsigned int);
+	int howMuchEmpty(unsigned int);
+	bool firstFit(DATtype&, unsigned int,unsigned int);
+	bool bestFit(DATtype&, unsigned int, unsigned int);
+	bool worstFit(DATtype&, unsigned int, unsigned int);
 	void alloc(DATtype&, unsigned int, unsigned int);
+	void allocExtend(DATtype &, unsigned int, unsigned int);
 #pragma endregion
 #pragma region Level3
 //	FCB* openfile(string&, string&, string&);
