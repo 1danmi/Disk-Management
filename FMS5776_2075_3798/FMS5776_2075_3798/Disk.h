@@ -57,9 +57,9 @@ public:
 	int howMuchEmpty();
 	int howMuchEmpty(unsigned int);
 
-	bool firstFit(DATtype&, unsigned int,unsigned int);
-	bool bestFit(DATtype&, unsigned int, unsigned int);
-	bool worstFit(DATtype&, unsigned int, unsigned int);
+	bool firstFit(DATtype&, unsigned int,unsigned int = 0);
+	bool bestFit(DATtype&, unsigned int, unsigned int = 0);
+	bool worstFit(DATtype&, unsigned int, unsigned int = 0);
 
 	void alloc(DATtype&, unsigned int, unsigned int);
 	void allocExtend(DATtype&, unsigned int, unsigned int);
