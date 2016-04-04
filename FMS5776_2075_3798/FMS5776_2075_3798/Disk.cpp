@@ -809,12 +809,12 @@ void Disk::dealloc(DATtype& fat)
 }
 
 #pragma endregion
-
+#pragma region Level3
 //FCB * Disk::openfile(string &, string &, string &)
 //{
 //	return nullptr;
 //}
-
+#pragma endregion
 
 
 
