@@ -1,4 +1,17 @@
-﻿  Main.cpp
-c:\users\stesh\documents\visual studio 2015\projects\fms5776_2075_3798\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
-  FMS5776_2075_3798.vcxproj -> C:\Users\Stesh\Documents\Visual Studio 2015\Projects\FMS5776_2075_3798\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
-  FMS5776_2075_3798.vcxproj -> C:\Users\Stesh\Documents\Visual Studio 2015\Projects\FMS5776_2075_3798\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)
+﻿  VHD.cpp
+  Sector.cpp
+  Main.cpp
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
+  FileHeader.cpp
+  FCB.cpp
+  Disk.cpp
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(494): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(526): warning C4018: '<': signed/unsigned mismatch
+  DirEntry.cpp
+  Dir.cpp
+  DAT.cpp
+  Generating Code...
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(541): warning C4715: 'Disk::bestFit': not all control paths return a value
+  LINK : D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe not found or not built by the last incremental link; performing full link
+  FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
+  FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)

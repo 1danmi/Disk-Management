@@ -1,12 +1,17 @@
 #pragma warning (disable:4996)
 #include "Disk.h"
 #include <ctime>
+#include <cmath>
+#include <algorithm>
+
+#pragma region Level0
+
 
 
 
 /*************************************************
 * FUNCTION
-*	default Ctor
+*	void Disk(void)
 * PARAMETERS
 *   VHD - creates a disk header;
 *	DAT - creates a disk DAT map;
@@ -17,7 +22,8 @@
 * RETURN VALUE
 *	---
 * MEANING
-*     This function initializes the Disk with default parametres
+*	Default CTOR for Disk.  
+*	This function initializes the Disk with default parametres.
 * SEE ALSO
 *	---
 **************************************************/
@@ -30,17 +36,18 @@ Disk::Disk(void)
 
 /*************************************************
 * FUNCTION
-*	Ctor for Disk class
+*	void Disk(string & dn, string & dow, char flag)
 * PARAMETERS
-*    string& - Disk name
-*    string& - Disk owner
-*    char - c/m (c - to create disk, m - to mount disk)
+*	string& - Disk name
+*	string& - Disk owner
+*	char - c/m (c - to create disk, m - to mount disk)
 * RETURN VALUE
-*
+*	---
 * MEANING
-*     This function initializes a new disk
+*	This function initializes a new disk.
 * SEE ALSO
-*
+*	void createDisk(string&, string&)
+*	void mountDisk(string&)
 **************************************************/
 Disk::Disk(string & dn, string & dow, char flag)
 {
@@ -71,25 +78,37 @@ Disk::Disk(string & dn, string & dow, char flag)
 	}
 }
 
+/*************************************************
+* FUNCTION
+*	~Disk(void)
+* PARAMETERS
+*	---
+* RETURN VALUE
+*	---
+* MEANING
+*	DTOR for Disk.
+* SEE ALSO
+*	void unmountDisk(void)
+**************************************************/
 Disk::~Disk(void)
 {
-	//if(mounted)
-		//unmountDisk();
+	if(mounted)
+		unmountDisk();
 	//dskfl.close();
 }
 
 /*************************************************
 * FUNCTION
-*	createDisk
+*	void createDisk(string&, string&)
 * PARAMETERS
 *   string& - Disk name
 *	string& - Disk owner
 * RETURN VALUE
 *	---
 * MEANING
-*     This function creates a new disk. NOT formatted.
+*	This function creates a new disk. NOT formatted.
 * SEE ALSO
-*
+*	---
 **************************************************/
 void Disk::createDisk(string & dn, string & dow)
 {
@@ -131,13 +150,13 @@ void Disk::createDisk(string & dn, string & dow)
 
 /*************************************************
 * FUNCTION
-*	mountDisk
+*	void mountDisk(string&)
 * PARAMETERS
-*    string& - file name.
+*   string& - file name.
 * RETURN VALUE
 *	---
 * MEANING
-*     This function mounts the disk
+*	This function mounts the disk
 * SEE ALSO
 *	---
 **************************************************/
@@ -170,15 +189,15 @@ void Disk::mountDisk(string & fn)
 
 /*************************************************
 * FUNCTION
-*	unmountDisk
+*	void unmountDisk(void)
 * PARAMETERS
 *	---
 * RETURN VALUE
 *	---
 * MEANING
-*     This function unmounts the disk
+*	This function unmounts the disk.
 * SEE ALSO
-*
+*	---
 **************************************************/
 void Disk::unmountDisk(void)
 {
@@ -211,7 +230,7 @@ void Disk::unmountDisk(void)
 
 /*************************************************
 * FUNCTION
-*	recreateDisk
+*	void recreateDisk(string&)
 * PARAMETERS
 *	string& - name of disk owner
 * RETURN VALUE
@@ -221,7 +240,7 @@ void Disk::unmountDisk(void)
 *	does the same then creating disk but doen't create a new file, instead just reinitializes the values.
 *	conditions: a) file exists. b) wasn't mounted.
 * SEE ALSO
-*
+*	---
 **************************************************/
 void Disk::recreateDisk(string & dow)
 {
@@ -262,15 +281,15 @@ void Disk::recreateDisk(string & dow)
 
 /*************************************************
 * FUNCTION
-*	getDskF1()
+*	fstream * getDskFl();
 * PARAMETERS
 *    ---
 * RETURN VALUE
-*	fstream*
+*	Returns the disk's file.
 * MEANING
-*   This function 
+*   This function returns a fstream of the disk file.
 * SEE ALSO
-*
+*	---
 **************************************************/
 fstream* Disk::getDskFl()
 {
@@ -281,15 +300,15 @@ fstream* Disk::getDskFl()
 
 /*************************************************
 * FUNCTION
-*	seekToSector
+*	void seekToSector(unsigned int)
 * PARAMETERS
 *   unsigned int – number of sector to go to.
 * RETURN VALUE
 *	---
 * MEANING
-*   This function moves the I/O head to the wanted sector
+*   This function moves the I/O head to the wanted sector.
 * SEE ALSO
-*
+*	---
 **************************************************/
 void Disk::seekToSector(unsigned int num)
 {
@@ -315,7 +334,7 @@ void Disk::seekToSector(unsigned int num)
 
 /*************************************************
 * FUNCTION
-*	writeSector
+*	void writeSector(unsigned int, Sector*)
 * PARAMETERS
 *   unsigned int - sector number to write on.
 *	Sector* - sector to write.
@@ -324,7 +343,7 @@ void Disk::seekToSector(unsigned int num)
 * MEANING
 *   This function writes a sector to the disk.
 * SEE ALSO
-*	---
+*	void seekToSector(unsigned int)
 **************************************************/
 void Disk::writeSector(unsigned int num, Sector* sec)
 {
@@ -354,7 +373,7 @@ void Disk::writeSector(unsigned int num, Sector* sec)
 
 /*************************************************
 * FUNCTION
-*	writeSector
+*	void writeSector(Sector*)
 * PARAMETERS
 *	Sector* - sector to write.
 * RETURN VALUE
@@ -362,7 +381,7 @@ void Disk::writeSector(unsigned int num, Sector* sec)
 * MEANING
 *   This function writes a sector to the disk.
 * SEE ALSO
-*	---
+*	void seekToSector(unsigned int)
 **************************************************/
 void Disk::writeSector(Sector* sec)
 {
@@ -398,7 +417,7 @@ void Disk::writeSector(Sector* sec)
 
 /*************************************************
 * FUNCTION
-*	readSector
+*	void readSector(int, Sector*)
 * PARAMETERS
 *   int - sector number to write on.
 *	Sector* - sector to write.
@@ -407,7 +426,7 @@ void Disk::writeSector(Sector* sec)
 * MEANING
 *   This function reads a sector on the disk.
 * SEE ALSO
-*	---
+*	void seekToSector(unsigned int)
 **************************************************/
 void Disk::readSector(int num, Sector* sec)
 {
@@ -437,7 +456,7 @@ void Disk::readSector(int num, Sector* sec)
 
 /*************************************************
 * FUNCTION
-*	readSector
+*	void readSector(Sector*)
 * PARAMETERS
 *	Sector* - sector to write.
 * RETURN VALUE
@@ -445,7 +464,7 @@ void Disk::readSector(int num, Sector* sec)
 * MEANING
 *   This function reads a sector on the disk.
 * SEE ALSO
-*	---
+*	void seekToSector(unsigned int)
 **************************************************/
 void Disk::readSector(Sector* sec)
 {
@@ -478,9 +497,13 @@ void Disk::readSector(Sector* sec)
 	}
 }
 
+#pragma endregion
+
+#pragma region Level1
+
 /*************************************************
 * FUNCTION
-*	format
+*	void format(string&)
 * PARAMETERS
 *   string& - name of user
 * RETURN VALUE
@@ -492,7 +515,7 @@ void Disk::readSector(Sector* sec)
 *				is mounted.
 *				disk exists.
 * SEE ALSO
-*
+*	---
 **************************************************/
 void Disk::format(string& name)
 {
@@ -516,13 +539,11 @@ void Disk::format(string& name)
 	_strdate(vhd.formatDate);
 	vhdUpdate = 1;
 	vhd.isFormated = 1;
-
-
 }
 
 /*************************************************
 * FUNCTION
-*	howMuchEmpty()
+*	int howMuchEmpty();
 * PARAMETERS
 *   --–
 * RETURN VALUE
@@ -530,12 +551,33 @@ void Disk::format(string& name)
 * MEANING
 *     This function checks how many clusters are empty. (in the dat map)
 * SEE ALSO
-*
+*	int howMuchEmpty(unsigned int)
 **************************************************/
 int Disk::howMuchEmpty()
 {
 	int count = 0;
 	for (int i = 4; i < 1600; i++)
+		if (dat.dat[i])
+			count++;
+	return count;
+}
+
+/*************************************************
+* FUNCTION
+*	int howMuchEmpty(unsigned int)
+* PARAMETERS
+*   unsigned int start - 
+* RETURN VALUE
+*	int - number of free/empty clusters
+* MEANING
+*     This function checks how many clusters are empty. (in the dat map)
+* SEE ALSO
+*	int howMuchEmpty()
+**************************************************/
+int Disk::howMuchEmpty(unsigned int start)
+{
+	int count = 0;
+	for (int i = start; i < 1600; i++)
 		if (dat.dat[i])
 			count++;
 	return count;
@@ -553,12 +595,12 @@ int Disk::howMuchEmpty()
 * SEE ALSO
 *
 **************************************************/
-bool Disk::firstFit(DATtype& fat, unsigned int clusters)
+bool Disk::firstFit(DATtype& fat, unsigned int clusters, unsigned int start)
 {
-	if (this->howMuchEmpty() < clusters)
+	if (this->howMuchEmpty(start) < clusters)
 		throw "Not enough space in disk";
 	fat.reset();
-	int i = 0;
+	int i = start;
 	while (clusters > 0 && i < 1600)
 	{
 		if (dat.dat[i])
@@ -586,23 +628,60 @@ bool Disk::firstFit(DATtype& fat, unsigned int clusters)
 * SEE ALSO
 *
 **************************************************/
-bool Disk::bestFit(DATtype& fat, unsigned int clusters)
+bool Disk::bestFit(DATtype& fat, unsigned int clusters, unsigned int start)
 {
-	if (howMuchEmpty() < clusters)
-		throw "Not enough space in disk!";
-	int bFitSize = -1;
-	int bFitIndex = -1;
-	int tmpBestfit = 0;
-	for (int i = 0; i < 1600; i++)
+	if (howMuchEmpty(start) < clusters)
+		throw "Not enough space in disk";
+	int i = start;
+	int bFitSize = 0;
+	int bFitIndex = 0;
+	int tmpBFitSize = 0;
+	int tmpBFitIndex = 0;
+	while (i < 1600)
 	{
+		tmpBFitSize = 0;
 		if (dat.dat[i])
-			tmpBestfit++;
-		/*else
 		{
-			if(tmpBestfit>bFitSize)
-
-		}*/
+			tmpBFitIndex = i;
+			while (dat.dat[i])
+			{
+				tmpBFitSize++;
+				i++;
+			}
+			if (clusters == tmpBFitSize)
+			{
+				bFitIndex = tmpBFitIndex;
+				bFitSize = tmpBFitSize;
+				break;
+			}
+			else if (clusters>tmpBFitSize)
+			{
+				if (tmpBFitSize > bFitSize)
+				{
+					bFitIndex = tmpBFitIndex;
+					bFitSize = tmpBFitSize;
+				}
+			}
+			else if (clusters < tmpBFitSize)
+			{
+				if (tmpBFitSize < bFitSize || bFitSize < clusters)
+				{
+					bFitIndex = tmpBFitIndex;
+					bFitSize = tmpBFitSize;
+				}
+			}
+		}
+		else
+			i++;
 	}
+	for (int i = 0; i < min(bFitSize, (int)clusters); i++)
+	{
+		dat.dat[i + bFitIndex] = 0;
+		fat[i + bFitIndex] = 1;
+	}
+	if (clusters > bFitSize)
+		bestFit(fat, clusters - bFitSize);
+	return true;
 }
 
 /*************************************************
@@ -617,9 +696,45 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters)
 * SEE ALSO
 *
 **************************************************/
-bool Disk::worstFit(DATtype & fat, unsigned int clusters)
+bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 {
-	return false;
+	if (howMuchEmpty() < clusters)
+		throw "Not enough space in disk";
+	int maxLength = 0;
+	int maxLengthIndex = 0;
+	int tmpMaxLength = 0;
+	int tmpMaxLengthIndex = 0;
+	int i = start;
+	while (i < 1600)
+	{
+		tmpMaxLength = 0;
+		if (dat.dat[i])
+		{
+			tmpMaxLengthIndex = i;
+			while (dat.dat[i])
+			{
+				tmpMaxLength++;
+				i++;
+			}
+			if (tmpMaxLength> maxLength)
+			{
+				maxLength = tmpMaxLength;
+				maxLengthIndex = tmpMaxLengthIndex;
+				if (clusters == maxLength)
+					break;
+			}
+		}
+		else
+			i++;
+	}
+	for (int i = 0; i < min(maxLength, (int)clusters); i++)
+	{
+		dat.dat[i + maxLengthIndex] = 0;
+		fat[i + maxLengthIndex] = 1;
+	}
+	if (clusters > maxLength)
+		bestFit(fat, clusters - maxLength);
+	return true;
 }
 
 /*************************************************
@@ -639,16 +754,18 @@ void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo)
 	unsigned int clusters;
 	if (numOfSecs % 2 == 0) clusters = numOfSecs / 2;
 	else clusters = (numOfSecs / 2) + 1;
+	if (howMuchEmpty() < clusters)
+		throw "Not enough space in disk!";
 	switch (algo)
 	{
 	case 0:
-		firstFit(fat, clusters);
+		firstFit(fat, clusters,0);
 		break;
 	case 1:
-		bestFit(fat, clusters);
+		bestFit(fat, clusters,0);
 		break;
 	case 2:
-		worstFit(fat, clusters);
+		worstFit(fat, clusters,0);
 		break;
 	default:
 		break;
@@ -656,9 +773,42 @@ void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo)
 
 }
 
-void Disk::allocExtend(DATtype &, unsigned int, unsigned int)
+void Disk::allocExtend(DATtype& fat, unsigned int sectors, unsigned int algo)
 {
+	//Finding last allocated index;
+	int lAlloc = 0;
+	for (int i = 0; i < 1600; i++)
+		if (fat[i])
+			lAlloc = i;
+	
+	unsigned int clusters;
+	if (sectors % 2 == 0) clusters = sectors / 2;
+	else clusters = (sectors / 2) + 1;
+
+	if (howMuchEmpty(lAlloc + 1) < clusters)
+		throw "Not enough space in disk!";
+	switch (algo)
+	{
+	case 0:
+		firstFit(fat, clusters, lAlloc+1);
+		break;
+	case 1:
+		bestFit(fat, clusters, lAlloc + 1);
+		break;
+	case 2:
+		worstFit(fat, clusters, lAlloc + 1);
+		break;
+	default:
+		break;
+	}
 }
+
+void Disk::dealloc(DATtype& fat)
+{
+	dat.dat |= fat;
+}
+
+#pragma endregion
 
 //FCB * Disk::openfile(string &, string &, string &)
 //{
