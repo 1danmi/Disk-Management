@@ -807,8 +807,23 @@ void Disk::dealloc(DATtype& fat)
 {
 	dat.dat |= fat;
 }
-
 #pragma endregion
+
+#pragma region Level2
+void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen, unsigned int numOfSecs, string & kt, unsigned int ko, unsigned int ks)
+{
+	
+}
+
+void Disk::delFile(string &, string &)
+{
+}
+
+void Disk::extendFile(string &, string &, unsigned int)
+{
+}
+#pragma endregion
+
 #pragma region Level3
 //FCB * Disk::openfile(string &, string &, string &)
 //{
