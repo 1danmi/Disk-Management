@@ -1,17 +1,19 @@
-﻿  VHD.cpp
-  Sector.cpp
+﻿  Disk.cpp
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(600): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(633): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(657): warning C4018: '>': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(665): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(667): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(682): warning C4018: '>': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(701): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(735): warning C4018: '>': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(757): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(788): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
   Main.cpp
 d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
-  FileHeader.cpp
   FCB.cpp
-  Disk.cpp
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(494): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(526): warning C4018: '<': signed/unsigned mismatch
-  DirEntry.cpp
-  Dir.cpp
-  DAT.cpp
   Generating Code...
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(541): warning C4715: 'Disk::bestFit': not all control paths return a value
-  LINK : D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe not found or not built by the last incremental link; performing full link
   FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
   FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)
