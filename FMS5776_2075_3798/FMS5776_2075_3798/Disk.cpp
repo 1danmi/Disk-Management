@@ -829,6 +829,7 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 		}
 		if (path == -1)
 			throw "To many files in the disk";
+		
 		DATtype fat;
 		alloc(fat, numOfSecs, algo);
 		int i = 0;
@@ -839,14 +840,15 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 		DirEntry de(fn.c_str(), fo.c_str(), firstSector, numOfSecs, firstSector + numOfSecs - 1, 
 			recLen, recLen, ft.c_str()[0], ko, ks, kt.c_str(), '1');
 		
-		/*FileHeader fh(firstSector, de, fat);*/
+		FileHeader fh(firstSector, de, fat);
+		
 		if (path >= 14 && path < 28)
 			rootDir.msbSector.dirEntry[i - 14] = de;
 		else if (path >= 0 && path < 14)
 			rootDir.lsbSector.dirEntry[i] = de;
 		else
 			throw "Unknown Error!";
-		
+		writeSector(firstSector, (Sector*)&fh);
 	}
 	catch (char* str)
 	{
@@ -858,8 +860,34 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 	}
 }
 
-void Disk::delFile(string &, string &)
+void Disk::delFile(string & fn, string & fo)
 {
+	int path = -1;
+	for (int i = 0; i < 14; i++)
+		{
+			if (strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()) && strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fn.c_str()))
+			{
+				path = i;
+				break;
+			}
+			else if (strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()) && strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fn.c_str()))
+			{
+				path = i + 14;
+				break;
+			}
+		}
+	if (path == -1)
+		throw "File does not exist!";
+	if (path >= 14 && path < 28)
+	{
+		rootDir.msbSector.dirEntry[path].setEntryStatus('2'); //2 = deleted
+		
+															  //dealloc(rootDir.msbSector.dirEntry[path].)
+	}
+	else if (path > -1 && path < 14)
+		rootDir.lsbSector.dirEntry[path].setEntryStatus('2');
+	else throw "Unknown error!";
+	
 }
 
 void Disk::extendFile(string &, string &, unsigned int)

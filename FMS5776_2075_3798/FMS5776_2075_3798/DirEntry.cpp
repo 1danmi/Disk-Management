@@ -63,5 +63,8 @@ char * DirEntry::getFileName()
 {
 	return this->fileName;
 }
-
+char * DirEntry::getOwnerName()
+{
+	return this->fileOwner;
+}
 

@@ -14,6 +14,7 @@ public:
 	unsigned char getEntryStatus();
 	void setEntryStatus(unsigned char);
 	char* getFileName();
+	char* getOwnerName();
 private:
 	char fileName[12];
 	char fileOwner[12];
