@@ -40,6 +40,7 @@ public:
 	void mountDisk(string&);
 	void unmountDisk(void);
 	void recreateDisk(string&);
+	bool isMounted();
 
 	fstream * getDskFl();
 	void seekToSector(unsigned int);

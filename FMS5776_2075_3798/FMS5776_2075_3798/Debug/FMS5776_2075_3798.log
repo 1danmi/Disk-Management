@@ -1,22 +1,104 @@
 ﻿  VHD.cpp
   Sector.cpp
   Main.cpp
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(160): error C2679: binary '<<': no operator found which takes a right-hand operand of type 'Disk' (or there is no acceptable conversion)
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(495): note: could be 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::basic_streambuf<char,std::char_traits<char>> *)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(475): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(const void *)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(455): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(long double)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(435): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(double)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(415): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(395): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned __int64)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(375): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(__int64)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(355): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned long)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(335): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(long)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(315): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned int)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(290): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(int)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(270): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned short)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(236): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(short)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(216): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(bool)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(209): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::ios_base &(__cdecl *)(std::ios_base &))'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(202): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::basic_ios<char,std::char_traits<char>> &(__cdecl *)(std::basic_ios<char,std::char_traits<char>> &))'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(196): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::basic_ostream<char,std::char_traits<char>> &(__cdecl *)(std::basic_ostream<char,std::char_traits<char>> &))'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(1019): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::error_code &)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(981): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,Disk>(std::basic_ostream<char,std::char_traits<char>> &&,const _Ty &)'
+          with
+          [
+              _Ty=Disk
+          ]
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(971): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,unsigned char)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(964): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const unsigned char *)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(957): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,signed char)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(950): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const signed char *)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(824): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,char)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(777): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const char *)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(739): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,char)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(692): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const char *)'
+  d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(160): note: while trying to match the argument list '(std::ostream, Disk)'
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(163): error C2276: '!': illegal operation on bound member function expression
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(171): error C2039: 'setSectorData': is not a member of 'Disk'
+  d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.h(17): note: see declaration of 'Disk'
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(172): error C2664: 'void Disk::writeSector(Sector *)': cannot convert argument 1 from 'int' to 'Sector *'
+  d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(172): note: Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(181): error C2664: 'void Disk::readSector(Sector *)': cannot convert argument 1 from 'int' to 'Sector *'
+  d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(181): note: Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(182): error C2679: binary '<<': no operator found which takes a right-hand operand of type 'Disk' (or there is no acceptable conversion)
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(495): note: could be 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::basic_streambuf<char,std::char_traits<char>> *)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(475): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(const void *)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(455): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(long double)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(435): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(double)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(415): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(395): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned __int64)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(375): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(__int64)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(355): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned long)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(335): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(long)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(315): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned int)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(290): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(int)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(270): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned short)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(236): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(short)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(216): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(bool)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(209): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::ios_base &(__cdecl *)(std::ios_base &))'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(202): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::basic_ios<char,std::char_traits<char>> &(__cdecl *)(std::basic_ios<char,std::char_traits<char>> &))'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(196): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::basic_ostream<char,std::char_traits<char>> &(__cdecl *)(std::basic_ostream<char,std::char_traits<char>> &))'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(1019): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::error_code &)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(981): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,Disk>(std::basic_ostream<char,std::char_traits<char>> &&,const _Ty &)'
+          with
+          [
+              _Ty=Disk
+          ]
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(971): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,unsigned char)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(964): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const unsigned char *)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(957): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,signed char)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(950): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const signed char *)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(824): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,char)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(777): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const char *)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(739): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,char)'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\ostream(692): note: or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const char *)'
+  d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(182): note: while trying to match the argument list '(std::ostream, Disk)'
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(168): error C4996: 'flushall': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _flushall. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(2451): note: see declaration of 'flushall'
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(239): error C4996: 'flushall': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _flushall. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(2451): note: see declaration of 'flushall'
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(262): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(274): error C2039: 'setSectorData': is not a member of 'Disk'
+  d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.h(17): note: see declaration of 'Disk'
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(275): error C2664: 'void Disk::writeSector(Sector *)': cannot convert argument 1 from 'int' to 'Sector *'
+  d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(275): note: Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(364): error C2039: 'deallocate': is not a member of 'Disk'
+  d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.h(17): note: see declaration of 'Disk'
   FileHeader.cpp
   FCB.cpp
   Disk.cpp
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(601): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(634): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(658): warning C4018: '>': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(666): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(668): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(683): warning C4018: '>': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(702): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(736): warning C4018: '>': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(758): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(789): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(832): error C2440: '<function-style-cast>': cannot convert from 'initializer list' to 'DirEntry'
-  d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(832): note: No constructor could take the source type, or constructor overload resolution was ambiguous
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(608): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(641): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(665): warning C4018: '>': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(673): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(675): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(690): warning C4018: '>': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(709): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(743): warning C4018: '>': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(765): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(796): warning C4018: '<': signed/unsigned mismatch
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(862): warning C4101: 'ex': unreferenced local variable
   DirEntry.cpp
   Dir.cpp
   DAT.cpp

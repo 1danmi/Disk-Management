@@ -282,6 +282,11 @@ void Disk::recreateDisk(string & dow)
 	}
 }
 
+bool Disk::isMounted()
+{
+	return mounted;
+}
+
 /*************************************************
 * FUNCTION
 *	fstream * getDskFl();
