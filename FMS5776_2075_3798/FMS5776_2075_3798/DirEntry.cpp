@@ -68,3 +68,8 @@ char * DirEntry::getOwnerName()
 	return this->fileOwner;
 }
 
+unsigned int DirEntry::getFileAddr()
+{
+	return this->fileAddr;
+}
+

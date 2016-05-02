@@ -15,10 +15,11 @@ public:
 	void setEntryStatus(unsigned char);
 	char* getFileName();
 	char* getOwnerName();
+	unsigned int getFileAddr();
 private:
 	char fileName[12];
 	char fileOwner[12];
-	unsigned int fileAddr; 
+	unsigned int fileAddr; //First sector of the file.
 	char crDate[10];
 	unsigned int fileSize; // number of sectors
 	unsigned int eofRecNr;  //end of file record number

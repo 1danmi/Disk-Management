@@ -19,3 +19,8 @@ FileHeader::FileHeader(unsigned int sn, DirEntry fd, DATtype fat)
 	fileDesc = fd;
 	this->fat = fat;
 }
+
+DATtype FileHeader::getFat()
+{
+	return this->fat;
+}

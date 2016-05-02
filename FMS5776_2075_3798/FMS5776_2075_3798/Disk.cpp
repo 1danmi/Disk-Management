@@ -9,9 +9,6 @@ using namespace std;
 
 #pragma region Level0
 
-
-
-
 /*************************************************
 * FUNCTION
 *	void Disk(void)
@@ -282,6 +279,18 @@ void Disk::recreateDisk(string & dow)
 	}
 }
 
+/*************************************************
+* FUNCTION
+*	bool isMounted();
+* PARAMETERS
+*   ---
+* RETURN VALUE
+*	Return wether the disk is mounted or not.
+* MEANING
+*   Return True if the disk is mounted, else - False.
+* SEE ALSO
+*	---
+**************************************************/
 bool Disk::isMounted()
 {
 	return mounted;
@@ -427,8 +436,8 @@ void Disk::writeSector(Sector* sec)
 * FUNCTION
 *	void readSector(int, Sector*)
 * PARAMETERS
-*   int - sector number to write on.
-*	Sector* - sector to write.
+*   int - sector number to read.
+*	Sector* - buffer.
 * RETURN VALUE
 *	---
 * MEANING
@@ -867,36 +876,68 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 
 void Disk::delFile(string & fn, string & fo)
 {
-	int path = -1;
-	for (int i = 0; i < 14; i++)
+	try
+	{
+		int path = -1;
+		for (int i = 0; i < 14; i++)
 		{
-			if (strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()) && strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fn.c_str()))
+			if (strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				path = i;
-				break;
+				if (strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fn.c_str()))
+				{
+					path = i;
+					break;
+				}
+				else
+				{
+					throw "Only the file's owner can delete the file!";
+					break;
+				}
 			}
-			else if (strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()) && strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fn.c_str()))
+			else if (strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				path = i + 14;
-				break;
+				if (strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fn.c_str()))
+				{
+					path = i + 14;
+					break;
+				}
+				else
+				{
+					throw "Only the file's owner can delete the file!";
+					break;
+				}
 			}
 		}
-	if (path == -1)
-		throw "File does not exist!";
-	if (path >= 14 && path < 28)
-	{
-		rootDir.msbSector.dirEntry[path].setEntryStatus('2'); //2 = deleted
-		
-															  //dealloc(rootDir.msbSector.dirEntry[path].)
+		if (path == -1)
+			throw "File does not exist!";
+		FileHeader* buffer;
+		if (path >= 14 && path < 28)
+		{
+			rootDir.msbSector.dirEntry[path - 14].setEntryStatus('2'); //2 = deleted
+			readSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)buffer);
+			dealloc((*buffer).getFat());
+		}
+		else if (path > -1 && path < 14)
+		{
+			rootDir.lsbSector.dirEntry[path].setEntryStatus('2');
+			readSector(rootDir.msbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
+			dealloc((*buffer).getFat());
+		}
+		else throw "Unknown error!";
 	}
-	else if (path > -1 && path < 14)
-		rootDir.lsbSector.dirEntry[path].setEntryStatus('2');
-	else throw "Unknown error!";
-	
+	catch (const char* msg)
+	{
+		throw msg;
+	}
+	catch (const std::exception& e)
+	{
+		throw "Unknown error";
+	}
 }
 
 void Disk::extendFile(string &, string &, unsigned int)
 {
+
 }
 #pragma endregion
 
