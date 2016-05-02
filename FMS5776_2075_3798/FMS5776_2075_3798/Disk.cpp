@@ -851,7 +851,7 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 		while (firstSector == -1 && i < 1600)
 			if (fat[i])
 				firstSector = i;
-		DirEntry de(fn.c_str(), fo.c_str(), firstSector, numOfSecs, firstSector + numOfSecs - 1, 
+		DirEntry de(fn.c_str(), fo.c_str(), firstSector, numOfSecs, (numOfSecs-1)*(1024/recLen)-1, 
 			recLen, recLen, ft.c_str()[0], ko, ks, kt.c_str(), '1');
 		
 		FileHeader fh(firstSector, de, fat);
@@ -883,7 +883,7 @@ void Disk::delFile(string & fn, string & fo)
 		{
 			if (strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				if (strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fn.c_str()))
+				if (strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fo.c_str()))
 				{
 					path = i;
 					break;
@@ -896,7 +896,7 @@ void Disk::delFile(string & fn, string & fo)
 			}
 			else if (strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				if (strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fn.c_str()))
+				if (strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fo.c_str()))
 				{
 					path = i + 14;
 					break;
@@ -935,9 +935,73 @@ void Disk::delFile(string & fn, string & fo)
 	}
 }
 
-void Disk::extendFile(string &, string &, unsigned int)
+void Disk::extendFile(string & fn, string & fo, unsigned int num)
 {
-
+	try
+	{
+		int path = -1;
+		for (int i = 0; i < 14; i++)
+		{
+			if (strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
+			{
+				if (strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fo.c_str()))
+				{
+					path = i;
+					break;
+				}
+				else
+				{
+					throw "Only the file's owner can delete the file!";
+					break;
+				}
+			}
+			else if (strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
+			{
+				if (strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fo.c_str()))
+				{
+					path = i + 14;
+					break;
+				}
+				else
+				{
+					throw "Only the file's owner can delete the file!";
+					break;
+				}
+			}
+		}
+		if (path == -1)
+			throw "File does not exist!";
+		
+		DATtype fat;
+		allocExtend(fat, num);
+		if (path >= 14 && path < 28)
+		{	
+			unsigned int fileSize = rootDir.msbSector.dirEntry[path - 14].getFileSize();
+			unsigned int recSize = rootDir.msbSector.dirEntry[path - 14].getRecSize();
+			rootDir.msbSector.dirEntry[path - 14].setEofRecNr((fileSize + num - 1)*(1024 / recSize) - 1);
+			rootDir.msbSector.dirEntry[path - 14].setFileSize(fileSize + num);
+			FileHeader buffer(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), rootDir.msbSector.dirEntry[path - 14], fat);
+			writeSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)&buffer);
+		}
+		else if (path > -1 && path < 14)
+		{
+			unsigned int fileSize = rootDir.msbSector.dirEntry[path].getFileSize();
+			unsigned int recSize = rootDir.msbSector.dirEntry[path].getRecSize();
+			rootDir.msbSector.dirEntry[path].setEofRecNr((fileSize + num - 1)*(1024 / recSize) - 1);
+			rootDir.msbSector.dirEntry[path].setFileSize(fileSize + num);
+			FileHeader buffer(rootDir.msbSector.dirEntry[path].getFileAddr(), rootDir.msbSector.dirEntry[path], fat);
+			writeSector(rootDir.msbSector.dirEntry[path].getFileAddr(), (Sector*)&buffer);
+		}
+		else throw "Unknown error!";
+	}
+	catch (const char* msg)
+	{
+		throw msg;
+	}
+	catch (const std::exception& e)
+	{
+		throw "Unknown error";
+	}
 }
 #pragma endregion
 

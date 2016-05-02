@@ -62,8 +62,8 @@ public:
 	bool bestFit(DATtype&, unsigned int, unsigned int = 0);
 	bool worstFit(DATtype&, unsigned int, unsigned int = 0);
 
-	void alloc(DATtype&, unsigned int, unsigned int);
-	void allocExtend(DATtype&, unsigned int, unsigned int);
+	void alloc(DATtype&, unsigned int, unsigned int=0);
+	void allocExtend(DATtype&, unsigned int, unsigned int=0);
 	void dealloc(DATtype&);
 
 #pragma endregion

@@ -73,3 +73,28 @@ unsigned int DirEntry::getFileAddr()
 	return this->fileAddr;
 }
 
+void DirEntry::setFileSize(unsigned int fs)
+{
+	fileSize = fs;
+}
+
+unsigned int DirEntry::getFileSize()
+{
+	return this->fileSize;
+}
+
+void DirEntry::setEofRecNr(unsigned int eof)
+{
+	this->eofRecNr = eof;
+}
+
+unsigned int DirEntry::getEofRecNr()
+{
+	return this->eofRecNr;
+}
+
+unsigned int DirEntry::getRecSize()
+{
+	return this->actualRecSize;
+}
+

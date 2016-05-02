@@ -16,6 +16,11 @@ public:
 	char* getFileName();
 	char* getOwnerName();
 	unsigned int getFileAddr();
+	void setFileSize(unsigned int);
+	unsigned int getFileSize();
+	void setEofRecNr(unsigned int);
+	unsigned int getEofRecNr();
+	unsigned int getRecSize();
 private:
 	char fileName[12];
 	char fileOwner[12];
