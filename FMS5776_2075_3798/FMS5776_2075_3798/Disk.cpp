@@ -1006,10 +1006,10 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num)
 #pragma endregion
 
 #pragma region Level3
-//FCB * Disk::openfile(string &, string &, string &)
-//{
-//	return nullptr;
-//}
+FCB * Disk::openfile(string &, string &, string &)
+{
+	return nullptr;
+}
 #pragma endregion
 
 
