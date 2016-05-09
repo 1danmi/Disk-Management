@@ -29,6 +29,7 @@ private:
 
 
 public:
+
 #pragma region Level0
 
 	//Ctor
@@ -67,14 +68,19 @@ public:
 	void dealloc(DATtype&);
 
 #pragma endregion
+
 #pragma region Level2
+
 	void createFile(string &, string &, string &, unsigned int, unsigned int, string &, unsigned int, unsigned int = 0, unsigned int=0);
 	void delFile(string &, string &);
 	void extendFile(string &, string &, unsigned int);
-	FCB * openfile(string &, string &, string &);
+
 #pragma endregion
+
 #pragma region Level3
-//	FCB* openfile(string&, string&, string&);
+
+	FCB* openFile(string&, string&, MODE);
+
 #pragma endregion
 
 

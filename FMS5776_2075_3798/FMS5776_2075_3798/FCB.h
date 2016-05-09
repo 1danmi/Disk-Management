@@ -1,6 +1,7 @@
 #pragma once
 #include "Disk.h"
 #include "DirEntry.h"
+enum MODE{I,O,IO,E};
 class FCB
 {
 public:
@@ -12,13 +13,15 @@ public:
 	unsigned int currSecNr;
 	unsigned int currRecNrInBuff;
 	bool updateMode;
+	MODE mode;
+	
 
 	FCB();
 	FCB(Disk*);
 	~FCB();
 
-	void closefile();
-	void flushfile();
+	void closeFile();
+	void flushFile();
 	void readRecord(char*, unsigned int=0);
 	void writeRecord(char*);
 	void seek(unsigned int, int);

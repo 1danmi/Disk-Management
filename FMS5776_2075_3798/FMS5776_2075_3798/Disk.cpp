@@ -1013,7 +1013,7 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num)
 
 #pragma region Level3
 
-FCB * Disk::openfile(string & fn, string & un, string & io)
+FCB * Disk::openFile(string & fn, string & un, MODE io)
 {
 	try
 	{
@@ -1039,16 +1039,17 @@ FCB * Disk::openfile(string & fn, string & un, string & io)
 		else if (path > -1 && path < 14)
 			readSector(rootDir.msbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
 		FCB fcb;
+		fcb.mode = io;
 		fcb.d = this;
 		fcb.FAT = (*buffer).fat;
 		fcb.fileDesc = (*buffer).fileDesc;
-		if (io == "i" || io == "o" || io == "io")
+		if (io == MODE::I || io == MODE::O || io == MODE::IO)
 		{
 			fcb.currRecNr = 0;
 			fcb.currSecNr = fcb.fileDesc.getFileAddr();
 			fcb.currRecNrInBuff = 0;
 		}
-		else if (io == "e")
+		else if (io == MODE::E)
 		{
 
 			fcb.currRecNr = fcb.fileDesc.getEofRecNr+1;
