@@ -11,7 +11,6 @@ public:
 	FileHeader(unsigned int, DirEntry, DATtype);
 	~FileHeader() {};
 	DATtype getFat();
-private:
 	unsigned int sectorNr;
 	DirEntry fileDesc;
 	DATtype fat;

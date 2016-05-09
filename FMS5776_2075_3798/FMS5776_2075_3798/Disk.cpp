@@ -837,9 +837,15 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 			if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()) || !strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
 				throw "File name in use";
 			if (path == -1 && (rootDir.lsbSector.dirEntry[i].getEntryStatus() == 0 || rootDir.lsbSector.dirEntry[i].getEntryStatus() == 2))
+			{
 				path = i;
+				break;
+			}
 			else if (path == -1 && (rootDir.msbSector.dirEntry[i].getEntryStatus() == 0 || rootDir.msbSector.dirEntry[i].getEntryStatus() == 2))
-				path = i+14;
+			{
+				path = i + 14;
+				break;
+			}
 		}
 		if (path == -1)
 			throw "To many files in the disk";
@@ -881,9 +887,9 @@ void Disk::delFile(string & fn, string & fo)
 		int path = -1;
 		for (int i = 0; i < 14; i++)
 		{
-			if (strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
+			if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				if (strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fo.c_str()))
+				if (!strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fo.c_str()))
 				{
 					path = i;
 					break;
@@ -894,9 +900,9 @@ void Disk::delFile(string & fn, string & fo)
 					break;
 				}
 			}
-			else if (strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
+			else if (!strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				if (strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fo.c_str()))
+				if (!strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fo.c_str()))
 				{
 					path = i + 14;
 					break;
@@ -942,9 +948,9 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num)
 		int path = -1;
 		for (int i = 0; i < 14; i++)
 		{
-			if (strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
+			if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				if (strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fo.c_str()))
+				if (!strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fo.c_str()))
 				{
 					path = i;
 					break;
@@ -955,9 +961,9 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num)
 					break;
 				}
 			}
-			else if (strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
+			else if (!strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				if (strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fo.c_str()))
+				if (!strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fo.c_str()))
 				{
 					path = i + 14;
 					break;
@@ -1006,10 +1012,60 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num)
 #pragma endregion
 
 #pragma region Level3
-FCB * Disk::openfile(string &, string &, string &)
+
+FCB * Disk::openfile(string & fn, string & un, string & io)
 {
-	return nullptr;
+	try
+	{
+		int path = -1;
+		for (int i = 0; i < 14; i++)
+		{
+			if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
+			{
+				path = i;
+				break;
+			}
+			if (!strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
+			{
+				path = i+14;
+				break;
+			}
+		}
+		if (path == -1)
+			throw "File Does Not Exist!";
+		FileHeader* buffer;
+		if (path >= 14 && path < 28)
+			readSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)buffer);
+		else if (path > -1 && path < 14)
+			readSector(rootDir.msbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
+		FCB fcb;
+		fcb.FAT = (*buffer).fat;
+		fcb.fileDesc = (*buffer).fileDesc;
+		if (io == "i" || io == "o" || io == "io")
+		{
+			fcb.currRecNr = 0;
+			fcb.currSecNr = fcb.fileDesc.getFileAddr();
+			fcb.currRecNrInBuff = 0;
+		}
+		else if (io == "e")
+		{
+
+			fcb.currRecNr = fcb.fileDesc.getEofRecNr+1;
+			fcb.currSecNr = fcb.fileDesc.getFileAddr()+fcb.fileDesc.getFileSize();
+			fcb.currRecNrInBuff = 0;
+		}
+		return &fcb;
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Exception!";
+	}
 }
+
 #pragma endregion
 
 

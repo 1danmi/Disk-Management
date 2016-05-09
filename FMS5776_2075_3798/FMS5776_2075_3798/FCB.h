@@ -3,15 +3,16 @@
 #include "DirEntry.h"
 class FCB
 {
+public:
 	Disk* d;
 	DirEntry fileDesc;
 	DATtype FAT;
-	Sector Buffer;
+	Sector buffer;
 	unsigned int currRecNr;
 	unsigned int currSecNr;
 	unsigned int currRecNrInBuff;
 	bool updateMode;
-public:
+
 	FCB();
 	FCB(Disk*);
 	~FCB();
