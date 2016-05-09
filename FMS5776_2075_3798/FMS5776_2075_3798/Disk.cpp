@@ -1039,6 +1039,7 @@ FCB * Disk::openfile(string & fn, string & un, string & io)
 		else if (path > -1 && path < 14)
 			readSector(rootDir.msbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
 		FCB fcb;
+		fcb.d = this;
 		fcb.FAT = (*buffer).fat;
 		fcb.fileDesc = (*buffer).fileDesc;
 		if (io == "i" || io == "o" || io == "io")

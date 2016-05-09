@@ -4,15 +4,25 @@
 
 FCB::FCB()
 {
+	this->d = NULL;
+	this->currRecNr = 0;
+	this->currRecNrInBuff = 0;
+	this->currSecNr = 0;
+	this->FAT = NULL;
 }
 
-FCB::FCB(Disk *)
+FCB::FCB(Disk * disk)
 {
+	this->d = disk;
+	this->currRecNr = 0;
+	this->currRecNrInBuff = 0;
+	this->currSecNr = 0;
+	this->FAT = NULL;
 }
-
 
 FCB::~FCB()
 {
+	delete this->d;
 }
 
 void FCB::closefile()
