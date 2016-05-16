@@ -1043,7 +1043,7 @@ FCB * Disk::openFile(string & fn, string & un, MODE io)
 		fcb.d = this;
 		fcb.FAT = (*buffer).fat;
 		fcb.fileDesc = (*buffer).fileDesc;
-		if (io == MODE::I || io == MODE::O || io == MODE::IO)
+		if (io == MODE::W || io == MODE::R || io == MODE::WR)
 		{
 			fcb.currRecNr = 0;
 			fcb.currSecNr = fcb.fileDesc.getFileAddr();

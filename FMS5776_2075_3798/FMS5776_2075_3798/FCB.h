@@ -1,7 +1,7 @@
 #pragma once
 #include "Disk.h"
 #include "DirEntry.h"
-enum MODE{I,O,IO,E};
+enum MODE{W,R,WR,E};
 class FCB
 {
 public:
@@ -13,6 +13,7 @@ public:
 	unsigned int currSecNr;
 	unsigned int currRecNrInBuff;
 	bool updateMode;
+	bool lock = 0;
 	MODE mode;
 	
 
