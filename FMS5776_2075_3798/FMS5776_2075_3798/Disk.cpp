@@ -916,7 +916,7 @@ void Disk::delFile(string & fn, string & fo)
 		}
 		if (path == -1)
 			throw "File does not exist!";
-		FileHeader* buffer;
+		FileHeader* buffer = new FileHeader();
 		if (path >= 14 && path < 28)
 		{
 			rootDir.msbSector.dirEntry[path - 14].setEntryStatus('2'); //2 = deleted
@@ -930,6 +930,7 @@ void Disk::delFile(string & fn, string & fo)
 			dealloc((*buffer).getFat());
 		}
 		else throw "Unknown error!";
+		delete buffer;
 	}
 	catch (const char* msg)
 	{
@@ -939,6 +940,7 @@ void Disk::delFile(string & fn, string & fo)
 	{
 		throw "Unknown error";
 	}
+	
 }
 
 void Disk::extendFile(string & fn, string & fo, unsigned int num)
@@ -1013,7 +1015,7 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num)
 
 #pragma region Level3
 
-FCB * Disk::openFile(string & fn, string & un, MODE io)
+FCB* Disk::openFile(string & fn, string & un, MODE io)
 {
 	try
 	{
@@ -1033,7 +1035,7 @@ FCB * Disk::openFile(string & fn, string & un, MODE io)
 		}
 		if (path == -1)
 			throw "File Does Not Exist!";
-		FileHeader* buffer;
+		FileHeader* buffer = new FileHeader();
 		if (path >= 14 && path < 28)
 			readSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)buffer);
 		else if (path > -1 && path < 14)
@@ -1054,10 +1056,11 @@ FCB * Disk::openFile(string & fn, string & un, MODE io)
 		else if (io == MODE::E)
 		{
 
-			fcb.currRecNr = fcb.fileDesc.getEofRecNr+1;
+			fcb.currRecNr = fcb.fileDesc.getEofRecNr()+1;
 			fcb.currSecNr = fcb.fileDesc.getFileAddr()+fcb.fileDesc.getFileSize();
 			fcb.currRecNrInBuff = 0;
 		}
+		delete buffer;
 		return &fcb;
 	}
 	catch (const char* str)
