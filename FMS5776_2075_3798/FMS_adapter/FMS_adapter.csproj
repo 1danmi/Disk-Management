@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{59EBA1C2-7594-4F36-A2EE-DC61CE0FBE72}</ProjectGuid>
+    <ProjectGuid>{D164ECEB-5328-46FC-900F-26D026A14D30}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FMS_adapter</RootNamespace>
