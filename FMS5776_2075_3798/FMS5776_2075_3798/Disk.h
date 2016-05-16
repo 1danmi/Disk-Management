@@ -20,7 +20,7 @@ private:
 	bool vhdUpdate;
 	DAT dat;
 	bool datUpdate;
-	RootDir rootDir;
+	
 	bool rootDirUpdate;
 	bool mounted;
 	fstream dskfl;
@@ -29,6 +29,8 @@ private:
 
 
 public:
+
+	RootDir rootDir;
 
 #pragma region Level0
 

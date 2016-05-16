@@ -1039,10 +1039,12 @@ FCB * Disk::openFile(string & fn, string & un, MODE io)
 		else if (path > -1 && path < 14)
 			readSector(rootDir.msbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
 		FCB fcb;
+		fcb.path = path;
 		fcb.mode = io;
 		fcb.d = this;
 		fcb.FAT = (*buffer).fat;
 		fcb.fileDesc = (*buffer).fileDesc;
+		fcb.numOfRecords = (*buffer).fileDesc.getEofRecNr();
 		if (io == MODE::W || io == MODE::R || io == MODE::WR)
 		{
 			fcb.currRecNr = 0;

@@ -6,6 +6,7 @@ class FCB
 {
 public:
 	Disk* d;
+	int path;
 	DirEntry fileDesc;
 	DATtype FAT;
 	Sector buffer;
@@ -15,6 +16,7 @@ public:
 	bool updateMode;
 	bool lock = 0;
 	MODE mode;
+	int numOfRecords;
 	
 
 	FCB();
@@ -23,9 +25,9 @@ public:
 
 	void closeFile();
 	void flushFile();
-	void readRecord(char*, unsigned int=0);
-	void writeRecord(char*);
-	void seek(unsigned int, int);
+	void readRecord(char*, unsigned int = 0, unsigned int = -1);
+	void writeRecord(char*, unsigned int = -1);
+	//void seek(unsigned int, int);
 	void updateCancel();
 	void deleteRecord();
 	void updateRecord(char *);
