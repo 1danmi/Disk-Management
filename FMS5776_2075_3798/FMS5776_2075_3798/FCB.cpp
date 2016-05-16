@@ -42,8 +42,6 @@ void FCB::closeFile()
 
 void FCB::flushFile()
 {
-	if (lock)
-		throw "The file is locked!";
 	this->d->writeSector(this->currSecNr, &(this->buffer));
 }
 
@@ -53,8 +51,12 @@ void FCB::readRecord(char * record , unsigned int update, unsigned int rec)
 	{
 		if (lock)
 			throw "The file is locked!";
+		
 		if (this->mode == MODE::W || this->mode == MODE::E)
 			throw "The file is not open for reading!";
+		if (update)
+			if (this->mode != MODE::WR)
+				throw "The file is not open for writing!";
 		if (rec != -1)
 		{
 			if (rec >= numOfRecords)
@@ -114,6 +116,10 @@ void FCB::writeRecord(char * record, unsigned int rec)
 		for (int i = 0; i < this->fileDesc.getRecSize(); i++)
 			this->buffer.rawData[recNum*this->fileDesc.getRecSize() + i]=record[i];
 		flushFile();
+		if (numOfRecords - currRecNr > 1)
+			this->currRecNr++;
+		else
+			currRecNr = 0;
 	}
 	catch (const char* str)
 	{
@@ -125,18 +131,72 @@ void FCB::writeRecord(char * record, unsigned int rec)
 	}
 }
 
-void FCB::seek(unsigned int, int)
-{
-}
+//void FCB::seek(unsigned int, int)
+//{
+//}
 
 void FCB::updateCancel()
 {
+	lock = 0;
 }
 
 void FCB::deleteRecord()
 {
+	try
+	{
+		if (!lock)
+			throw "The file is not locked for update!";
+		if (this->mode != MODE::WR)
+			throw "The file is not open for updating!";
+		int numOfRecs = 1020 / this->fileDesc.getRecSize();
+		this->currSecNr = numOfRecords / numOfRecs;
+		int recNum = numOfRecords%numOfRecs - 1;
+		for (int i = recNum*fileDesc.getRecSize(); i < fileDesc.getKeySize(); i++)
+			buffer.rawData[i + fileDesc.getKeyOffset()] = 0;
+		lock = 0;
+		flushFile();
+		if (numOfRecords - currRecNr > 1)
+			this->currRecNr++;
+		else
+			currRecNr = 0;
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Exception";
+	}
 }
 
-void FCB::updateRecord(char *)
+void FCB::updateRecord(char * record)
 {
+	try
+	{
+		if (!lock)
+			throw "The file is not locked for update!";
+		if (this->mode != MODE::WR)
+			throw "The file is not open for updating!";
+		int numOfRecs = 1020 / this->fileDesc.getRecSize();
+		this->currSecNr = numOfRecords / numOfRecs;
+		int recNum = numOfRecords%numOfRecs - 1;
+		for (int i = 0; i < this->fileDesc.getRecSize(); i++)
+			this->buffer.rawData[recNum*this->fileDesc.getRecSize() + i] = record[i];
+		lock = 0;
+		flushFile();
+		if (numOfRecords - currRecNr > 1)
+			this->currRecNr++;
+		else
+			currRecNr = 0;
+		
+	}
+	catch (const char* str)
+	{
+		throw str;
+	}
+	catch (const std::exception&)
+	{
+		throw "Unknown Exception";
+	}
 }

@@ -21,6 +21,8 @@ public:
 	void setEofRecNr(unsigned int);
 	unsigned int getEofRecNr();
 	unsigned int getRecSize();
+	unsigned int getKeySize();
+	unsigned int getKeyOffset();
 private:
 	char fileName[12];
 	char fileOwner[12];

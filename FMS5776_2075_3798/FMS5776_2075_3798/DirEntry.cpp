@@ -98,3 +98,13 @@ unsigned int DirEntry::getRecSize()
 	return this->actualRecSize;
 }
 
+unsigned int DirEntry::getKeySize()
+{
+	return this->keySize;
+}
+
+unsigned int DirEntry::getKeyOffset()
+{
+	return this->keyOffset;
+}
+
