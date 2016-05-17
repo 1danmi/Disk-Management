@@ -201,3 +201,6 @@ void FCB::updateRecord(char * record)
 		throw "Unknown Exception";
 	}
 }
+
+string& FCB::GetLastErrorMessage() { return this->lastErrorMessage; }
+void FCB::SetLastErrorMessage(string lastErrorMessage) { this->lastErrorMessage = lastErrorMessage; }

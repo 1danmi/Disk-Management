@@ -27,6 +27,7 @@ private:
 	fstream dskfl;
 	unsigned int currDiskSectorNr;
 	//char buffer[sizeof(Sector)];
+	string lastErrorMessage;
 
 
 public:
@@ -81,6 +82,11 @@ public:
 #pragma endregion
 
 #pragma region Level3
-	FCB* openFile(string&, string&, MODE);
+	FCB* openFile(string&, string&, MODE);	
+#pragma endregion
+
+#pragma region Level4
+	string & GetLastErrorMessage();
+	void SetLastErrorMessage(string lastErrorMessage);
 #pragma endregion
 };

@@ -1075,5 +1075,10 @@ FCB* Disk::openFile(string & fn, string & un, MODE io)
 
 #pragma endregion
 
+#pragma region Level4
+	string& Disk::GetLastErrorMessage() { return this->lastErrorMessage; }
+	void Disk::SetLastErrorMessage(string lastErrorMessage) { this->lastErrorMessage = lastErrorMessage; }
+#pragma endregion
+
 
 

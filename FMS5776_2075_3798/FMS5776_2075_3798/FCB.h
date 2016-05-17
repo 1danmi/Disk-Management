@@ -17,6 +17,7 @@ public:
 	bool lock = 0;
 	MODE mode;
 	int numOfRecords;
+	string lastErrorMessage;
 	
 
 	FCB();
@@ -31,5 +32,8 @@ public:
 	void updateCancel();
 	void deleteRecord();
 	void updateRecord(char *);
+
+	string & GetLastErrorMessage();
+	void SetLastErrorMessage(string lastErrorMessage);
 };
 
