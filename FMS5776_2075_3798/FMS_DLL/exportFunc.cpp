@@ -187,7 +187,7 @@ __declspec(dllexport) void deleteRecord(FCB* THIS)
 		throw ex;
 	}
 }
-__declspec(dllexport) void updateRecord(FCB* THIS)
+__declspec(dllexport) void updateCancel(FCB* THIS)
 {
 	try
 	{
