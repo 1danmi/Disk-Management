@@ -80,7 +80,7 @@ __declspec(dllexport) void createFile(Disk* THIS, char* & fn, char* & fo, char* 
 {
 	try
 	{
-		THIS->createFile(std::string(fn), std::string(fo), string(ft), recLen, numOfSecs, string(kt), ko, ks, algo));
+		THIS->createFile(std::string(fn), std::string(fo), string(ft), recLen, numOfSecs, string(kt), ko, ks, algo);
 	}
 	catch (exception ex)
 	{
@@ -162,6 +162,7 @@ __declspec(dllexport) void writeRecord(FCB* THIS, char * record, unsigned int re
 		throw ex;
 	}
 }
+//no seek func
 
 __declspec(dllexport) void updateRecord(FCB* THIS, char * record)
 {
@@ -199,9 +200,22 @@ __declspec(dllexport) void updateCancel(FCB* THIS)
 		throw ex;
 	}
 }
-
-
-
-
-
 #pragma endregion
+
+extern "C" 
+{  
+	__declspec(dllexport) Disk* makeDiskObject() 
+	{ 
+		return new Disk(); 
+	}  
+	__declspec(dllexport) void deleteDiskObject(Disk*& THIS) 
+	{ 
+		if (THIS != NULL)    delete  THIS;   
+		THIS = NULL; 
+	}  
+	__declspec(dllexport) const char* getLastDiskErrorMessage(Disk* THIS) 
+	{ 
+		const char* str = THIS->GetLastErrorMessage().c_str();   
+		return str; 
+	}  
+}
