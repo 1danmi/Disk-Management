@@ -62,7 +62,7 @@ __declspec(dllexport) void format(Disk* THIS, char* diskOwner)
 		THIS->SetLastErrorMessage(ex.what());   throw ex;
 	}
 }
-__declspec(dllexport) void howMuchEmpty(Disk* THIS)
+__declspec(dllexport) int howMuchEmpty(Disk* THIS)
 {
 	try
 	{
@@ -112,7 +112,7 @@ __declspec(dllexport) void extendFile(Disk* THIS, char* fileName, char* fileOwne
 #pragma endregion
 
 #pragma region Level3
-__declspec(dllexport) void delFile(Disk* THIS, char* fileName, char* fileOwner, MODE m)
+__declspec(dllexport) FCB* openFile(Disk* THIS, char* fileName, char* fileOwner, MODE m)
 {
 	try
 	{
@@ -126,7 +126,7 @@ __declspec(dllexport) void delFile(Disk* THIS, char* fileName, char* fileOwner, 
 #pragma endregion
 
 #pragma region FCB
-__declspec(dllexport) void delFile(FCB* THIS)
+__declspec(dllexport) void closeFile(FCB* THIS)
 {
 	try
 	{
@@ -138,5 +138,70 @@ __declspec(dllexport) void delFile(FCB* THIS)
 		throw ex;
 	}
 }
+__declspec(dllexport) void readRecord(FCB* THIS, char * record, unsigned int update, unsigned int rec)
+{
+	try
+	{
+		THIS->readRecord(record, update, rec);
+	}
+	catch (exception ex)
+	{
+		THIS->SetLastErrorMessage(ex.what());
+		throw ex;
+	}
+}
+__declspec(dllexport) void writeRecord(FCB* THIS, char * record, unsigned int rec)
+{
+	try
+	{
+		THIS->writeRecord(record, rec);
+	}
+	catch (exception ex)
+	{
+		THIS->SetLastErrorMessage(ex.what());
+		throw ex;
+	}
+}
+
+__declspec(dllexport) void updateRecord(FCB* THIS, char * record)
+{
+	try
+	{
+		THIS->updateRecord(record);
+	}
+	catch (exception ex)
+	{
+		THIS->SetLastErrorMessage(ex.what());
+		throw ex;
+	}
+}
+__declspec(dllexport) void deleteRecord(FCB* THIS)
+{
+	try
+	{
+		THIS->deleteRecord();
+	}
+	catch (exception ex)
+	{
+		THIS->SetLastErrorMessage(ex.what());
+		throw ex;
+	}
+}
+__declspec(dllexport) void updateRecord(FCB* THIS)
+{
+	try
+	{
+		THIS->updateCancel();
+	}
+	catch (exception ex)
+	{
+		THIS->SetLastErrorMessage(ex.what());
+		throw ex;
+	}
+}
+
+
+
+
 
 #pragma endregion
