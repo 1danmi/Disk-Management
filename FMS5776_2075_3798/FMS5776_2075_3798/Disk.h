@@ -2,21 +2,22 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+
 #include "Dir.h"
 #include "VHD.h"
-#include "DirEntry.h"
 #include "FileHeader.h"
 #include "Sector.h"
-#include "DAT.h"
 #include "FCB.h"
 
-using namespace std;
-class TestLevel_0;
 
+using namespace std;
+//class TestLevel_0;
+class FCB;
+enum MODE;
 class Disk
 {
 private:
-	VHD vhd;
+	
 	bool vhdUpdate;
 	DAT dat;
 	bool datUpdate;
@@ -26,10 +27,11 @@ private:
 	fstream dskfl;
 	unsigned int currDiskSectorNr;
 	//char buffer[sizeof(Sector)];
+	string lastErrorMessage;
 
 
 public:
-
+	VHD vhd;
 	RootDir rootDir;
 
 #pragma region Level0
@@ -51,7 +53,7 @@ public:
 	void writeSector(Sector*);
 	void readSector(int, Sector*);
 	void readSector(Sector*);
-	friend class TestLevel_0;
+	//friend class TestLevel_0;
 
 #pragma endregion
 
@@ -80,11 +82,11 @@ public:
 #pragma endregion
 
 #pragma region Level3
-
-	FCB* openFile(string&, string&, MODE);
-
+	FCB* openFile(string&, string&, MODE);	
 #pragma endregion
 
-
-	
+#pragma region Level4
+	string & GetLastErrorMessage();
+	void SetLastErrorMessage(string lastErrorMessage);
+#pragma endregion
 };

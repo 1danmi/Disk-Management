@@ -28,7 +28,7 @@ void FCB::closeFile()
 	if (lock)
 		throw "The file is locked!";
 	flushFile();
-	FileHeader* fh;
+	FileHeader* fh = new FileHeader();
 	this->d->readSector(this->fileDesc.getFileAddr(), (Sector*)fh);
 	fh->fileDesc = this->fileDesc;
 	fh->fat = this->FAT;
@@ -38,6 +38,7 @@ void FCB::closeFile()
 	else if (path > -1 && path < 14)
 		d->rootDir.msbSector.dirEntry[path] = fileDesc;
 	d = nullptr;
+	delete fh;
 }
 
 void FCB::flushFile()
@@ -200,3 +201,6 @@ void FCB::updateRecord(char * record)
 		throw "Unknown Exception";
 	}
 }
+
+string& FCB::GetLastErrorMessage() { return this->lastErrorMessage; }
+void FCB::SetLastErrorMessage(string lastErrorMessage) { this->lastErrorMessage = lastErrorMessage; }
