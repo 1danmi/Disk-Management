@@ -80,7 +80,7 @@ __declspec(dllexport) void createFile(Disk* THIS, char* & fn, char* & fo, char* 
 {
 	try
 	{
-		THIS->createFile(std::string(fn), std::string(fo), string(ft), recLen, numOfSecs, string(kt), ko, ks, algo));
+		THIS->createFile(std::string(fn), std::string(fo), string(ft), recLen, numOfSecs, string(kt), ko, ks, algo);
 	}
 	catch (exception ex)
 	{
