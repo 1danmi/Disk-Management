@@ -217,5 +217,16 @@ extern "C"
 	{ 
 		const char* str = THIS->GetLastErrorMessage().c_str();   
 		return str; 
-	}  
+	}
+
+	__declspec(dllexport) void  deleteFcbObject(FCB*& THIS) 
+	{ 
+		if (THIS != NULL)   delete  THIS;  
+		THIS = NULL; 
+	}
+	__declspec(dllexport) const  char* getLastFcbErrorMessage(FCB* THIS) 
+	{ 
+		const char* str = THIS->GetLastErrorMessage().c_str();  
+		return str; 
+	}
 }
