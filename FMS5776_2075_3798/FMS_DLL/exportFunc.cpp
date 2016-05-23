@@ -1,3 +1,8 @@
+#include "Disk.h"
+#include <string>       // std::string
+#include <iostream>     // std::cout
+#include <sstream>     
+
 #include "Dir.h"
 #include "VHD.h"
 #include "FileHeader.h"
@@ -230,3 +235,19 @@ extern "C"
 		return str; 
 	}
 }
+
+// extra
+//
+//__declspec(dllexport)   void  getVolumeHeader(Disk* THIS, VHD* buffer)
+//{
+//	memcpy_s(buffer, sizeof(VHD), &THIS->getVHD(), sizeof(VHD));
+//}
+//
+//string str;
+//__declspec(dllexport) const char*  getDat(Disk* THIS)
+//{
+//	std::stringstream ss;
+//	ss << THIS->getDat();
+//	str = ss.str();
+//	return str.c_str();
+//}
