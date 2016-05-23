@@ -1,34 +1,34 @@
 ﻿  VHD.cpp
   Sector.cpp
   Main.cpp
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
   FileHeader.cpp
   FCB.cpp
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(63): warning C4018: '>=': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(67): warning C4018: '>=': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(74): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(106): warning C4018: '>=': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(110): warning C4018: '>=': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(117): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(155): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(185): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(63): warning C4018: '>=': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(67): warning C4018: '>=': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(74): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(106): warning C4018: '>=': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(110): warning C4018: '>=': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(117): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(155): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\fcb.cpp(185): warning C4018: '<': signed/unsigned mismatch
   Disk.cpp
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(617): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(650): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(674): warning C4018: '>': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(682): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(684): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(699): warning C4018: '>': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(718): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(752): warning C4018: '>': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(774): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(805): warning C4018: '<': signed/unsigned mismatch
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(877): warning C4101: 'ex': unreferenced local variable
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(939): warning C4101: 'e': unreferenced local variable
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(1009): warning C4101: 'e': unreferenced local variable
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(617): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(650): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(674): warning C4018: '>': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(682): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(684): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(699): warning C4018: '>': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(718): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(752): warning C4018: '>': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(774): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(805): warning C4018: '<': signed/unsigned mismatch
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(877): warning C4101: 'ex': unreferenced local variable
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(939): warning C4101: 'e': unreferenced local variable
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(1009): warning C4101: 'e': unreferenced local variable
   DirEntry.cpp
   Dir.cpp
   DAT.cpp
   Generating Code...
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(1064): warning C4172: returning address of local variable or temporary: fcb
-  FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.lib
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(1064): warning C4172: returning address of local variable or temporary: fcb
+  FMS5776_2075_3798.vcxproj -> D:\FMS_GUI\FMS5776_2075_3798\Debug\FMS5776_2075_3798.lib

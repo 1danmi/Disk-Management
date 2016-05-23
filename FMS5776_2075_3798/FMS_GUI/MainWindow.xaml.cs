@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace FMS_GUI
 {
@@ -23,6 +25,44 @@ namespace FMS_GUI
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new MainPage());
         }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            //bl.saveBranchesToXML("BranchesXmlBySerilalizer.xml");
+            //bl.saveDishesToXML("DishesXmlBySerilalizer.xml");
+            //bl.saveClientsToXML("ClientsXmlBySerilalizer.xml");
+            //bl.saveOrdersToXML("OrdersXmlBySerilalizer.xml");
+            //bl.saveODToXML("ODXmlBySerilalizer.xml");
+            this.Close();
+        }
+
+        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+                this.WindowState = WindowState.Maximized;
+            else
+                this.WindowState = WindowState.Normal;
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                this.DragMove();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+
     }
 }
