@@ -1,0 +1,14 @@
+﻿<Window x:Class="PL_Wpf.WaitWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL_Wpf"
+        mc:Ignorable="d" 
+        Title="Waiting..." Height="300" Width="600" Background="White" ContentRendered="Window_ContentRendered" >
+    
+    <Grid Background="#FF9E9E9E">
+        <Label Content="Waiting for Administrator Card..." Style="{StaticResource TitleStyle}" FontSize="30"  VerticalAlignment="Stretch" RenderTransformOrigin="0.57,1.356" Margin="142.15,114.377,0,81.483" d:LayoutOverrides="Height" />
+        <Image x:Name="image" HorizontalAlignment="Left" Margin="37.15,84.504,0,61.266" Width="100" Source="Warning (1).gif"/>
+    </Grid>
+</Window>
