@@ -71,7 +71,7 @@ void FCB::readRecord(char * record , unsigned int update, unsigned int rec)
 		if (currRecNrInBuff != currSecNr)
 			d->readSector(fileDesc.getFileAddr() + currSecNr, &(this->buffer));
 		int recNum = numOfRecords%numOfRecs-1;
-		for (int i = 0; i < this->fileDesc.getRecSize(); i++)
+		for (unsigned int i = 0; i < this->fileDesc.getRecSize(); i++)
 			record[i] = this->buffer.rawData[recNum*this->fileDesc.getRecSize() + i];
 		if (!update)
 		{
@@ -114,7 +114,7 @@ void FCB::writeRecord(char * record, unsigned int rec)
 		if (currRecNrInBuff != currSecNr)
 			d->readSector(fileDesc.getFileAddr() + currSecNr, &(this->buffer));
 		int recNum = numOfRecords%numOfRecs - 1;
-		for (int i = 0; i < this->fileDesc.getRecSize(); i++)
+		for (unsigned int i = 0; i < this->fileDesc.getRecSize(); i++)
 			this->buffer.rawData[recNum*this->fileDesc.getRecSize() + i]=record[i];
 		flushFile();
 		if (numOfRecords - currRecNr > 1)
@@ -152,7 +152,7 @@ void FCB::deleteRecord()
 		int numOfRecs = 1020 / this->fileDesc.getRecSize();
 		this->currSecNr = numOfRecords / numOfRecs;
 		int recNum = numOfRecords%numOfRecs - 1;
-		for (int i = recNum*fileDesc.getRecSize(); i < fileDesc.getKeySize(); i++)
+		for (unsigned int i = recNum*fileDesc.getRecSize(); i < fileDesc.getKeySize(); i++)
 			buffer.rawData[i + fileDesc.getKeyOffset()] = 0;
 		lock = 0;
 		flushFile();
@@ -182,7 +182,7 @@ void FCB::updateRecord(char * record)
 		int numOfRecs = 1020 / this->fileDesc.getRecSize();
 		this->currSecNr = numOfRecords / numOfRecs;
 		int recNum = numOfRecords%numOfRecs - 1;
-		for (int i = 0; i < this->fileDesc.getRecSize(); i++)
+		for (unsigned int i = 0; i < this->fileDesc.getRecSize(); i++)
 			this->buffer.rawData[recNum*this->fileDesc.getRecSize() + i] = record[i];
 		lock = 0;
 		flushFile();

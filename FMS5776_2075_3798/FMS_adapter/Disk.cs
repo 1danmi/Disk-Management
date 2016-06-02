@@ -181,22 +181,22 @@ namespace FMS_adapter
         }
 
         // Level3
-        public FCB openFile(string fn, string fow, MODE mo)
-        {
-            try
-            {
-                return cppToCsharpAdapter.openFile(this.myDiskPtr, fn, fow, mo);
-            }
-            catch (SEHException)
-            {
-                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
-                string message = Marshal.PtrToStringAnsi(cString);
-                throw new Exception(message);
-            }
-            catch
-            {
-                throw;
-            }
-        }
+        //public FCB openFile(string fn, string fow, MODE mo)
+        //{
+        //    try
+        //    {
+        //        return cppToCsharpAdapter.openFile(this.myDiskPtr, fn, fow, mo);
+        //    }
+        //    catch (SEHException)
+        //    {
+        //        IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+        //        string message = Marshal.PtrToStringAnsi(cString);
+        //        throw new Exception(message);
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
     }
 }

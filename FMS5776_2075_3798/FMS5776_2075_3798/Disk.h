@@ -60,8 +60,8 @@ public:
 #pragma region Level1
 
 	void format(string&);
-	int howMuchEmpty();
-	int howMuchEmpty(unsigned int);
+	unsigned int howMuchEmpty();
+	unsigned int howMuchEmpty(unsigned int);
 
 	bool firstFit(DATtype&, unsigned int,unsigned int = 0);
 	bool bestFit(DATtype&, unsigned int, unsigned int = 0);

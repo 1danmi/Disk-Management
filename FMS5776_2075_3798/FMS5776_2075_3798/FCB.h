@@ -16,7 +16,7 @@ public:
 	bool updateMode;
 	bool lock = 0;
 	MODE mode;
-	int numOfRecords;
+	unsigned int numOfRecords;
 	string lastErrorMessage;
 	
 

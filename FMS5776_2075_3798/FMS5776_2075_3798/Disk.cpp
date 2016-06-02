@@ -570,9 +570,9 @@ void Disk::format(string& name)
 * SEE ALSO
 *	int howMuchEmpty(unsigned int)
 **************************************************/
-int Disk::howMuchEmpty()
+unsigned int Disk::howMuchEmpty()
 {
-	int count = 0;
+	unsigned int count = 0;
 	for (int i = 4; i < 1600; i++)
 		if (dat.dat[i])
 			count++;
@@ -591,9 +591,9 @@ int Disk::howMuchEmpty()
 * SEE ALSO
 *	int howMuchEmpty()
 **************************************************/
-int Disk::howMuchEmpty(unsigned int start)
+unsigned int Disk::howMuchEmpty(unsigned int start)
 {
-	int count = 0;
+	unsigned int count = 0;
 	for (int i = start; i < 1600; i++)
 		if (dat.dat[i])
 			count++;
@@ -650,10 +650,10 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters, unsigned int start)
 	if (howMuchEmpty(start) < clusters)
 		throw "Not enough space in disk";
 	int i = start;
-	int bFitSize = 0;
-	int bFitIndex = 0;
-	int tmpBFitSize = 0;
-	int tmpBFitIndex = 0;
+	unsigned int bFitSize = 0;
+	unsigned int bFitIndex = 0;
+	unsigned  int tmpBFitSize = 0;
+	unsigned int tmpBFitIndex = 0;
 	while (i < 1600)
 	{
 		tmpBFitSize = 0;
@@ -691,7 +691,7 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters, unsigned int start)
 		else
 			i++;
 	}
-	for (int i = 0; i < min(bFitSize, (int)clusters); i++)
+	for (int i = 0; i < min((int)bFitSize, (int)clusters); i++)
 	{
 		dat.dat[i + bFitIndex] = 0;
 		fat[i + bFitIndex] = 1;
@@ -717,10 +717,10 @@ bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 {
 	if (howMuchEmpty() < clusters)
 		throw "Not enough space in disk";
-	int maxLength = 0;
-	int maxLengthIndex = 0;
-	int tmpMaxLength = 0;
-	int tmpMaxLengthIndex = 0;
+	unsigned  int maxLength = 0;
+	unsigned  int maxLengthIndex = 0;
+	unsigned  int tmpMaxLength = 0;
+	unsigned  int tmpMaxLengthIndex = 0;
 	int i = start;
 	while (i < 1600)
 	{
@@ -744,7 +744,7 @@ bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 		else
 			i++;
 	}
-	for (int i = 0; i < min(maxLength, (int)clusters); i++)
+	for (int i = 0; i < min((int)maxLength, (int)clusters); i++)
 	{
 		dat.dat[i + maxLengthIndex] = 0;
 		fat[i + maxLengthIndex] = 1;
@@ -874,9 +874,9 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 	{
 		throw str;
 	}
-	catch (const std::exception& ex)
+	catch (const std::exception&)
 	{
-
+		throw "Unknown exception\nEditional details: Thrown from 'create file'";
 	}
 }
 
@@ -936,9 +936,9 @@ void Disk::delFile(string & fn, string & fo)
 	{
 		throw msg;
 	}
-	catch (const std::exception& e)
+	catch (const std::exception&)
 	{
-		throw "Unknown error";
+		throw "Unknown exception\nEditional details: Thrown from 'del file'";
 	}
 	
 }
@@ -1006,9 +1006,9 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num)
 	{
 		throw msg;
 	}
-	catch (const std::exception& e)
+	catch (const std::exception&)
 	{
-		throw "Unknown error";
+		throw "Unknown exception\nEditional details: Thrown from 'extend file'";
 	}
 }
 #pragma endregion
