@@ -5,10 +5,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FMS_GUI"
       mc:Ignorable="d" 
-      d:DesignHeight="720" d:DesignWidth="1280"
+      xmlns:WpfPageTransitions="clr-namespace:WpfPageTransitions;assembly=WpfPageTransitions"
+      
+      d:DesignHeight="1080" d:DesignWidth="1920"
       Title="MainPage">
 
-    <Grid Background="Blue">
-        
+    <Grid Background="White" d:DataContext="{d:DesignInstance Type=local:MainPage}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="3.5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="textBox" Grid.ColumnSpan="2" Margin="206.129,144.746,113.151,269.585" Grid.Row="1" TextWrapping="Wrap" Text="sdkjgbkfdcxbfvdm,zvbjzf,x.hbk, mc.xkjvkxjhfvgjshgdxfvyer" FontSize="20"/>
+
+        <Rectangle x:Name="shadowRectangle" Fill="#4C000000" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+
+        <ContentControl x:Name="codpContentControl" Content="{Binding codp}" Grid.Column="1" Grid.Row="1"/>
     </Grid>
 </Page>

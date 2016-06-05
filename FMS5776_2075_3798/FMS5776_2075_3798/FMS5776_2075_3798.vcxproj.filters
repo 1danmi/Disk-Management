@@ -42,6 +42,9 @@
     <ClInclude Include="FCB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ACL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VHD.cpp">

@@ -26,15 +26,13 @@ namespace FMS_GUI
         {
             InitializeComponent();
             MainFrame.Navigate(new MainPage());
+            //CreateOpenDiskWindow codw = new CreateOpenDiskWindow();
+            //codw.Show();
+            //this.IsEnabled = false;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            //bl.saveBranchesToXML("BranchesXmlBySerilalizer.xml");
-            //bl.saveDishesToXML("DishesXmlBySerilalizer.xml");
-            //bl.saveClientsToXML("ClientsXmlBySerilalizer.xml");
-            //bl.saveOrdersToXML("OrdersXmlBySerilalizer.xml");
-            //bl.saveODToXML("ODXmlBySerilalizer.xml");
             this.Close();
         }
 
@@ -59,7 +57,7 @@ namespace FMS_GUI
             }
             catch (Exception ex)
             {
-
+                throw new Exception(ex.Message);
             }
         }
 

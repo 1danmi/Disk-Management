@@ -1,0 +1,19 @@
+﻿<Page x:Class="FMS_GUI.ChooseUserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FMS_GUI"
+      xmlns:WpfPageTransitions="clr-namespace:WpfPageTransitions;assembly=WpfPageTransitions"
+      
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="ChooseUserPage"
+      Background="Green">
+
+    <Viewbox>
+        <Grid x:Name="MainGrid" Background="Green">
+
+        </Grid>
+    </Viewbox>
+</Page>

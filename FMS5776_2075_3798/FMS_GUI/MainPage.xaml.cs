@@ -20,9 +20,19 @@ namespace FMS_GUI
     /// </summary>
     public partial class MainPage : Page
     {
+        public CreateOpenDiskPage codp { get; set; }
         public MainPage()
         {
             InitializeComponent();
+            codp = new CreateOpenDiskPage();
+            this.codpContentControl.DataContext = this;
+
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            ChooseUserPage usersPage = new ChooseUserPage();
+            this.NavigationService.Navigate(usersPage); 
         }
     }
 }

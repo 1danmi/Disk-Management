@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FMS_GUI"
         mc:Ignorable="d" x:Name="mainWindow"
         BorderBrush="Black" BorderThickness="3,3,3,3"
-        Title="MainWindow" Width="1280" 
+        Title="MainWindow" Width="1280" ResizeMode="CanResizeWithGrip"
         Background="#FF3F3F46" MouseLeftButtonDown="Window_MouseLeftButtonDown" AllowsTransparency="True" WindowStyle="None" >
     <Window.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="MaximizeButton"/>
@@ -20,7 +20,7 @@
         <Frame x:Name="MainFrame" BorderBrush="Black" BorderThickness="0,2,0,0" Grid.Row="1"  NavigationUIVisibility="Hidden" Background="White"/>
         <Button x:Name="MinimizeButton" Foreground="White"    HorizontalAlignment="Right" Background="#FF333337" Width="22.375" Grid.Row="0" Margin="0,3.728,58,5" Click="MinimizeButton_Click">
             <Button.Content>
-                <Image Source="ic_keyboard_arrow_down_white_48dp_2x.png"/>
+                <Image Source="ic_keyboard_arrow_down_white_48dp_2x.png" />
             </Button.Content>
         </Button>
         <Button x:Name="MaximizeButton" Foreground="White" HorizontalAlignment="Right" Background="#FF333337" Width="22.375" Grid.Row="0" Margin="0,3.728,30.625,5" Click="MaximizeButton_Click">
