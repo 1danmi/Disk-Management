@@ -1,6 +1,5 @@
 #pragma once
 #include "DirEntry.h"
-
 struct SectorDir
 {
 public:
@@ -20,5 +19,6 @@ struct RootDir
 
 public:
 	RootDir();
+	RootDir(unsigned int, unsigned int);
 	~RootDir(){};
 };

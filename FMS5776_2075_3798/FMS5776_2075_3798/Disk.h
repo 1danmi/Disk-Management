@@ -1,17 +1,14 @@
-#pragma once
-#include <iostream>
-#include <string>
-#include <fstream>
-
-#include "Dir.h"
-#include "VHD.h"
-#include "FileHeader.h"
-#include "Sector.h"
-#include "FCB.h"
-
-
-using namespace std;
 //class TestLevel_0;
+#pragma once
+#include "Dat.h"
+#include "User.h"
+#include "VHD.h"
+#include "Dir.h"
+#include "Sector.h"
+#include "FileHeader.h"
+#include <fstream>
+#include "FCB.h"
+using namespace std;
 class FCB;
 enum MODE;
 class Disk
@@ -21,10 +18,13 @@ private:
 	bool vhdUpdate;
 	DAT dat;
 	bool datUpdate;
-	
+	int currUser;
+	UsersSec users;
+	bool usersUpdate;
 	bool rootDirUpdate;
 	bool mounted;
 	fstream dskfl;
+	bool sign;
 	unsigned int currDiskSectorNr;
 	//char buffer[sizeof(Sector)];
 	string lastErrorMessage;
@@ -38,10 +38,10 @@ public:
 
 	//Ctor
 	Disk(void);
-	Disk(string&, string&, char);
+	Disk(string&, string&, char, string&);
 	~Disk(void);
 	
-	void createDisk(string&, string&);
+	void createDisk(string&, string&,string&);
 	void mountDisk(string&);
 	void unmountDisk(void);
 	void recreateDisk(string&);

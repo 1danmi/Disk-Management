@@ -1,5 +1,6 @@
 #pragma warning (disable:4996)
 #include "DirEntry.h"
+#include <cstring>
 #include <ctime>
 #define CRT_NO_WARNINGS
 /*************************************************

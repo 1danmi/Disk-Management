@@ -25,7 +25,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -71,7 +71,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)_CRT_NONSTDC_NO_WARNINGS_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
@@ -113,7 +113,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ACL.h" />
+    <ClInclude Include="User.h" />
     <ClInclude Include="DAT.h" />
     <ClInclude Include="Dir.h" />
     <ClInclude Include="DirEntry.h" />
@@ -121,7 +121,6 @@
     <ClInclude Include="FCB.h" />
     <ClInclude Include="FileHeader.h" />
     <ClInclude Include="Sector.h" />
-    <ClInclude Include="Today.h" />
     <ClInclude Include="VHD.h" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +132,7 @@
     <ClCompile Include="FileHeader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Sector.cpp" />
+    <ClCompile Include="User.cpp" />
     <ClCompile Include="VHD.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

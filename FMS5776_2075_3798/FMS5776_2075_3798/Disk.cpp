@@ -1,3 +1,4 @@
+#pragma once
 #pragma warning (disable:4996)
 #include "Disk.h"
 #include <ctime>
@@ -5,6 +6,7 @@
 #include <algorithm>
 #include <cstring>
 #include <iostream>
+
 using namespace std;
 
 #pragma region Level0
@@ -49,15 +51,14 @@ Disk::Disk(void)
 *	void createDisk(string&, string&)
 *	void mountDisk(string&)
 **************************************************/
-Disk::Disk(string & dn, string & dow, char flag)
-{
-	
+Disk::Disk(string & dn, string & dow, char flag,string& pwd)
+{	
 	try
 	{
-		dskfl.open("NewDisk.fms", ios::out | ios::in, ios::binary);
+		//dskfl.open(dn+".fms", ios::out | ios::in, ios::binary);
 		if (flag == 'c')
 		{
-			createDisk(dn, dow);
+			createDisk(dn, dow,pwd);
 		}
 		else if (flag == 'm')
 		{
@@ -110,7 +111,7 @@ Disk::~Disk(void)
 * SEE ALSO
 *	---
 **************************************************/
-void Disk::createDisk(string & dn, string & dow)
+void Disk::createDisk(string & dn, string & dow,string& pwd)
 {
 	try
 	{
@@ -118,26 +119,47 @@ void Disk::createDisk(string & dn, string & dow)
 		dskfl.open(fileName, ios::binary | ios::out);
 		if (dskfl.is_open())
 		{
+			users.users[0] = User(dow, 0, pwd);
+			currUser = 0;
+			sign = 0;
 			char rawData[1020] = { 0 };
 			for (int i = 0; i < 3200; i++)
 			{
 				Sector sec(i, rawData);
 				dskfl.write((char*)& sec, sizeof(Sector));
 			}
-			dskfl.seekp(0);
 			//VHD Initialization.
 			string fd = "00/00/000";
 			char date[10];
 			_strdate(date);
-			vhd = VHD(0, dn.c_str(), dow.c_str(), date, 1600, 1596, 1, 2, 800, 1000, 3, fd.c_str(), false);
-			dskfl.write((char*)& vhd, sizeof(Sector));
+			vhd = VHD(0, dn.c_str(), dow.c_str(), date, 1600, 1596, 1, 2, 800, 1000, 5, fd.c_str(), false, 4);
 			vhdUpdate = 0;
 			//DAT Initialization
+			dat.sectorNr = vhd.addrDAT;
 			this->dat.dat.set();
-			for (int i = 0; i < 4; i++)
-				this->dat.dat[i] = 0;
+			dat.dat[0] = 0;
+			dat.dat[vhd.addrDAT] = 0;
+			dat.dat[vhd.addrRootDir] = 0;
+			dat.dat[vhd.addrRootDir+1] = 0;
+			dat.dat[vhd.addrUserSec] = 0;
+			dat.dat[vhd.addrDATcpy] = 0;
+			dat.dat[vhd.addrRootDirCpy] = 0;
+			rootDir = RootDir(vhd.addrRootDir,vhd.addrRootDir+1);
+			dskfl.seekp(0);
+			dskfl.write((char*)& vhd, sizeof(Sector));
+			dskfl.seekp(vhd.addrDAT*sizeof(Sector));
+			dskfl.write((char*)& dat, sizeof(Sector));
+			dskfl.seekp(vhd.addrRootDir * sizeof(Sector));
+			dskfl.write((char*)& rootDir, 2*sizeof(Sector));
+			dskfl.seekp(vhd.addrUserSec * sizeof(Sector));
+			dskfl.write((char*)& users, sizeof(Sector));
+
+			dskfl.seekp(vhd.addrDATcpy * sizeof(Sector));
+			dskfl.write((char*)& dat, sizeof(Sector));
+			dskfl.seekp(vhd.addrRootDirCpy * sizeof(Sector));
+			dskfl.write((char*)& rootDir, sizeof(Sector));
 			dskfl.close();
-			datUpdate = 0;
+			mountDisk(dn);
 		}
 		else
 			throw "File Problem!";
@@ -169,14 +191,19 @@ void Disk::mountDisk(string & fn)
 		dskfl.open(fn+".fms", ios::in, ios::binary);
 		if (dskfl.is_open())
 		{
-			mounted = true;
 			dskfl.read((char*)& vhd, 1024);
+			dskfl.seekg(vhd.addrDAT * sizeof(Sector));
 			dskfl.read((char*)& dat, 1024);
+			dskfl.seekg(vhd.addrRootDir * sizeof(Sector));
 			dskfl.read((char*)& rootDir, 2048);
-			currDiskSectorNr = 3;
+			dskfl.seekg(vhd.addrUserSec * sizeof(Sector));
+			dskfl.read((char*)& users, 1024);
+			currDiskSectorNr = vhd.addrDataStart;
 			vhdUpdate = 0;
 			datUpdate = 0;
 			rootDirUpdate = 0;
+			sign = 0;
+			mounted = true;
 		}
 		else
 			throw "File Problem!";
@@ -205,13 +232,27 @@ void Disk::unmountDisk(void)
 	{
 		if (dskfl.is_open())
 		{
-			dskfl.seekp(0);
-			if(vhdUpdate)
+			
+			if (vhdUpdate)
+			{
+				dskfl.seekp(0);
 				dskfl.write((char*)& vhd, sizeof(Sector));
+			}
 			if(datUpdate)
+			{
+				dskfl.seekp(vhd.addrDAT*sizeof(Sector));
 				dskfl.write((char*)& rootDir, sizeof(Sector));
+			}
 			if(rootDirUpdate)
-				dskfl.write((char*)& rootDir, sizeof(Sector)*2);
+			{
+				dskfl.seekp(vhd.addrRootDir * sizeof(Sector));
+				dskfl.write((char*)& rootDir, sizeof(Sector) * 2);
+			}
+			if(usersUpdate)
+				{
+				dskfl.seekp(vhd.addrUserSec * sizeof(Sector));
+				dskfl.write((char*)& users, sizeof(Sector) );
+			}
 			dskfl.close();
 			mounted = false;
 		}
@@ -241,6 +282,8 @@ void Disk::unmountDisk(void)
 *	conditions: a) file exists. b) wasn't mounted.
 * SEE ALSO
 *	---
+*--------------------------------------------------
+* I don't know why this function is exist so I'm not going to fix it;
 **************************************************/
 void Disk::recreateDisk(string & dow)
 {
@@ -260,7 +303,7 @@ void Disk::recreateDisk(string & dow)
 			string fd = "00/00/000";
 			char date[10];
 			_strdate(date);
-			vhd = VHD(0, vhd.diskName, dow.c_str(), date, 1600, 1596, 1, 2, 800, 1000, 3, fd.c_str(), false);
+			vhd = VHD(0, vhd.diskName, dow.c_str(), date, 1600, 1596, 1, 2, 800, 1000,5, fd.c_str(), false,4);
 			dskfl.write((char*)& vhd, sizeof(Sector));
 			vhdUpdate = 0;
 			//DAT Initialization
@@ -372,8 +415,11 @@ void Disk::writeSector(unsigned int num, Sector* sec)
 		{
 			this->seekToSector(num);
 			dskfl.write((char*)sec, sizeof(Sector));
-			this->seekToSector(num + 1);
-			this->currDiskSectorNr = num + 1;
+			if (num != 3200)
+			{
+				this->seekToSector(num + 1);
+				this->currDiskSectorNr = num + 1;
+			}
 		}
 		else
 			throw "File problem!";
@@ -455,8 +501,11 @@ void Disk::readSector(int num, Sector* sec)
 		{
 			this->seekToSector(num);
 			dskfl.read((char*)sec, sizeof(Sector));
-			this->seekToSector(num + 1);
-			this->currDiskSectorNr = num + 1;
+			if (num != 3200)
+			{
+				this->seekToSector(num + 1);
+				this->currDiskSectorNr = num + 1;
+			}
 		}
 		else
 			throw "File problem!";

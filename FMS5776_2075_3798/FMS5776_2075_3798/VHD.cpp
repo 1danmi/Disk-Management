@@ -26,7 +26,7 @@
 **************************************************/
 VHD::VHD(unsigned int sn,const char dn[12],const char Do[12],const char pd[10], unsigned int cq, unsigned int dcq,
 	unsigned int adat, unsigned int ard, unsigned int adc, unsigned int ardc, unsigned int ads,
-	const char fd[10], bool is)
+	const char fd[10], bool is,unsigned int aus)
 {
 	sectorNr = sn;
 	strcpy_s(diskName,dn);
@@ -41,4 +41,5 @@ VHD::VHD(unsigned int sn,const char dn[12],const char Do[12],const char pd[10], 
 	addrDataStart = ads;
 	strcpy_s(formatDate, fd);
 	isFormated = is;
+	addrUserSec = aus;
 }

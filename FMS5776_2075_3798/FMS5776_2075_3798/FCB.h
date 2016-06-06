@@ -1,7 +1,7 @@
 #pragma once
 #include "Disk.h"
-#include "DirEntry.h"
 enum MODE{W,R,WR,E};
+class Disk;
 class FCB
 {
 public:

@@ -16,6 +16,12 @@ RootDir::RootDir()
 	msbSector = SectorDir(2);
 	lsbSector = SectorDir(3);
 }
+RootDir::RootDir(unsigned int a, unsigned int b)
+{
+	msbSector = SectorDir(a);
+	lsbSector = SectorDir(b);
+
+}
 /*************************************************
 * FUNCTION
 *	Ctor for SectorDir

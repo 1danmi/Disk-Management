@@ -15,7 +15,7 @@ class TestLevel_0
 		cout << "Size Of DirEntry -->" << sizeof(DirEntry) << endl;
 		cout << "Size Of SectorDir -->" << sizeof(SectorDir) << endl;
 		cout << "Size Of FileHeader -->" << sizeof(FileHeader) << endl;
-
+		cout << "Size Of usersSec -->" << sizeof(UsersSec) << endl;
 		cout << "Size Of RootDir -->" << sizeof(RootDir) << endl;
 	}
 
@@ -40,13 +40,13 @@ class TestLevel_0
 
 	}
 
-	static void test_create(string diskName, string ownerName)
+	static void test_create(string diskName, string ownerName,string pwd)
 	{
 		Disk d;
 		cout << "\npre createdisk: " << endl;
 		printDiskInfo(d);
 		cout << "post createdisk: " << endl;
-		d.createDisk(diskName, ownerName);
+		d.createDisk(diskName, ownerName,pwd); 
 		printDiskInfo(d);
 	}
 
@@ -83,9 +83,9 @@ public:
 		{
 			string diskName = "disk 1";
 			string ownerName = "oshri";
-
+			string pwd = "password";
 			printStructSize();
-			test_create(diskName, ownerName);
+			test_create(diskName, ownerName,pwd);
 			test_mount(diskName);
 		}
 		catch (exception ex)

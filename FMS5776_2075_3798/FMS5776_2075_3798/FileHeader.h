@@ -1,8 +1,6 @@
 #pragma once
-#include "dirEntry.h"
 #include "DAT.h"
-using namespace std;
-
+#include "DirEntry.h"
 
 class FileHeader
 {

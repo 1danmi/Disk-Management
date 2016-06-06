@@ -1,5 +1,5 @@
 #pragma once
-//#include "Disk.h"
+using namespace std;
 class VHD
 {
 public:
@@ -18,10 +18,8 @@ public:
 	VHD() {};
 	VHD(unsigned int,const char[12],const char[12],const char[10], unsigned int, unsigned int
 		, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int
-		, const char[10], bool);
+		, const char[10], bool, unsigned int);
 	~VHD() {};
-
-private:
 	unsigned int sectorNr;
 	char diskName[12];
 	char diskOwner[12];
@@ -33,9 +31,10 @@ private:
 	unsigned int addrDATcpy;
 	unsigned int addrRootDirCpy;
 	unsigned int addrDataStart;
+	unsigned int addrUserSec;
 	char formatDate[10];
 	bool isFormated;
-	char emptyArea[944];
+	char emptyArea[940];
 	friend class TestLevel_0;;
 	friend class Disk;
 };

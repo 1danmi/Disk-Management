@@ -1,8 +1,5 @@
 #pragma once
-#include "Today.h"
-#include <string>
 using namespace std;
-
 class DirEntry
 {
 public:

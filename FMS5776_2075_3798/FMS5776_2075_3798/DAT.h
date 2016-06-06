@@ -1,7 +1,6 @@
 #pragma once
 #include <bitset>
 using namespace std;
-
 typedef bitset<1600> DATtype;
 
 class DAT
@@ -11,8 +10,8 @@ public:
 	~DAT();
 	bool operator==(DAT const& dat);
 	DATtype dat;
-private:
 	unsigned int sectorNr = 1;
+private:
 	char emptyArea[820];
 	
 };

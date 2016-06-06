@@ -36,13 +36,10 @@
     <ClInclude Include="Dir.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Today.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FCB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ACL.h">
+    <ClInclude Include="User.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -72,6 +69,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FCB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -11,7 +11,7 @@ namespace FMS_adapter
     class Program
     {
 
-        List<FCB> fcbList;
+        //List<FCB> fcbList;
 
         public static string ToStringProperty(object t)
         {

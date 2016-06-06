@@ -1,7 +1,7 @@
 ﻿  VHD.cpp
+  User.cpp
   Sector.cpp
   Main.cpp
-d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'test': unreferenced local variable
   FileHeader.cpp
   FCB.cpp
   Disk.cpp
@@ -9,5 +9,6 @@ d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\main.cpp(100): warning C4101: 'te
   Dir.cpp
   DAT.cpp
   Generating Code...
-d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(1064): warning C4172: returning address of local variable or temporary: fcb
-  FMS5776_2075_3798.vcxproj -> D:\FMS_GUI\FMS5776_2075_3798\Debug\FMS5776_2075_3798.lib
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(1068): warning C4172: returning address of local variable or temporary: fcb
+  FMS5776_2075_3798.vcxproj -> D:\FMS_GUI\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
+  FMS5776_2075_3798.vcxproj -> D:\FMS_GUI\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)
