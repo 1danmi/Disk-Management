@@ -21,11 +21,11 @@ namespace FMS_adapter
             if (myDiskPtr != null) cppToCsharpAdapter.deleteDiskObject(ref myDiskPtr);
         }
 
-        public void createDisk(string dn, string dow)
+        public void createDisk(string dn, string dow, string pwd)
         {
             try
             {
-                cppToCsharpAdapter.createDisk(this.myDiskPtr, dn, dow);
+                cppToCsharpAdapter.createDisk(this.myDiskPtr, dn, dow,pwd);
             }
             catch (SEHException)
             {

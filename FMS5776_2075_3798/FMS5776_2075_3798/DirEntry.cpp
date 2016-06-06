@@ -30,8 +30,8 @@ DirEntry::DirEntry(const char fn[12], const char fo[12], unsigned int fa, unsign
 	unsigned int eorn, unsigned int mrs, unsigned int ars, char rf, unsigned int ko, 
 	unsigned int ks, const char kt[2], unsigned char es)
 {
-	strcpy_s(fileName, fn);
-	strcpy_s(fileOwner, fo);
+	strncpy_s(fileName,12, fn,11);
+	strncpy_s(fileOwner,12, fo,11);
 	fileAddr = fa;
 	char date[10];
 	_strdate(date);

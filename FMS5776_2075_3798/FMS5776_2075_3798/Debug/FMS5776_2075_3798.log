@@ -9,6 +9,6 @@
   Dir.cpp
   DAT.cpp
   Generating Code...
-d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(1068): warning C4172: returning address of local variable or temporary: fcb
+d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(1201): warning C4172: returning address of local variable or temporary: fcb
   FMS5776_2075_3798.vcxproj -> D:\FMS_GUI\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
   FMS5776_2075_3798.vcxproj -> D:\FMS_GUI\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)

@@ -1,6 +1,13 @@
 #pragma warning (disable:4996)
 #include "User.h"
 
+User::User()
+{
+	memcpy(this->name,"",1);
+	memcpy(this->password, "", 1);
+	this->sLevel = SLEVEL::user;
+}
+
 User::User(string & name, int sLevel, string & pwd)
 {
 	strncpy_s(this->name,12, name.c_str(), 11);
@@ -8,12 +15,15 @@ User::User(string & name, int sLevel, string & pwd)
 	switch (sLevel)
 	{
 	case 0:
-		this->sLevel = SLEVEL::Super_User;
+		this->sLevel = SLEVEL::Owner;
 		break;
 	case 1:
-		this->sLevel = SLEVEL::Administrator;
+		this->sLevel = SLEVEL::Super_User;
 		break;
 	case 2:
+		this->sLevel = SLEVEL::Administrator;
+		break;
+	case 3:
 		this->sLevel = SLEVEL::user;
 		break;
 	default:

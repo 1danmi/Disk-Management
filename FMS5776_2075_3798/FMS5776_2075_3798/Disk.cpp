@@ -120,8 +120,9 @@ void Disk::createDisk(string & dn, string & dow,string& pwd)
 		if (dskfl.is_open())
 		{
 			users.users[0] = User(dow, 0, pwd);
-			currUser = 0;
-			sign = 0;
+			users.numOfUsers = 1;
+			for (int i = 1; i < 5; i++)
+				users.users[i] = User();
 			char rawData[1020] = { 0 };
 			for (int i = 0; i < 3200; i++)
 			{
@@ -230,6 +231,8 @@ void Disk::unmountDisk(void)
 {
 	try
 	{
+		if (sign)
+			throw "You must sign out first!";
 		if (dskfl.is_open())
 		{
 			
@@ -357,6 +360,8 @@ fstream* Disk::getDskFl()
 		return &dskfl;
 	return NULL;
 }
+
+
 
 /*************************************************
 * FUNCTION
@@ -563,6 +568,89 @@ void Disk::readSector(Sector* sec)
 	}
 }
 
+void Disk::addUser(string & user, SLEVEL sLevel, string & pwd, SLEVEL applicantSLevel)
+{
+	if (users.numOfUsers == 5)
+		throw "You can't add more users!";
+	else
+	{
+		if (applicantSLevel >= sLevel)
+		{
+			users.users[users.numOfUsers - 1] = User(user, sLevel, pwd);
+			users.numOfUsers++;
+		}
+		else
+			throw "You can't set user with higher security level than yours!";
+	}
+}
+
+void Disk::signIn(string & user, string & pwd)
+{
+	if (sign)
+		throw "You  have to log out first!";
+	for(int i=0;i<users.numOfUsers;i++)
+		if (!strcmp(users.users[i].name, user.c_str()))
+		{
+			if (users.users[i].password != pwd)
+				break;
+			else
+			{
+				currUser = users.users[i];
+				sign = 1;
+				return;
+			}
+		}
+	throw "Username or Password is incorrect!";
+}
+
+void Disk::signOut()
+{
+	if (!sign)
+		throw "You are already signed out!";
+	sign = 0;
+	currUser = User();
+}
+
+void Disk::removeUser(string & user, string & pwd)
+{
+	if (sign)
+		throw "You must signed out first!";
+	for (int i = 0; i<users.numOfUsers; i++)
+		if (!strcmp(users.users[i].name, user.c_str()))
+		{
+			if (users.users[i].password != pwd)
+				break;
+			else
+			{
+				for (int j = i; j < users.numOfUsers - 1; j++)
+					users.users[i] = users.users[i + 1];
+				users.users[users.numOfUsers - 1] = User();
+			}
+		}
+	throw "Username or Password is incorrect!";
+}
+
+void Disk::removeUserSigned(string & user, SLEVEL applicantSLevel)
+{
+	for (int i = 0; i<users.numOfUsers; i++)
+		if (!strcmp(users.users[i].name, user.c_str()))
+		{
+			if (applicantSLevel >= SLEVEL::Super_User&&applicantSLevel > users.users[i].sLevel)
+			{
+				if (sign)
+					if (!strcmp(currUser.name, user.c_str()))
+						throw "You must signed out first!";
+				for (int j = i; j < users.numOfUsers - 1; j++)
+					users.users[i] = users.users[i + 1];
+				users.users[users.numOfUsers - 1] = User();
+				return;
+			}
+			else
+				throw "You don't have the appropriate permission to delete this account!";
+		}
+	throw "Account doesn't exist!";
+}
+
 #pragma endregion
 
 #pragma region Level1
@@ -586,6 +674,8 @@ void Disk::readSector(Sector* sec)
 void Disk::format(string& name)
 {
 	if (vhd.isFormated) throw "already formated";
+	if (this->currUser.sLevel != SLEVEL::Super_User)
+		throw "You must have a super user permission in order to format the disk";
 	if (strcmp(vhd.diskOwner, name.c_str()))
 		throw "Only the disk owner can format the disk!";
 	if (!mounted)
@@ -876,7 +966,7 @@ void Disk::dealloc(DATtype& fat)
 #pragma endregion
 
 #pragma region Level2
-void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen, unsigned int numOfSecs, string & kt, unsigned int ko, unsigned int ks, unsigned int algo)
+void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen, unsigned int numOfSecs, string & kt, unsigned int ko, User user, unsigned int ks, unsigned int algo)
 {
 	try
 	{
@@ -909,7 +999,7 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 		DirEntry de(fn.c_str(), fo.c_str(), firstSector, numOfSecs, (numOfSecs-1)*(1024/recLen)-1, 
 			recLen, recLen, ft.c_str()[0], ko, ks, kt.c_str(), '1');
 		
-		FileHeader fh(firstSector, de, fat);
+		FileHeader fh(firstSector, de, fat,user.sLevel);
 		
 		if (path >= 14 && path < 28)
 			rootDir.msbSector.dirEntry[i - 14] = de;
@@ -929,7 +1019,7 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 	}
 }
 
-void Disk::delFile(string & fn, string & fo)
+void Disk::delFile(string & fn, string & fo,User user)
 {
 	try
 	{
@@ -992,7 +1082,7 @@ void Disk::delFile(string & fn, string & fo)
 	
 }
 
-void Disk::extendFile(string & fn, string & fo, unsigned int num)
+void Disk::extendFile(string & fn, string & fo, unsigned int num,User user)
 {
 	try
 	{
@@ -1037,7 +1127,7 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num)
 			unsigned int recSize = rootDir.msbSector.dirEntry[path - 14].getRecSize();
 			rootDir.msbSector.dirEntry[path - 14].setEofRecNr((fileSize + num - 1)*(1024 / recSize) - 1);
 			rootDir.msbSector.dirEntry[path - 14].setFileSize(fileSize + num);
-			FileHeader buffer(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), rootDir.msbSector.dirEntry[path - 14], fat);
+			FileHeader buffer(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), rootDir.msbSector.dirEntry[path - 14], fat,user.sLevel);
 			writeSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)&buffer);
 		}
 		else if (path > -1 && path < 14)
@@ -1046,7 +1136,7 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num)
 			unsigned int recSize = rootDir.msbSector.dirEntry[path].getRecSize();
 			rootDir.msbSector.dirEntry[path].setEofRecNr((fileSize + num - 1)*(1024 / recSize) - 1);
 			rootDir.msbSector.dirEntry[path].setFileSize(fileSize + num);
-			FileHeader buffer(rootDir.msbSector.dirEntry[path].getFileAddr(), rootDir.msbSector.dirEntry[path], fat);
+			FileHeader buffer(rootDir.msbSector.dirEntry[path].getFileAddr(), rootDir.msbSector.dirEntry[path], fat,user.sLevel);
 			writeSector(rootDir.msbSector.dirEntry[path].getFileAddr(), (Sector*)&buffer);
 		}
 		else throw "Unknown error!";

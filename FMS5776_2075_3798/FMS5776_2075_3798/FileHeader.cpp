@@ -13,8 +13,9 @@
 * SEE ALSO
 *	---
 **************************************************/
-FileHeader::FileHeader(unsigned int sn, DirEntry fd, DATtype fat)
+FileHeader::FileHeader(unsigned int sn, DirEntry fd, DATtype fat, SLEVEL sl)
 {
+	sLevel = sl;
 	sectorNr = sn;
 	fileDesc = fd;
 	this->fat = fat;

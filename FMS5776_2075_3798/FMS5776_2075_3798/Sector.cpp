@@ -17,5 +17,5 @@
 Sector::Sector(unsigned int sn, char rd[1020])
 {
 	sectorNr = sn;
-	strcpy_s(rawData, rd);
+	strncpy_s(rawData,1020, rd,1020);
 }

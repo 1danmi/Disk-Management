@@ -13,12 +13,12 @@ class FCB;
 enum MODE;
 class Disk
 {
-private:
+public:
 	
 	bool vhdUpdate;
 	DAT dat;
 	bool datUpdate;
-	int currUser;
+	User currUser;
 	UsersSec users;
 	bool usersUpdate;
 	bool rootDirUpdate;
@@ -30,7 +30,7 @@ private:
 	string lastErrorMessage;
 
 
-public:
+
 	VHD vhd;
 	RootDir rootDir;
 
@@ -55,6 +55,11 @@ public:
 	void readSector(Sector*);
 	//friend class TestLevel_0;
 
+	void addUser(string& user, SLEVEL sLevel, string& pwd, SLEVEL applicantSLevel = SLEVEL::user);
+	void signIn(string& user, string& pwd);
+	void signOut();
+	void removeUser(string& user, string& pwd);
+	void removeUserSigned(string& user, SLEVEL applicantSLevel = SLEVEL::user);
 #pragma endregion
 
 #pragma region Level1
@@ -75,9 +80,9 @@ public:
 
 #pragma region Level2
 
-	void createFile(string &, string &, string &, unsigned int, unsigned int, string &, unsigned int, unsigned int = 0, unsigned int=0);
-	void delFile(string &, string &);
-	void extendFile(string &, string &, unsigned int);
+	void createFile(string &, string &, string &, unsigned int, unsigned int, string &, unsigned int,User, unsigned int = 0, unsigned int=0);
+	void delFile(string &, string &,User);
+	void extendFile(string &, string &, unsigned int, User);
 
 #pragma endregion
 

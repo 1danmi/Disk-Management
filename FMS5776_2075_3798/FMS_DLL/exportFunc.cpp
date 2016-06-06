@@ -10,11 +10,11 @@
 #include "FCB.h"
 
 #pragma region Level0
-__declspec(dllexport) void createDisk(Disk* THIS, char* diskName, char* diskOwner) 
+__declspec(dllexport) void createDisk(Disk* THIS, char* diskName, char* diskOwner, char* pwd) 
 { 
 	try 
 	{ 
-		THIS->createDisk(std::string(diskName), std::string(diskOwner));
+		THIS->createDisk(std::string(diskName), std::string(diskOwner),std::string(pwd));
 	} 
 	catch (exception ex) 
 	{ 

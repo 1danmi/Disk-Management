@@ -1,13 +1,15 @@
 #pragma once
 #include "DAT.h"
 #include "DirEntry.h"
+#include "user.h"
 
 class FileHeader
 {
 public:
 	FileHeader() {};
-	FileHeader(unsigned int, DirEntry, DATtype);
+	FileHeader(unsigned int, DirEntry, DATtype,SLEVEL);
 	~FileHeader() {};
+	SLEVEL sLevel;
 	DATtype getFat();
 	unsigned int sectorNr;
 	DirEntry fileDesc;

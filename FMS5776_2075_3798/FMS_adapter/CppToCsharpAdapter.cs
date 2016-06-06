@@ -87,7 +87,7 @@ namespace FMS_adapter
         // Level 0
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void createDisk(IntPtr THIS, string diskName, string diskOwner);
+        public static extern void createDisk(IntPtr THIS, string diskName, string diskOwner, string pwd);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void mountDisk(IntPtr THIS, string diskName);

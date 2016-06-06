@@ -29,8 +29,8 @@ VHD::VHD(unsigned int sn,const char dn[12],const char Do[12],const char pd[10], 
 	const char fd[10], bool is,unsigned int aus)
 {
 	sectorNr = sn;
-	strcpy_s(diskName,dn);
-	strcpy_s(diskOwner, Do);
+	strncpy_s(diskName,12,dn,11);
+	strncpy_s(diskOwner,12, Do,11);
 	strcpy_s(prodDate, pd);
 	ClusQty = cq;
 	dataClusQty = dcq;

@@ -3,8 +3,41 @@
 
 using namespace std;
 
-class TestLevel_0
+class Level0Debug
 {
+public:
+	static void startDebug(Disk& d,int mode)
+	{
+		string diskName;
+		string ownerName;
+		string ownerPwd;
+		int a;
+		switch (mode)
+		{
+		case 1:
+			printStructSize();
+		case 2:
+			printDiskInfo(d);
+		case 3:
+		{
+			cout << "Enter Disk Name:\n";
+			cin >> diskName;
+			cout << "Enter Owner Name:\n";
+			cin >> ownerName;
+			cout << "Enter Owner Password\n";
+			cin >> ownerPwd;
+			cout << "Creating Disk...\n";
+			d.createDisk(diskName, ownerName, ownerPwd);
+			cout << "Disk Created!\nWould you like to see the disk details?\n";
+			cout << "1. Yeah, Sure!\n";
+			cout << "2. No, I'm good\n";
+			cin >> a;
+			if (a == 1)
+				startDebug(d, 2);
+			break;
+		}
+		}
+	}
 	static void printStructSize()
 	{
 		cout << "start" << endl;
@@ -18,7 +51,6 @@ class TestLevel_0
 		cout << "Size Of usersSec -->" << sizeof(UsersSec) << endl;
 		cout << "Size Of RootDir -->" << sizeof(RootDir) << endl;
 	}
-
 	static void printDiskInfo(Disk& d)
 	{
 		VHD* vh = &d.vhd;
@@ -29,76 +61,27 @@ class TestLevel_0
 		cout << "	formatDate:       " << vh->formatDate << endl;
 		cout << "	isFormated:       " << vh->isFormated << endl;
 		cout << "	addrDataStart:    " << vh->addrDataStart << endl;
-
+		cout << "Users Info\n";
+		for (int i = 0; i < d.users.numOfUsers; i++)
+			cout << d.users.users[i].name << "\t" << d.users.users[i].password << endl;
 		cout << "	ClusQty:          " << vh->ClusQty << endl;
 		cout << "	dataClusQty:      " << vh->dataClusQty << endl;
-
 		cout << "	addrDAT:          " << vh->addrDAT << endl;
 		cout << "	addrRootDir:      " << vh->addrRootDir << endl;
 		cout << "	addrDATcpy:       " << vh->addrDATcpy << endl;
 		cout << "	addrRootDirCpy:   " << vh->addrRootDirCpy << endl << endl;
-
-	}
-
-	static void test_create(string diskName, string ownerName,string pwd)
-	{
-		Disk d;
-		cout << "\npre createdisk: " << endl;
-		printDiskInfo(d);
-		cout << "post createdisk: " << endl;
-		d.createDisk(diskName, ownerName,pwd); 
-		printDiskInfo(d);
-	}
-
-	static void test_mount(string diskName)
-	{
-		Disk d;
-		cout << "\npre mountdisk: " << endl;
-		printDiskInfo(d);
-		d.mountDisk(diskName);
-		cout << "post mountdisk: " << endl;
-		printDiskInfo(d);
-		d.unmountDisk();
 	}
 
 
-	/*static void test_rwSector(string diskName)
-	{
-		Disk d;
-		Sector sector;
-		d.mountDisk(diskName);
-
-		cout << "\nread sector: " << endl;
-		d.readSector(8, &sector);
-		strcpy_s(sector.rawData, "this is write temp sector");
-		d.writeSector(8, &sector);
-		d.unmountdisk();
-
-	}
-*/
-public:
-	static void test_0()
-	{
-		try
-		{
-			string diskName = "disk 1";
-			string ownerName = "oshri";
-			string pwd = "password";
-			printStructSize();
-			test_create(diskName, ownerName,pwd);
-			test_mount(diskName);
-		}
-		catch (exception ex)
-		{
-			cout << ex.what() << endl;
-		}
-	}
 };
 
 int main()
 {
-	TestLevel_0 test;
-	test.test_0();
+	Disk d;
+	cout << "Welcome to Level 0 Debuuging Mode!\nWhat would you like to do?\n";
+	cout << "1. See structs Details\n";
+	cout << "2. See disk Details\n";
+
 	system("pause");
 	return 0;
 }
