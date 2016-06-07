@@ -757,6 +757,8 @@ void Disk::format()
 **************************************************/
 unsigned int Disk::howMuchEmpty()
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	unsigned int count = 0;
 	for (int i = vhd.addrDataStart; i < 1600; i++)
 		if (dat.dat[i])
@@ -778,6 +780,8 @@ unsigned int Disk::howMuchEmpty()
 **************************************************/
 unsigned int Disk::howMuchEmpty(unsigned int start)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	unsigned int count = 0;
 	unsigned int discount = 0;
 	for (int i = start; i < 1600; i++)
@@ -802,6 +806,8 @@ unsigned int Disk::howMuchEmpty(unsigned int start)
 **************************************************/
 bool Disk::firstFit(DATtype& fat, unsigned int clusters, unsigned int start)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	if (this->howMuchEmpty(start) < clusters)
 		throw "Not enough space in disk!";
 	//fat.reset();
@@ -885,6 +891,8 @@ bool Disk::firstFit(DATtype& fat, unsigned int clusters, unsigned int start)
 **************************************************/
 bool Disk::bestFit(DATtype& fat, unsigned int clusters, unsigned int start)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	if (howMuchEmpty(start) < clusters)
 		throw "Not enough space in disk";
 	int i = start;
@@ -959,6 +967,8 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters, unsigned int start)
 **************************************************/
 bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	if (howMuchEmpty() < clusters)
 		throw "Not enough space in disk";
 	int maxLength = 0;
@@ -1025,6 +1035,8 @@ bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 **************************************************/
 void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo, unsigned int debug)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	unsigned int clusters;
 	if (numOfSecs % 2 == 0) clusters = numOfSecs / 2;
 	else clusters = (numOfSecs / 2) + 1;
@@ -1053,6 +1065,8 @@ void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo, unsig
 
 void Disk::allocExtend(DATtype& fat, unsigned int sectors, unsigned int algo)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	//Finding last allocated index;
 	int lAlloc = 0;
 	for (int i = 0; i < 1600; i++)
@@ -1083,20 +1097,30 @@ void Disk::allocExtend(DATtype& fat, unsigned int sectors, unsigned int algo)
 
 void Disk::dealloc(DATtype& fat)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	dat.dat |= fat;
 }
 #pragma endregion
 
 #pragma region Level2
-void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen, unsigned int numOfSecs, string & kt, unsigned int ko, User user, unsigned int ks, unsigned int algo)
+
+void Disk::createFile(string & fn, string & ft, unsigned int recLen, unsigned int numOfSecs, string & kt,SLEVEL sl, unsigned int ko, unsigned int ks, unsigned int algo)
 {
 	try
 	{
+		if (!mounted)
+			throw "Disk is not mounted!";
+		if (!sign)
+			throw "You have to sign-in in order to create a new file!";
+		if (sl > currUser.sLevel)
+			throw "You can't create new file with higher permisition than yours!";
 		int path =-1;
 		for (int i = 0; i < 14; i++)
-		{
 			if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()) || !strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
 				throw "File name in use";
+		for (int i = 0; i < 14; i++)
+		{
 			if (path == -1 && (rootDir.lsbSector.dirEntry[i].getEntryStatus() == 0 || rootDir.lsbSector.dirEntry[i].getEntryStatus() == 2))
 			{
 				path = i;
@@ -1109,8 +1133,7 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 			}
 		}
 		if (path == -1)
-			throw "To many files in the disk";
-		
+			throw "Disk is full!";
 		DATtype fat;
 		alloc(fat, numOfSecs, algo);
 		int i = 0;
@@ -1118,10 +1141,10 @@ void Disk::createFile(string & fn, string & fo, string & ft, unsigned int recLen
 		while (firstSector == -1 && i < 1600)
 			if (fat[i])
 				firstSector = i;
-		DirEntry de(fn.c_str(), fo.c_str(), firstSector, numOfSecs, (numOfSecs-1)*(1024/recLen)-1, 
+		DirEntry de(fn.c_str(), currUser.name, firstSector, numOfSecs, (numOfSecs-1)*(1024/recLen)-1, 
 			recLen, recLen, ft.c_str()[0], ko, ks, kt.c_str(), '1');
 		
-		FileHeader fh(firstSector, de, fat,user.sLevel);
+		FileHeader fh(firstSector, de, fat,sl);
 		
 		if (path >= 14 && path < 28)
 			rootDir.msbSector.dirEntry[i - 14] = de;
@@ -1145,34 +1168,22 @@ void Disk::delFile(string & fn, string & fo,User user)
 {
 	try
 	{
+		if (!mounted)
+			throw "Disk is not mounted!";
+		if (!sign)
+			throw "You have to sign-in in order to delete a file!";
 		int path = -1;
 		for (int i = 0; i < 14; i++)
 		{
 			if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				if (!strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fo.c_str()))
-				{
-					path = i;
-					break;
-				}
-				else
-				{
-					throw "Only the file's owner can delete the file!";
-					break;
-				}
+				path = i;
+				break;
 			}
 			else if (!strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				if (!strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fo.c_str()))
-				{
-					path = i + 14;
-					break;
-				}
-				else
-				{
-					throw "Only the file's owner can delete the file!";
-					break;
-				}
+				path = i + 14;
+				break;
 			}
 		}
 		if (path == -1)
@@ -1180,12 +1191,16 @@ void Disk::delFile(string & fn, string & fo,User user)
 		FileHeader* buffer = new FileHeader();
 		if (path >= 14 && path < 28)
 		{
+			if (rootDir.msbSector.dirEntry[path - 14].sLevel >= currUser.sLevel&&strcmp(currUser.name, rootDir.msbSector.dirEntry[path - 14].getOwnerName()))
+				throw "You don't have the right permission to delete this file";
 			rootDir.msbSector.dirEntry[path - 14].setEntryStatus('2'); //2 = deleted
 			readSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)buffer);
 			dealloc((*buffer).getFat());
 		}
 		else if (path > -1 && path < 14)
 		{
+			if (rootDir.lsbSector.dirEntry[path].sLevel >= currUser.sLevel&&strcmp(currUser.name, rootDir.lsbSector.dirEntry[path].getOwnerName()))
+				throw "You don't have the right permission to delete this file";
 			rootDir.lsbSector.dirEntry[path].setEntryStatus('2');
 			readSector(rootDir.msbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
 			dealloc((*buffer).getFat());
@@ -1208,43 +1223,34 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num,User user)
 {
 	try
 	{
+		if (!mounted)
+			throw "Disk is not mounted!";
+		if (!sign)
+			throw "You have to sign-in in order to extend a file!";
 		int path = -1;
 		for (int i = 0; i < 14; i++)
 		{
 			if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				if (!strcmp(rootDir.lsbSector.dirEntry[i].getOwnerName(), fo.c_str()))
-				{
-					path = i;
-					break;
-				}
-				else
-				{
-					throw "Only the file's owner can delete the file!";
-					break;
-				}
+				path = i;
+				break;
 			}
 			else if (!strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
 			{
-				if (!strcmp(rootDir.msbSector.dirEntry[i].getOwnerName(), fo.c_str()))
-				{
-					path = i + 14;
-					break;
-				}
-				else
-				{
-					throw "Only the file's owner can delete the file!";
-					break;
-				}
+				path = i + 14;
+				break;
 			}
 		}
 		if (path == -1)
 			throw "File does not exist!";
 		
 		DATtype fat;
-		allocExtend(fat, num);
+		
 		if (path >= 14 && path < 28)
 		{	
+			if (rootDir.msbSector.dirEntry[path - 14].sLevel >= currUser.sLevel&&strcmp(currUser.name, rootDir.msbSector.dirEntry[path - 14].getOwnerName()))
+				throw "You don't have the right permission to perform this action";
+			allocExtend(fat, num);
 			unsigned int fileSize = rootDir.msbSector.dirEntry[path - 14].getFileSize();
 			unsigned int recSize = rootDir.msbSector.dirEntry[path - 14].getRecSize();
 			rootDir.msbSector.dirEntry[path - 14].setEofRecNr((fileSize + num - 1)*(1024 / recSize) - 1);
@@ -1254,6 +1260,8 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num,User user)
 		}
 		else if (path > -1 && path < 14)
 		{
+			if (rootDir.lsbSector.dirEntry[path].sLevel >= currUser.sLevel&&strcmp(currUser.name, rootDir.lsbSector.dirEntry[path].getOwnerName()))
+				throw "You don't have the right permission to perform this action";
 			unsigned int fileSize = rootDir.msbSector.dirEntry[path].getFileSize();
 			unsigned int recSize = rootDir.msbSector.dirEntry[path].getRecSize();
 			rootDir.msbSector.dirEntry[path].setEofRecNr((fileSize + num - 1)*(1024 / recSize) - 1);
@@ -1272,6 +1280,7 @@ void Disk::extendFile(string & fn, string & fo, unsigned int num,User user)
 		throw "Unknown exception\nEditional details: Thrown from 'extend file'";
 	}
 }
+
 #pragma endregion
 
 #pragma region Level3

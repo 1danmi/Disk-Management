@@ -28,9 +28,6 @@ public:
 	unsigned int currDiskSectorNr;
 	//char buffer[sizeof(Sector)];
 	string lastErrorMessage;
-
-
-
 	VHD vhd;
 	RootDir rootDir;
 
@@ -80,7 +77,7 @@ public:
 
 #pragma region Level2
 
-	void createFile(string &, string &, string &, unsigned int, unsigned int, string &, unsigned int,User, unsigned int = 0, unsigned int=0);
+	void createFile(string &, string &, unsigned int, unsigned int, string &,SLEVEL, unsigned int, unsigned int = 0, unsigned int=0);
 	void delFile(string &, string &,User);
 	void extendFile(string &, string &, unsigned int, User);
 

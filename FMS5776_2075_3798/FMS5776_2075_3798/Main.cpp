@@ -376,7 +376,7 @@ public:
 			cout << "Fat:\t";
 			for (int i = 6; i < 22; i++)
 				cout << fat[i] << " ";
-			cout << "\t(Before Allocation)" << endl;
+			cout << "\t" << endl;
 			d.dealloc(fat);
 			cout << "Dat:\t";
 			for (int i = 6; i < 22; i++)
@@ -412,6 +412,46 @@ public:
 		cout << "	addrUserSec:      " << vh->addrUserSec << endl;
 		cout << "	addrDATcpy:       " << vh->addrDATcpy << endl;
 		cout << "	addrRootDirCpy:   " << vh->addrRootDirCpy << endl << endl;
+	}
+	static void setDatTest(Disk& d)
+	{
+		for (int i = 6; i < 1600; i++)
+			d.dat.dat[i] = 0;
+		d.dat.dat[6] = 0;
+		d.dat.dat[7] = 1;
+		d.dat.dat[8] = 1;
+		d.dat.dat[9] = 1;
+		d.dat.dat[10] = 0;
+		d.dat.dat[11] = 0;
+		d.dat.dat[12] = 0;
+		d.dat.dat[13] = 0;
+		d.dat.dat[14] = 1;
+		d.dat.dat[15] = 1;
+		d.dat.dat[16] = 0;
+		d.dat.dat[17] = 1;
+		d.dat.dat[18] = 1;
+		d.dat.dat[19] = 1;
+		d.dat.dat[20] = 1;
+		d.dat.dat[21] = 0;
+		/*for (int i = 6; i < 1600; i++)
+			d.dat.dat[i] = 0;
+		d.dat.dat[6] = 1;
+		d.dat.dat[7] = 0;
+		d.dat.dat[8] = 1;
+		d.dat.dat[9] = 0;
+		d.dat.dat[10] = 1;
+		d.dat.dat[11] = 0;
+		d.dat.dat[12] = 1;
+		d.dat.dat[13] = 0;
+		d.dat.dat[14] = 1;
+		d.dat.dat[15] = 0;
+		d.dat.dat[16] = 1;
+		d.dat.dat[17] = 0;
+		d.dat.dat[18] = 1;
+		d.dat.dat[19] = 0;
+		d.dat.dat[20] = 1;
+		d.dat.dat[21] = 0;*/
+
 	}
 	static void welcomeDebugLevel1(Disk& d)
 	{
@@ -458,52 +498,90 @@ public:
 			cin >> a;
 		}
 	}
-	static void setDatTest(Disk& d)
+};
+
+class Level2Debug
+{
+	static void startDebug(Disk& d, int mode)
 	{
-		for (int i = 6; i < 1600; i++)
-			d.dat.dat[i] = 0;
-		d.dat.dat[6] = 0;
-		d.dat.dat[7] = 1;
-		d.dat.dat[8] = 1;
-		d.dat.dat[9] = 1;
-		d.dat.dat[10] = 0;
-		d.dat.dat[11] = 0;
-		d.dat.dat[12] = 0;
-		d.dat.dat[13] = 0;
-		d.dat.dat[14] = 1;
-		d.dat.dat[15] = 1;
-		d.dat.dat[16] = 0;
-		d.dat.dat[17] = 1;
-		d.dat.dat[18] = 1;
-		d.dat.dat[19] = 1;
-		d.dat.dat[20] = 1;
-		d.dat.dat[21] = 0;
-		/*for (int i = 6; i < 1600; i++)
-			d.dat.dat[i] = 0;
-		d.dat.dat[6] = 1;
-		d.dat.dat[7] = 0;
-		d.dat.dat[8] = 1;
-		d.dat.dat[9] = 0;
-		d.dat.dat[10] = 1;
-		d.dat.dat[11] = 0;
-		d.dat.dat[12] = 1;
-		d.dat.dat[13] = 0;
-		d.dat.dat[14] = 1;
-		d.dat.dat[15] = 0;
-		d.dat.dat[16] = 1;
-		d.dat.dat[17] = 0;
-		d.dat.dat[18] = 1;
-		d.dat.dat[19] = 0;
-		d.dat.dat[20] = 1;
-		d.dat.dat[21] = 0;*/
+		switch (mode)
+		{
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		case 7:
+			break;
+		case 8:
+			break;
+		case 9:
+			break;
+		default:
+			break;
+		}
 
 	}
+	static void welcomeDebugLevel2(Disk& d)
+	{
+		int a;
+		d.mountDisk(string("Disk1.fms"));
+		cout << "Welcome to Level 1 Debugging Mode!\nWhat would you like to do?\n";
+		cout << "1. Set Disk (level 0)\n";
+		cout << "2. See disk Details\n";
+		cout << "3. Format Disk\n";
+		cout << "4. Check first fit algorithm\n";
+		cout << "5. Check best fit algorithm\n";
+		cout << "6. Check worse fit algorithm\n";
+		cout << "7. Allocate space\n";
+		cout << "8. Extend Allocation\n";
+		cout << "9. Deallocate Space\n";
+		cout << "10. Exit\n";
+		cin >> a;
+		while (a != 10)
+		{
+			if (a > 10 || a < 1)
+			{
+				cout << "Illegal Command!\n";
+			}
+			else
+			{
+				try {
+					startDebug(d, a);
+				}
+				catch (const char* str) {
+					cout << str << endl;
+				}
+			}
+			cout << "Welcome to Level 1 Debugging Mode!\nWhat would you like to do?\n";
+			cout << "1. Set Disk (level 0)\n";
+			cout << "2. See disk Details\n";
+			cout << "3. Format Disk\n";
+			cout << "4. Check first fit algorithm\n";
+			cout << "5. Check best fit algorithm\n";
+			cout << "6. Check worse fit algorithm\n";
+			cout << "7. Allocate space\n";
+			cout << "8. Extend Allocation\n";
+			cout << "9. Deallocate Space\n";
+			cout << "10. Exit\n";
+			cin >> a;
+		}
+	}
 };
+
 int main()
 {	
 	try{
 		Disk d;
-		Level1Debug::welcomeDebugLevel1(d);
+		//Level1Debug::welcomeDebugLevel1(d);
+		cout << sizeof(DirEntry) << "\t" << sizeof(RootDir)/2 <<"\t"<<sizeof(FileHeader)<< endl;
 	}
 	catch (const char* str){
 		cout << str << endl;

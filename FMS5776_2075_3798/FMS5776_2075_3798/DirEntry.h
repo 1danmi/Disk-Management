@@ -21,19 +21,18 @@ public:
 	unsigned int getRecSize();
 	unsigned int getKeySize();
 	unsigned int getKeyOffset();
-private:
 	char fileName[12];
 	char fileOwner[12];
 	unsigned int fileAddr; //First sector of the file.
 	char crDate[10];
 	unsigned int fileSize; // number of sectors
 	unsigned int eofRecNr;  //end of file record number
-	unsigned int maxRecSize; // קיבולת תאורטית
+	//unsigned int maxRecSize; // קיבולת תאורטית
 	unsigned int actualRecSize; //קיבולת מעשית
 	char recFormat[2]; //fixed size
 	unsigned int keyOffset;
 	unsigned int keySize; //number of bytes
 	char keyType[2]; // I - 00 / F - 01 / D - 10 / C - 10
 	unsigned char entryStatus; // 0 - empty / 1- active / 2 - deleted
-
+	SLEVEL sLevel;
 };
