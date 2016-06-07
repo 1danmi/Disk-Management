@@ -8,9 +8,10 @@ class DAT
 public:
 	DAT();
 	~DAT();
-	bool operator==(DAT const& dat);
-	DATtype dat;
 	unsigned int sectorNr = 1;
+	DATtype dat;
+	bool operator==(DAT const& dat);
+	
 private:
 	char emptyArea[820];
 	

@@ -5,6 +5,7 @@
 #include <cmath>
 #include <algorithm>
 #include <cstring>
+#include <fstream>
 #include <iostream>
 
 using namespace std;
@@ -115,8 +116,10 @@ void Disk::createDisk(string & dn, string & dow,string& pwd)
 {
 	try
 	{
+		
 		string fileName = dn + ".fms";
-		dskfl.open(fileName, ios::binary | ios::out);
+		dskfl = fstream(fileName, ios::binary | ios::out);
+		//dskfl.open(fileName,ios::binary | ios::in | ios::out);
 		if (dskfl.is_open())
 		{
 			users.users[0] = User(dow, 0, pwd);
@@ -160,7 +163,7 @@ void Disk::createDisk(string & dn, string & dow,string& pwd)
 			dskfl.seekp(vhd.addrRootDirCpy * sizeof(Sector));
 			dskfl.write((char*)& rootDir, sizeof(Sector));
 			dskfl.close();
-			mountDisk(dn);
+			mountDisk(fileName);
 		}
 		else
 			throw "File Problem!";
@@ -189,7 +192,8 @@ void Disk::mountDisk(string & fn)
 	{
 		if (mounted)
 			throw "Disk already mounted";
-		dskfl.open(fn+".fms", ios::in, ios::binary);
+		//dskfl = fstream(fn, ios::binary);
+		dskfl.open(fn, ios::in | ios::out | ios::binary);
 		if (dskfl.is_open())
 		{
 			dskfl.read((char*)& vhd, 1024);
@@ -251,11 +255,8 @@ void Disk::unmountDisk(void)
 				dskfl.seekp(vhd.addrRootDir * sizeof(Sector));
 				dskfl.write((char*)& rootDir, sizeof(Sector) * 2);
 			}
-			if(usersUpdate)
-				{
-				dskfl.seekp(vhd.addrUserSec * sizeof(Sector));
-				dskfl.write((char*)& users, sizeof(Sector) );
-			}
+			dskfl.seekp(vhd.addrUserSec * sizeof(Sector));
+			dskfl.write((char*)& users, sizeof(Sector) );
 			dskfl.close();
 			mounted = false;
 		}
@@ -361,8 +362,6 @@ fstream* Disk::getDskFl()
 	return NULL;
 }
 
-
-
 /*************************************************
 * FUNCTION
 *	void seekToSector(unsigned int)
@@ -379,6 +378,8 @@ void Disk::seekToSector(unsigned int num)
 {
 	try
 	{
+		if (!mounted)
+			throw "Disk is not mounted!";
 		if (!dskfl.is_open())
 		{
 			throw "Disk file is not open!";
@@ -414,11 +415,14 @@ void Disk::writeSector(unsigned int num, Sector* sec)
 {
 	try
 	{
+		if (!mounted)
+			throw "Disk is not mounted!";
 		if (num > 3200 || num <0)
 			throw "Sector number is incorrect!";
 		if (dskfl.is_open())
 		{
 			this->seekToSector(num);
+			sec->sectorNr = num;
 			dskfl.write((char*)sec, sizeof(Sector));
 			if (num != 3200)
 			{
@@ -455,11 +459,14 @@ void Disk::writeSector(Sector* sec)
 {
 	try
 	{
+		if (!mounted)
+			throw "Disk is not mounted!";
 		if (!dskfl.is_open())
 			throw "File problem!";
 		if (currDiskSectorNr > 3200)
 			throw "Disk is full!";
 		seekToSector(currDiskSectorNr);
+		sec->sectorNr = currDiskSectorNr;
 		dskfl.write((char*)sec, sizeof(Sector));
 		if (currDiskSectorNr < 3200)
 		{
@@ -500,6 +507,8 @@ void Disk::readSector(int num, Sector* sec)
 {
 	try
 	{
+		if (!mounted)
+			throw "Disk is not mounted!";
 		if (num > 3200 || num < 0)
 			throw "Sector number is incorrect!";
 		if (dskfl.is_open())
@@ -541,6 +550,8 @@ void Disk::readSector(Sector* sec)
 {
 	try
 	{
+		if (!mounted)
+			throw "Disk is not mounted!";
 		if (!dskfl.is_open())
 			throw "File problem!";
 		if (currDiskSectorNr > 3200)
@@ -570,13 +581,18 @@ void Disk::readSector(Sector* sec)
 
 void Disk::addUser(string & user, SLEVEL sLevel, string & pwd, SLEVEL applicantSLevel)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	if (users.numOfUsers == 5)
 		throw "You can't add more users!";
+	for (int i = 0; i < users.numOfUsers; i++)
+		if (!strcmp(users.users[i].name, user.c_str()))
+			throw "User name already taken!";
 	else
 	{
 		if (applicantSLevel >= sLevel)
 		{
-			users.users[users.numOfUsers - 1] = User(user, sLevel, pwd);
+			users.users[users.numOfUsers] = User(user, sLevel, pwd);
 			users.numOfUsers++;
 		}
 		else
@@ -586,12 +602,14 @@ void Disk::addUser(string & user, SLEVEL sLevel, string & pwd, SLEVEL applicantS
 
 void Disk::signIn(string & user, string & pwd)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	if (sign)
 		throw "You  have to log out first!";
 	for(int i=0;i<users.numOfUsers;i++)
 		if (!strcmp(users.users[i].name, user.c_str()))
 		{
-			if (users.users[i].password != pwd)
+			if (strcmp(users.users[i].password, pwd.c_str()))
 				break;
 			else
 			{
@@ -605,6 +623,8 @@ void Disk::signIn(string & user, string & pwd)
 
 void Disk::signOut()
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	if (!sign)
 		throw "You are already signed out!";
 	sign = 0;
@@ -613,18 +633,24 @@ void Disk::signOut()
 
 void Disk::removeUser(string & user, string & pwd)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	if (sign)
 		throw "You must signed out first!";
 	for (int i = 0; i<users.numOfUsers; i++)
 		if (!strcmp(users.users[i].name, user.c_str()))
 		{
-			if (users.users[i].password != pwd)
+			if (users.users[i].sLevel == SLEVEL::Owner)
+				throw "You can't remove the owner!";
+			if (strcmp(users.users[i].password, pwd.c_str()))
 				break;
 			else
 			{
 				for (int j = i; j < users.numOfUsers - 1; j++)
 					users.users[i] = users.users[i + 1];
 				users.users[users.numOfUsers - 1] = User();
+				this->users.numOfUsers--;
+				return;
 			}
 		}
 	throw "Username or Password is incorrect!";
@@ -632,6 +658,8 @@ void Disk::removeUser(string & user, string & pwd)
 
 void Disk::removeUserSigned(string & user, SLEVEL applicantSLevel)
 {
+	if (!mounted)
+		throw "Disk is not mounted!";
 	for (int i = 0; i<users.numOfUsers; i++)
 		if (!strcmp(users.users[i].name, user.c_str()))
 		{
@@ -643,6 +671,7 @@ void Disk::removeUserSigned(string & user, SLEVEL applicantSLevel)
 				for (int j = i; j < users.numOfUsers - 1; j++)
 					users.users[i] = users.users[i + 1];
 				users.users[users.numOfUsers - 1] = User();
+				users.numOfUsers--;
 				return;
 			}
 			else

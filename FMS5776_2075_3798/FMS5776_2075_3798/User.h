@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-enum SLEVEL {user, Administrator,Super_User,Owner};
+enum SLEVEL {user=1, Administrator,Super_User,Owner};
 class User
 {
 public:
