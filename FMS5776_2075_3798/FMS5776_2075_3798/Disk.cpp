@@ -141,13 +141,13 @@ void Disk::createDisk(string & dn, string & dow,string& pwd)
 			//DAT Initialization
 			dat.sectorNr = vhd.addrDAT;
 			this->dat.dat.set();
-			dat.dat[0] = 0;
-			dat.dat[vhd.addrDAT] = 0;
-			dat.dat[vhd.addrRootDir] = 0;
-			dat.dat[vhd.addrRootDir+1] = 0;
-			dat.dat[vhd.addrUserSec] = 0;
-			dat.dat[vhd.addrDATcpy] = 0;
-			dat.dat[vhd.addrRootDirCpy] = 0;
+			dat.dat[0] = 0;//VHD
+			dat.dat[vhd.addrDAT/2] = 0;//DAT
+			dat.dat[vhd.addrRootDir/2] = 0;//RootDir
+			dat.dat[vhd.addrUserSec/2] = 0;//UserSec
+			dat.dat[vhd.addrDATcpy / 2] = 0;
+			dat.dat[vhd.addrRootDirCpy / 2] = 0;
+
 			rootDir = RootDir(vhd.addrRootDir,vhd.addrRootDir+1);
 			dskfl.seekp(0);
 			dskfl.write((char*)& vhd, sizeof(Sector));
@@ -249,11 +249,16 @@ void Disk::unmountDisk(void)
 			{
 				dskfl.seekp(vhd.addrDAT*sizeof(Sector));
 				dskfl.write((char*)& rootDir, sizeof(Sector));
+				dskfl.seekp(vhd.addrDATcpy * sizeof(Sector));
+				dskfl.write((char*)& dat, sizeof(Sector));
+				
 			}
 			if(rootDirUpdate)
 			{
 				dskfl.seekp(vhd.addrRootDir * sizeof(Sector));
 				dskfl.write((char*)& rootDir, sizeof(Sector) * 2);
+				dskfl.seekp(vhd.addrRootDirCpy * sizeof(Sector));
+				dskfl.write((char*)& rootDir, sizeof(Sector));
 			}
 			dskfl.seekp(vhd.addrUserSec * sizeof(Sector));
 			dskfl.write((char*)& users, sizeof(Sector) );
@@ -700,20 +705,29 @@ void Disk::removeUserSigned(string & user, SLEVEL applicantSLevel)
 * SEE ALSO
 *	---
 **************************************************/
-void Disk::format(string& name)
+void Disk::format()
 {
-	if (vhd.isFormated) throw "already formated";
-	if (this->currUser.sLevel != SLEVEL::Super_User)
-		throw "You must have a super user permission in order to format the disk";
-	if (strcmp(vhd.diskOwner, name.c_str()))
-		throw "Only the disk owner can format the disk!";
-	if (!mounted)
-		throw "No disk is mounted!";
 	if (!dskfl.is_open())
 		throw "File problem!";
-	dat.dat.set();
-	for (int i = 0; i < 4; i++)
-		this->dat.dat[i] = 0;
+	if (!mounted)
+		throw "No disk is mounted!";
+	if (!sign)
+		throw "You have to be signed in in order to format the disk!";
+	if (vhd.isFormated) 
+		throw "Already formated!";
+	if (this->currUser.sLevel != SLEVEL::Owner)
+		throw "You must have owner permissions in order to format the disk!";
+	/*if (strcmp(vhd.diskOwner, name.c_str()))
+		throw "Only the disk owner can format the disk!";*/
+	
+	dat.sectorNr = vhd.addrDAT;
+	this->dat.dat.set();
+	dat.dat[0] = 0;//VHD
+	dat.dat[vhd.addrDAT / 2] = 0;//DAT
+	dat.dat[vhd.addrRootDir / 2] = 0;//RootDir
+	dat.dat[vhd.addrUserSec / 2] = 0;//UserSec
+	dat.dat[vhd.addrDATcpy / 2] = 0;
+	dat.dat[vhd.addrRootDirCpy / 2] = 0;
 	datUpdate = 1;
 	for (int i = 0; i < 14; i++)
 	{
@@ -724,6 +738,9 @@ void Disk::format(string& name)
 	_strdate(vhd.formatDate);
 	vhdUpdate = 1;
 	vhd.isFormated = 1;
+	string diskName(vhd.diskName);
+	unmountDisk();
+	mountDisk(diskName + ".fms");
 }
 
 /*************************************************
@@ -741,7 +758,7 @@ void Disk::format(string& name)
 unsigned int Disk::howMuchEmpty()
 {
 	unsigned int count = 0;
-	for (int i = 4; i < 1600; i++)
+	for (int i = vhd.addrDataStart; i < 1600; i++)
 		if (dat.dat[i])
 			count++;
 	return count;
@@ -762,9 +779,12 @@ unsigned int Disk::howMuchEmpty()
 unsigned int Disk::howMuchEmpty(unsigned int start)
 {
 	unsigned int count = 0;
+	unsigned int discount = 0;
 	for (int i = start; i < 1600; i++)
 		if (dat.dat[i])
 			count++;
+		else
+			discount++;
 	return count;
 }
 
@@ -783,21 +803,71 @@ unsigned int Disk::howMuchEmpty(unsigned int start)
 bool Disk::firstFit(DATtype& fat, unsigned int clusters, unsigned int start)
 {
 	if (this->howMuchEmpty(start) < clusters)
-		throw "Not enough space in disk";
-	fat.reset();
+		throw "Not enough space in disk!";
+	//fat.reset();
+	int count = 0;
+	int alloc = -1;
 	int i = start;
 	while (clusters > 0 && i < 1600)
 	{
 		if (dat.dat[i])
 		{
-			dat.dat[i] = 0;
-			fat[i] = 1;
-			clusters--;
+			count++;
+			if (alloc == -1)
+				alloc = i;
+		}
+		if (count == clusters)
+			break;
+		if (!dat.dat[i])
+		{
+			count = 0;
+			alloc = -1;
 		}
 		i++;
 	}
-	if (i >= 1600 && clusters > 0)
+	if (alloc + clusters >= 1600 && clusters > 0)
 		throw "Oops, something went wrong";
+	if (alloc != -1)
+	{
+		for (int j = 0; j < clusters; j++)
+		{
+			dat.dat[j + alloc] = 0;
+			fat[j + alloc] = 1;
+			//fat[i] = 1;
+		}
+	}
+	else
+	{
+		int frag = -1;
+		for(int j= start;j<1600;j++)
+			if (dat.dat[j])
+			{
+				frag = j;
+				break;
+			}
+		if (frag != -1)
+		{
+			while (dat.dat[frag] && clusters > 0)
+			{
+				dat.dat[frag] = 0;
+				fat[frag] = 1;
+				clusters--;
+				frag++;
+			}
+		}
+		else
+			throw "Error!";
+		if (clusters > 0)
+			firstFit(fat, clusters, start);
+	}
+	
+	
+	if (!vhd.isFormated)
+	{
+		vhd.isFormated = 1;
+		vhdUpdate = 1;
+	}
+	datUpdate = 1;
 	return true;
 }
 
@@ -865,7 +935,13 @@ bool Disk::bestFit(DATtype& fat, unsigned int clusters, unsigned int start)
 		fat[i + bFitIndex] = 1;
 	}
 	if (clusters > bFitSize)
-		bestFit(fat, clusters - bFitSize);
+		bestFit(fat, clusters - bFitSize,start);
+	if (!vhd.isFormated)
+	{
+		vhd.isFormated = 1;
+		vhdUpdate = 1;
+	}
+	datUpdate = 1;
 	return true;
 }
 
@@ -885,17 +961,20 @@ bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 {
 	if (howMuchEmpty() < clusters)
 		throw "Not enough space in disk";
-	unsigned  int maxLength = 0;
-	unsigned  int maxLengthIndex = 0;
-	unsigned  int tmpMaxLength = 0;
-	unsigned  int tmpMaxLengthIndex = 0;
+	int maxLength = 0;
+	int maxLengthIndex = 0;
+	bool counting = 0;
+	int tmpMaxLength = -1;
+    int tmpMaxLengthIndex = -1;
 	int i = start;
 	while (i < 1600)
 	{
-		tmpMaxLength = 0;
 		if (dat.dat[i])
 		{
-			tmpMaxLengthIndex = i;
+			if (tmpMaxLength == -1)
+				tmpMaxLength = 0;
+			if(tmpMaxLengthIndex==-1)
+				tmpMaxLengthIndex = i;
 			while (dat.dat[i])
 			{
 				tmpMaxLength++;
@@ -910,7 +989,11 @@ bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 			}
 		}
 		else
+		{
+			tmpMaxLength = -1;
+			tmpMaxLengthIndex = -1;
 			i++;
+		}
 	}
 	for (int i = 0; i < min((int)maxLength, (int)clusters); i++)
 	{
@@ -918,7 +1001,13 @@ bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 		fat[i + maxLengthIndex] = 1;
 	}
 	if (clusters > maxLength)
-		worstFit(fat, clusters - maxLength);
+		worstFit(fat, clusters - maxLength,start);
+	if (!vhd.isFormated)
+	{
+		vhd.isFormated = 1;
+		vhdUpdate = 1;
+	}
+	datUpdate = 1;
 	return true;
 }
 
@@ -934,23 +1023,27 @@ bool Disk::worstFit(DATtype & fat, unsigned int clusters, unsigned int start)
 * SEE ALSO
 *
 **************************************************/
-void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo)
+void Disk::alloc(DATtype & fat, unsigned int numOfSecs, unsigned int algo, unsigned int debug)
 {
 	unsigned int clusters;
 	if (numOfSecs % 2 == 0) clusters = numOfSecs / 2;
 	else clusters = (numOfSecs / 2) + 1;
 	if (howMuchEmpty() < clusters)
 		throw "Not enough space in disk!";
+	fat.reset();
+	int start = 0;
+	if (debug)
+		start = debug;
 	switch (algo)
 	{
 	case 0:
-		firstFit(fat, clusters,0);
+		firstFit(fat, clusters, start);
 		break;
 	case 1:
-		bestFit(fat, clusters,0);
+		bestFit(fat, clusters, start);
 		break;
 	case 2:
-		worstFit(fat, clusters,0);
+		worstFit(fat, clusters, start);
 		break;
 	default:
 		break;
