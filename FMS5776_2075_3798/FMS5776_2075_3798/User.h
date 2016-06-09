@@ -15,9 +15,10 @@ public:
 class UsersSec
 {
 public:
+	int sectorNr;
 	int numOfUsers = 0;
 	User users[5];
-	char RawData[1024 - 5*sizeof(User)-sizeof(int)];
+	char RawData[1024 - 5*sizeof(User)-2*sizeof(int)];
 	UsersSec() {}
 	
 };

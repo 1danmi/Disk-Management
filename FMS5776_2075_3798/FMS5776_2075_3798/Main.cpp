@@ -163,7 +163,7 @@ public:
 		cout << "	Mounted:          " << d.mounted << endl;
 		cout << "	prodDate:         " << vh->prodDate << endl;
 		cout << "	formatDate:       " << vh->formatDate << endl;
-		cout << "	isFormated:       " << vh->isFormated << endl;
+		cout << "	isFormated:       " << vh->isFormatted << endl;
 		cout << "	Users Info:\n";
 		for (int i = 0; i < d.users.numOfUsers; i++)
 			cout << "\t" << d.users.users[i].name << "\t" << d.users.users[i].password << "\t" << d.users.users[i].sLevel << endl;
@@ -243,7 +243,7 @@ public:
 			Level0Debug::welcomeDebugLevel0(d);
 			break;
 		case 2:
-			printDiskInfo(d);
+			Level0Debug::printDiskInfo(d);
 			break;
 		case 3:
 			d.format();
@@ -389,30 +389,6 @@ public:
 		}
 
 	}
-	static void printDiskInfo(Disk& d)
-	{
-		VHD* vh = &d.vhd;
-
-		cout << "	disk name:        " << vh->diskName << endl;
-		cout << "	Owner Name:       " << vh->diskOwner << endl;
-		cout << "	Mounted:          " << d.mounted << endl;
-		cout << "	prodDate:         " << vh->prodDate << endl;
-		cout << "	formatDate:       " << vh->formatDate << endl;
-		cout << "	isFormated:       " << vh->isFormated << endl;
-		cout << "	Users Info:\n";
-		for (int i = 0; i < d.users.numOfUsers; i++)
-			cout << "\t" << d.users.users[i].name << "\t" << d.users.users[i].password << "\t" << d.users.users[i].sLevel << endl;
-		cout << "	Signed:           " << d.sign << endl;
-		cout << "	currUser:         " << d.currUser.name << "\t" << d.currUser.password << "\t" << d.currUser.sLevel << endl;
-		cout << "	ClusQty:          " << vh->ClusQty << endl;
-		cout << "	addrDataStart:    " << vh->addrDataStart << endl;
-		cout << "	dataClusQty:      " << vh->dataClusQty << endl;
-		cout << "	addrDAT:          " << vh->addrDAT << endl;
-		cout << "	addrRootDir:      " << vh->addrRootDir << endl;
-		cout << "	addrUserSec:      " << vh->addrUserSec << endl;
-		cout << "	addrDATcpy:       " << vh->addrDATcpy << endl;
-		cout << "	addrRootDirCpy:   " << vh->addrRootDirCpy << endl << endl;
-	}
 	static void setDatTest(Disk& d)
 	{
 		for (int i = 6; i < 1600; i++)
@@ -502,30 +478,134 @@ public:
 
 class Level2Debug
 {
+public:
 	static void startDebug(Disk& d, int mode)
 	{
+		string fileName;
+		int recSize;
+		int recNum;
+		int kType;
+		string keyType;
+		int sLevel;
+		int keyOffset;
+		int keySize;
+		int algo;
+		int sectors;
 		switch (mode)
 		{
 		case 1:
+			Level0Debug::welcomeDebugLevel0(d);
 			break;
 		case 2:
+			Level0Debug::printDiskInfo(d);
 			break;
 		case 3:
+			cout << "Enter file name:\n";
+			cin >> fileName;
+			cout << "Enter record size:\n";
+			cin >> recSize;
+			cout << "Enter record number:\n";
+			cin >> recNum;
+			cout << "Choose key type:\n";
+			cout << "1. Int\n2. Float\n3. Double\n4. String\n";
+			cin >> kType;
+			switch (kType)
+			{
+			case 1:
+				keyType = "I";
+				break;
+			case 2:
+				keyType = "F";
+				break;
+			case 3:
+				keyType = "D";
+				break;
+			case 4:
+				keyType = "S";
+				break;
+			default:
+				throw "You must choose a number between 1 to 4!";
+				break;
+			}
+			cout << "Choose security level:\n";
+			cout << "1. User" << endl;
+			if (d.currUser.sLevel >= SLEVEL::Administrator)
+				cout << "2. Administrator" << endl;
+			if (d.currUser.sLevel >= SLEVEL::Super_User)
+				cout << "3. Super User" << endl;
+			if (d.currUser.sLevel >= SLEVEL::Owner)
+				cout << "4. Owner" << endl;
+			cin >> sLevel;
+			cout << "Enter key offset:\n";
+			cin >> keyOffset;
+			cout << "Enter key size:\n";
+			cin >> keySize;
+			cout << "Choose Allocation Algorithm:\n";
+			cout << "1. First Fit\n";
+			cout << "2. Best Fit\n";
+			cout << "3. Worse Fit\n";
+			cin >> algo;
+			if (!(algo < 4 && algo>0))
+				throw "You must choose a number between 1 to 3";
+			cout << "Creating file...\n";
+			d.createFile(fileName, string("F"), recSize, recNum, ceil(((double)recNum / (1020 / recSize))) + 1, keyType, (SLEVEL)sLevel, keyOffset, keySize, algo - 1);
+			cout << "File created successfully!\n";
 			break;
 		case 4:
+			cout << "Enter file name to delete:\n";
+			cin >> fileName;
+			cout << "Deleteing file...\n";
+			d.delFile(fileName);
+			cout << "File deleted!\n";
 			break;
 		case 5:
+			cout << "Enter file name to extend:\n";
+			cin >> fileName;
+			cout << "How many sectors to extend?:\n";
+			cin >> sectors;
+			cout << "Extending Disk...\n";
+			d.extendFile(fileName, sectors);
+			cout << "File extended!\n";
 			break;
 		case 6:
+			printRootDirInfo(d);
 			break;
 		case 7:
+			cout << "formatting...\n";
+			d.format();
+			cout << "Format Succesfully!\n";
 			break;
 		case 8:
+			cout << "Printing DAT...\n";
+			printDAT(d.dat.dat);
 			break;
 		case 9:
+			cout << "Enter file name:\n";
+			cin >> fileName;
+			printDAT(d.getFat(fileName));
 			break;
 		default:
 			break;
+		}
+
+	}
+	static void printRootDirInfo(Disk& d)
+	{
+		cout << "File Name:" << "\t" << "File Owner:" << "\t" << "File Address:" << "\t" << "Creation Date:" << "\t" << "FileSize:" << "\t" << "EOF Record Number:" << "\t" <<"Record Size:" << "\t" << "Record Format:" << "\t" << "Key Offset:" << "\t" << "Key Size:" << "\t" << "Key Type:" << "\t" << "Entry Status:" << "\t" << "Security Level:" << endl;
+		for (int i = 0; i < 14; i++)
+		{
+			cout<<d.rootDir.lsbSector.dirEntry[i];
+			cout<<d.rootDir.msbSector.dirEntry[i];
+		}
+
+	}
+	static void printDAT(DATtype& dat)
+	{
+		for (int i = 0; i < 20; i++)
+		{
+			for (int j = 0; j <80; j++)
+				cout << dat[i*80 + j] << " ";
+			cout << endl;
 		}
 
 	}
@@ -533,16 +613,17 @@ class Level2Debug
 	{
 		int a;
 		d.mountDisk(string("Disk1.fms"));
-		cout << "Welcome to Level 1 Debugging Mode!\nWhat would you like to do?\n";
+		d.signIn(string("Daniel"), string("1234"));
+		cout << "Welcome to Level 2 Debugging Mode!\nWhat would you like to do?\n";
 		cout << "1. Set Disk (level 0)\n";
 		cout << "2. See disk Details\n";
-		cout << "3. Format Disk\n";
-		cout << "4. Check first fit algorithm\n";
-		cout << "5. Check best fit algorithm\n";
-		cout << "6. Check worse fit algorithm\n";
-		cout << "7. Allocate space\n";
-		cout << "8. Extend Allocation\n";
-		cout << "9. Deallocate Space\n";
+		cout << "3. Create new File\n";
+		cout << "4. Delete file\n";
+		cout << "5. Extend file\n";
+		cout << "6. Print root dir details\n";
+		cout << "7. Format Disk\n";
+		cout << "8. Print DAT\n";
+		cout << "9. Print FAT\n";
 		cout << "10. Exit\n";
 		cin >> a;
 		while (a != 10)
@@ -560,16 +641,16 @@ class Level2Debug
 					cout << str << endl;
 				}
 			}
-			cout << "Welcome to Level 1 Debugging Mode!\nWhat would you like to do?\n";
+			cout << "Welcome to Level 2 Debugging Mode!\nWhat would you like to do?\n";
 			cout << "1. Set Disk (level 0)\n";
 			cout << "2. See disk Details\n";
-			cout << "3. Format Disk\n";
-			cout << "4. Check first fit algorithm\n";
-			cout << "5. Check best fit algorithm\n";
-			cout << "6. Check worse fit algorithm\n";
-			cout << "7. Allocate space\n";
-			cout << "8. Extend Allocation\n";
-			cout << "9. Deallocate Space\n";
+			cout << "3. Create new File\n";
+			cout << "4. Delete file\n";
+			cout << "5. Extend file\n";
+			cout << "6. See root dir details\n";
+			cout << "7. Format Disk\n";
+			cout << "8. Print DAT\n";
+			cout << "9. Print FAT\n";
 			cout << "10. Exit\n";
 			cin >> a;
 		}
@@ -580,8 +661,10 @@ int main()
 {	
 	try{
 		Disk d;
-		//Level1Debug::welcomeDebugLevel1(d);
-		cout << sizeof(DirEntry) << "\t" << sizeof(RootDir)/2 <<"\t"<<sizeof(FileHeader)<< endl;
+		Level2Debug::welcomeDebugLevel2(d);
+		/*cout <<"(1020 / 200) = " << (1020 / 200) << endl;
+		cout << "(double)19 / (1020 / 200) = " << (double)19 / (1020 / 200) << endl;
+		cout <<"ceil(((double)19 / (1020 / 200))) +1 = " << ceil(((double)19 / (1020 / 200))) << endl;*/
 	}
 	catch (const char* str){
 		cout << str << endl;

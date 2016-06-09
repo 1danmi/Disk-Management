@@ -3,6 +3,24 @@
 #include <cstring>
 #include <ctime>
 #define CRT_NO_WARNINGS
+DirEntry::DirEntry()
+{
+	strcpy(this->fileName,"");
+	strcpy(this->fileOwner,"");
+	this->fileAddr = 0;
+	char date[10];
+	_strdate(date);
+	strcpy_s(crDate, date);
+	this->fileSize=0;
+	this->eofRecNr = 0;
+	this->actualRecSize = 0;
+	strcpy(this->recFormat,"F");
+	this->keyOffset=0;
+	this->keySize = 0;
+	strcpy(keyType,"F");
+	this->entryStatus = '0'; // 0 - empty / 1- active / 2 - deleted
+	this->sLevel = SLEVEL::user;
+}
 /*************************************************
 * FUNCTION
 *	Ctor for DirEntry
@@ -27,8 +45,8 @@
 *	---
 **************************************************/
 DirEntry::DirEntry(const char fn[12], const char fo[12], unsigned int fa, unsigned int fs,
-	unsigned int eorn, unsigned int mrs, unsigned int ars, char rf, unsigned int ko, 
-	unsigned int ks, const char kt[2], unsigned char es)
+	unsigned int eorn, unsigned int ars, char rf[2], unsigned int ko, 
+	unsigned int ks, const char kt[2], unsigned char es,SLEVEL sl)
 {
 	strncpy_s(fileName,12, fn,11);
 	strncpy_s(fileOwner,12, fo,11);
@@ -38,13 +56,14 @@ DirEntry::DirEntry(const char fn[12], const char fo[12], unsigned int fa, unsign
 	strcpy_s(crDate,date);
 	fileSize = fs;  //number of sectors
 	eofRecNr = eorn;  //end of file record number
-	maxRecSize = mrs; // קיבולת תאורטית
+	//maxRecSize = mrs; // קיבולת תאורטית
 	actualRecSize = ars; //קיבולת מעשית
-	recFormat[2] = rf; //fixed size
+	strncpy_s(recFormat,2,rf,1); //fixed size
 	keyOffset = ko;
 	keySize = ks; //number of bytes
 	strcpy_s(keyType, kt);
 	entryStatus = es; //empty
+	sLevel = sl;
 }
 
 unsigned char DirEntry::getEntryStatus()
@@ -54,7 +73,7 @@ unsigned char DirEntry::getEntryStatus()
 
 void DirEntry::setEntryStatus(unsigned char es)
 {
-	if (es != '0' || es != '1' || es != '2')
+	if (es != '0' && es != '1' && es != '2')
 		throw "Entry status can be either 0(empty), 1(full) or 2(deleted)";
 	entryStatus = es;
 
@@ -109,3 +128,8 @@ unsigned int DirEntry::getKeyOffset()
 	return this->keyOffset;
 }
 
+ostream & operator<<(ostream& out, const DirEntry& dirEntry)
+{
+	out << dirEntry.fileName << "\t" << dirEntry.fileOwner << "\t\t\t" << dirEntry.fileAddr << "\t\t" << dirEntry.crDate << "\t" << dirEntry.fileSize << "\t\t" << dirEntry.eofRecNr << "\t\t\t" << dirEntry.actualRecSize << "\t\t" << dirEntry.recFormat[0] << "\t\t" << dirEntry.keyOffset << "\t\t" << dirEntry.keySize << "\t\t" << dirEntry.keyType << "\t\t" << dirEntry.entryStatus << "\t\t" << dirEntry.sLevel << endl;
+	return out;
+}

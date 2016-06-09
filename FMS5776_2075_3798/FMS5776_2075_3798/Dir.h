@@ -14,9 +14,8 @@ public:
 
 struct RootDir
 {
-	SectorDir msbSector;
 	SectorDir lsbSector;
-
+	SectorDir msbSector;
 public:
 	RootDir();
 	RootDir(unsigned int, unsigned int);

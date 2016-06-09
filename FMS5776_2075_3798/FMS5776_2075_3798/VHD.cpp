@@ -40,6 +40,6 @@ VHD::VHD(unsigned int sn,const char dn[12],const char Do[12],const char pd[10], 
 	addrRootDirCpy = ardc;
 	addrDataStart = ads;
 	strcpy_s(formatDate, fd);
-	isFormated = is;
+	isFormatted = is;
 	addrUserSec = aus;
 }

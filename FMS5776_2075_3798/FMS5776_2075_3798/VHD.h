@@ -33,7 +33,7 @@ public:
 	unsigned int addrDataStart;
 	unsigned int addrUserSec;
 	char formatDate[10];
-	bool isFormated;
+	bool isFormatted;
 	char emptyArea[940];
 	friend class TestLevel_0;;
 	friend class Disk;

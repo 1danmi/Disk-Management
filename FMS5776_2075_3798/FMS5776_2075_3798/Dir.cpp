@@ -37,4 +37,8 @@ RootDir::RootDir(unsigned int a, unsigned int b)
 SectorDir::SectorDir(int num)
 {
 	sectorNr = num;
+	for (int i = 0; i < 14; i++)
+	{
+		this->dirEntry[i] = DirEntry();
+	}
 }

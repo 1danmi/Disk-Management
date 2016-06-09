@@ -77,10 +77,10 @@ public:
 
 #pragma region Level2
 
-	void createFile(string &, string &, unsigned int, unsigned int, string &,SLEVEL, unsigned int, unsigned int = 0, unsigned int=0);
-	void delFile(string &, string &,User);
-	void extendFile(string &, string &, unsigned int, User);
-
+	void createFile(string&, string &, unsigned int, unsigned int, unsigned int, string &,SLEVEL, unsigned int, unsigned int = 0, unsigned int=0);
+	void delFile(string &);
+	void extendFile(string &, unsigned int);
+	DATtype& getFat(string&);
 #pragma endregion
 
 #pragma region Level3
