@@ -11,7 +11,7 @@ public:
 	DirEntry fileDesc;
 	DATtype fat;
 	RecInfo recInfo;
-	//char emptyArea[4] = { 0 };
+	char emptyArea[16] = { 0 };
 
 
 	FileHeader() {};
