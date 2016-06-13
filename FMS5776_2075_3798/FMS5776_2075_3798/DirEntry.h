@@ -34,7 +34,7 @@ public:
 	char recFormat[2]; //fixed size
 	unsigned int keyOffset;
 	unsigned int keySize; //number of bytes
-	char keyType[2]; // I - 00 / F - 01 / D - 10 / C - 10
+	char keyType[2]; // I - 00 / F - 01 / D - 10 / S - 10
 	unsigned char entryStatus; // 0 - empty / 1- active / 2 - deleted
 	SLEVEL sLevel;
 

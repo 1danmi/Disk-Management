@@ -1,15 +1,4 @@
-﻿  VHD.cpp
-  User.cpp
-  Sector.cpp
-  Main.cpp
-d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\main.cpp(551): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
-  FileHeader.cpp
-  FCB.cpp
-  Disk.cpp
-  DirEntry.cpp
-  Dir.cpp
-  DAT.cpp
-  Generating Code...
-d:\fms_gui\fms5776_2075_3798\fms5776_2075_3798\disk.cpp(1446): warning C4172: returning address of local variable or temporary: fcb
-  FMS5776_2075_3798.vcxproj -> D:\FMS_GUI\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
-  FMS5776_2075_3798.vcxproj -> D:\FMS_GUI\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)
+﻿  Disk.cpp
+c:\users\daniel\desktop\fms-logic-level\fms5776_2075_3798\disk.cpp(1463): warning C4172: returning address of local variable or temporary: fcb
+  FMS5776_2075_3798.vcxproj -> C:\Users\Daniel\Desktop\FMS-Logic-Level\Debug\FMS5776_2075_3798.exe
+  FMS5776_2075_3798.vcxproj -> C:\Users\Daniel\Desktop\FMS-Logic-Level\Debug\FMS5776_2075_3798.pdb (Partial PDB)

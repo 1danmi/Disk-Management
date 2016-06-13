@@ -13,7 +13,7 @@ public:
 	bool operator==(DAT const& dat);
 	
 private:
-	char emptyArea[820];
+	char emptyArea[816];
 	
 };
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Disk.h"
+#include "Student.h"
 
 using namespace std;
 
@@ -612,8 +613,8 @@ public:
 	static void welcomeDebugLevel2(Disk& d)
 	{
 		int a;
-		d.mountDisk(string("Disk1.fms"));
-		d.signIn(string("Daniel"), string("1234"));
+		/*d.mountDisk(string("Disk1.fms"));
+		d.signIn(string("Daniel"), string("1234"));*/
 		cout << "Welcome to Level 2 Debugging Mode!\nWhat would you like to do?\n";
 		cout << "1. Set Disk (level 0)\n";
 		cout << "2. See disk Details\n";
@@ -657,14 +658,103 @@ public:
 	}
 };
 
+class Level3Debug
+{
+public:
+	static void startDebug(Disk& d, int mode)
+	{
+		FCB* fcb = NULL;
+		string fileName;
+		switch (mode)
+		{
+		case 1:
+			Level0Debug::welcomeDebugLevel0(d);
+			break;
+		case 2:
+			Level2Debug::welcomeDebugLevel2(d);
+			break;
+		case 3:
+			cout << "Enter file name:\n";
+			cin >> fileName;
+			fcb = d.openFile(fileName, MODE::WR);
+			break;
+		case 4:
+			cout << fcb->recInfo;
+			break;
+		case 5:
+			cout << fcb->DAT << endl;
+			break;
+		case 6:
+			break;
+		case 7:
+			break;
+		case 8:
+			break;
+		case 9:
+			delete fcb;
+			break;
+		default:
+			break;
+		}
+
+	}
+	static void welcomeDebugLevel3(Disk& d)
+	{
+		int a;
+		d.mountDisk(string("Disk1.fms"));
+		d.signIn(string("Daniel"), string("1234"));
+		
+		cout << "Welcome to Level 3 Debugging Mode!\nWhat would you like to do?\n";
+		cout << "1. Set Disk (level 0)\n";
+		cout << "2. See disk Details\n";
+		cout << "3. Open File\n";
+		cout << "4. Print Rec Info\n";
+		cout << "5. \n";
+		cout << "6. \n";
+		cout << "7. \n";
+		cout << "8. \n";
+		cout << "9. \n";
+		cout << "10. \n";
+		cin >> a;
+		while (a != 10)
+		{
+			if (a > 10 || a < 1)
+			{
+				cout << "Illegal Command!\n";
+			}
+			else
+			{
+				try {
+					startDebug(d, a);
+				}
+				catch (const char* str) {
+					cout << str << endl;
+				}
+			}
+			cout << "Welcome to Level 3 Debugging Mode!\nWhat would you like to do?\n";
+			cout << "1. Set Disk (level 0)\n";
+			cout << "2. See disk Details\n";
+			cout << "3. Open File\n";
+			cout << "4. Print Rec Info\n";
+			cout << "5. \n";
+			cout << "6. \n";
+			cout << "7. \n";
+			cout << "8. \n";
+			cout << "9. \n";
+			cout << "10. \n";
+			cin >> a;
+		}
+	}
+};
+
+
 int main()
 {	
 	try{
 		Disk d;
-		Level2Debug::welcomeDebugLevel2(d);
-		/*cout <<"(1020 / 200) = " << (1020 / 200) << endl;
-		cout << "(double)19 / (1020 / 200) = " << (double)19 / (1020 / 200) << endl;
-		cout <<"ceil(((double)19 / (1020 / 200))) +1 = " << ceil(((double)19 / (1020 / 200))) << endl;*/
+		Level3Debug::welcomeDebugLevel3(d);
+		//cout << sizeof(FileHeader) << endl;
+
 	}
 	catch (const char* str){
 		cout << str << endl;

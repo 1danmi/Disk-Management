@@ -2,6 +2,7 @@
 #include "DAT.h"
 #include "DirEntry.h"
 #include "user.h"
+#include "RecInfo.h"
 
 class FileHeader
 {
@@ -9,7 +10,8 @@ public:
 	unsigned int sectorNr;
 	DirEntry fileDesc;
 	DATtype fat;
-	char emptyArea[744] = { 0 };
+	RecInfo recInfo;
+	//char emptyArea[4] = { 0 };
 
 
 	FileHeader() {};

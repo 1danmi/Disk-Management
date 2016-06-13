@@ -134,7 +134,7 @@ void Disk::createDisk(string & dn, string & dow,string& pwd)
 			string fd = "00/00/000";
 			char date[10];
 			_strdate(date);
-			vhd = VHD(0, dn.c_str(), dow.c_str(), date, 1600, 1596, 1, 2, 800, 1000, 5, fd.c_str(), false, 4);
+			vhd = VHD(0, dn.c_str(), dow.c_str(), date, 1600, 1597, 1, 2, 800, 1000, 5, fd.c_str(), false, 4);
 			vhdUpdate = 0;
 			//DAT Initialization
 			dat.sectorNr = vhd.addrDAT;
@@ -595,16 +595,14 @@ void Disk::addUser(string & user, SLEVEL sLevel, string & pwd, SLEVEL applicantS
 	for (int i = 0; i < users.numOfUsers; i++)
 		if (!strcmp(users.users[i].name, user.c_str()))
 			throw "User name already taken!";
-	else
+	
+	if (applicantSLevel >= sLevel)
 	{
-		if (applicantSLevel >= sLevel)
-		{
 			users.users[users.numOfUsers] = User(user, sLevel, pwd);
 			users.numOfUsers++;
-		}
-		else
-			throw "You can't set user with higher security level than yours!";
 	}
+	else
+		throw "You can't set user with higher security level than yours!";
 }
 
 void Disk::signIn(string & user, string & pwd)
@@ -1397,19 +1395,19 @@ DATtype& Disk::getFat(string& fileName)
 
 #pragma region Level3
 
-FCB* Disk::openFile(string & fn, string & un, MODE io)
+FCB* Disk::openFile(string & fn, MODE io)
 {
 	try
 	{
 		int path = -1;
 		for (int i = 0; i < 14; i++)
 		{
-			if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()))
+			if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fn.c_str()) && rootDir.lsbSector.dirEntry[i].entryStatus == '1')
 			{
 				path = i;
 				break;
 			}
-			if (!strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()))
+			if (!strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fn.c_str()) && rootDir.lsbSector.dirEntry[i].entryStatus == '1')
 			{
 				path = i+14;
 				break;
@@ -1419,29 +1417,48 @@ FCB* Disk::openFile(string & fn, string & un, MODE io)
 			throw "File Does Not Exist!";
 		FileHeader* buffer = new FileHeader();
 		if (path >= 14 && path < 28)
+		{
+			if (rootDir.msbSector.dirEntry[path - 14].sLevel > currUser.sLevel)
+				throw "You don't have access to this file!";
 			readSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)buffer);
+
+		}
 		else if (path > -1 && path < 14)
-			readSector(rootDir.msbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
+		{
+			if (rootDir.lsbSector.dirEntry[path - 14].sLevel > currUser.sLevel)
+				throw "You don't have access to this file!";
+			readSector(rootDir.lsbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
+		}
 		FCB fcb;
+		
+		fcb.d = this;
 		fcb.path = path;
 		fcb.mode = io;
-		fcb.d = this;
 		fcb.FAT = (*buffer).fat;
 		fcb.fileDesc = (*buffer).fileDesc;
 		fcb.numOfRecords = (*buffer).fileDesc.getEofRecNr();
+		
+		fcb.recInfo = buffer->recInfo;
+		
+		fcb.maxRecNum = (fcb.fileDesc.fileSize - 1)*(1024 / fcb.fileDesc.actualRecSize);
+		//fcb.DAT = new int[fcb.maxRecNum];
+		for (int i = 0; i < 46; i++)
+			fcb.DAT[i] = 0;
+		for (int i = 0; i < fcb.recInfo.size; i++)
+			fcb.DAT[fcb.recInfo.records[i].recNr] = 1;
 		if (io == MODE::W || io == MODE::R || io == MODE::WR)
 		{
 			fcb.currRecNr = 0;
-			fcb.currSecNr = fcb.fileDesc.getFileAddr();
+			fcb.currSecNr = fcb.fileDesc.getFileAddr()+1;
 			fcb.currRecNrInBuff = 0;
 		}
 		else if (io == MODE::E)
 		{
-
 			fcb.currRecNr = fcb.fileDesc.getEofRecNr()+1;
 			fcb.currSecNr = fcb.fileDesc.getFileAddr()+fcb.fileDesc.getFileSize();
 			fcb.currRecNrInBuff = 0;
 		}
+
 		delete buffer;
 		return &fcb;
 	}

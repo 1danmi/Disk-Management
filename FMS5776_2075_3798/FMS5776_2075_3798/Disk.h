@@ -84,7 +84,7 @@ public:
 #pragma endregion
 
 #pragma region Level3
-	FCB* openFile(string&, string&, MODE);	
+	FCB* openFile(string&, MODE);	
 #pragma endregion
 
 #pragma region Level4

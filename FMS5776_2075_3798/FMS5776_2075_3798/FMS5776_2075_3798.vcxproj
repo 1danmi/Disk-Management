@@ -113,6 +113,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="RecInfo.h" />
+    <ClInclude Include="Student.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="DAT.h" />
     <ClInclude Include="Dir.h" />

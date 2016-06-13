@@ -19,6 +19,7 @@ FileHeader::FileHeader(unsigned int sn, DirEntry fd, DATtype fat, SLEVEL sl)
 	sectorNr = sn;
 	fileDesc = fd;
 	this->fat = fat;
+	this->recInfo.size = 0;
 }
 
 DATtype FileHeader::getFat()
