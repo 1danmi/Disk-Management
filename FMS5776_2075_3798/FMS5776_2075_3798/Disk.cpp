@@ -1307,7 +1307,8 @@ void Disk::extendFile(string & fn, unsigned int num)
 				throw "You don't have the right permission to perform this action!";
 			if (rootDir.msbSector.dirEntry[path - 14].fileSize % 2 == 1)
 				num--;
-			
+			if (num % 2 == 1)
+				num++;
 			readSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)Buffer);
 			fat = (*Buffer).fat;
 			allocExtend(fat, num);
@@ -1315,6 +1316,7 @@ void Disk::extendFile(string & fn, unsigned int num)
 			unsigned int recSize = rootDir.msbSector.dirEntry[path - 14].getRecSize();
 			//rootDir.msbSector.dirEntry[path - 14].setEofRecNr((fileSize + num - 1)*(1024 / recSize) - 1);
 			rootDir.msbSector.dirEntry[path - 14].setFileSize(fileSize + num);
+			rootDir.msbSector.dirEntry[path - 14].eofRecNr += 2 * (1020 / recSize);
 			FileHeader buffer(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), rootDir.msbSector.dirEntry[path - 14], fat,rootDir.msbSector.dirEntry[path-14].sLevel);
 			writeSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)&buffer);
 		}
@@ -1324,6 +1326,8 @@ void Disk::extendFile(string & fn, unsigned int num)
 				throw "You don't have the right permission to perform this action!";
 			if (rootDir.lsbSector.dirEntry[path].fileSize % 2 == 1)
 				num--;
+			if (num % 2 == 1)
+				num++;
 			readSector(rootDir.lsbSector.dirEntry[path].getFileAddr(), (Sector*)Buffer);
 			fat = (*Buffer).fat;
 			allocExtend(fat, num);
@@ -1331,6 +1335,7 @@ void Disk::extendFile(string & fn, unsigned int num)
 			unsigned int recSize = rootDir.lsbSector.dirEntry[path].getRecSize();
 			//rootDir.lsbSector.dirEntry[path].setEofRecNr((fileSize + num - 1)*(1024 / recSize) - 1);
 			rootDir.lsbSector.dirEntry[path].setFileSize(fileSize + num);
+			rootDir.lsbSector.dirEntry[path].eofRecNr += 2 * (1020 / recSize);
 			FileHeader buffer(rootDir.lsbSector.dirEntry[path].getFileAddr(), rootDir.lsbSector.dirEntry[path], fat, rootDir.lsbSector.dirEntry[path - 14].sLevel);
 			writeSector(rootDir.lsbSector.dirEntry[path].getFileAddr(), (Sector*)&buffer);
 		}

@@ -703,7 +703,7 @@ public:
 			cin >> ID;
 			rec = fcb.recInfo.findRecordNr(ID);
 			if (rec == -1)
-				throw "Record is not exist";
+				throw "Record does not exist";
 			cout << "Reading record...\n";
 			fcb.readRecord((char*)& stu, rec);
 			cout << stu;
@@ -711,6 +711,14 @@ public:
 		case 6:
 			break;
 		case 7:
+			cout << "Enter record key:\n";
+			cin >> ID;
+			rec = fcb.recInfo.findRecordNr(ID);
+			if (rec == -1)
+				throw "Record does not exist";
+			cout << "Deleting record...\n";
+			fcb.deleteRecord(rec);
+			cout << "Record deleted!\n";
 			break;
 		case 8:
 			if (!fcb.loaded)
@@ -732,15 +740,15 @@ public:
 		int a;
 		d.mountDisk(string("Disk1.fms"));
 		d.signIn(string("Daniel"), string("1234"));
-		
+		fcb = (*d.openFile(string("TestFile"), MODE::WR));
 		cout << "Welcome to Level 3 Debugging Mode!\nWhat would you like to do?\n";
 		cout << "1. Set Disk (level 0)\n";
 		cout << "2. Manage Files (level 2)\n";
 		cout << "3. Open File\n";
 		cout << "4. Add Record\n";
 		cout << "5. Read Record\n";
-		cout << "6. Delete Record\n";
-		cout << "7. \n";
+		cout << "6. \n";
+		cout << "7. Delete Record\n";
 		cout << "8. Print Rec Info\n";
 		cout << "9. Close File\n";
 		cout << "10. Exit\n";
@@ -766,8 +774,8 @@ public:
 			cout << "3. Open File\n";
 			cout << "4. Add Record\n";
 			cout << "5. Read Record\n";
-			cout << "6. Delete Record\n";
-			cout << "7. \n";
+			cout << "6. \n";
+			cout << "7. Delete Record\n";
 			cout << "8. Print Rec Info\n";
 			cout << "9. Close File\n";
 			cout << "10. Exit\n";

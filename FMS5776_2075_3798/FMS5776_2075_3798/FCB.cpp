@@ -40,7 +40,7 @@ void FCB::closeFile()
 	//flushFile();
 	FileHeader* fh = new FileHeader();
 	this->d->readSector(this->fileDesc.getFileAddr(), (Sector*)fh);
-	fh->fileDesc.eofRecNr = this->numOfRecords;
+	fh->fileDesc.eofRecNr = this->maxRecNum;
 	strncpy_s(fh->fileDesc.fileName,12,this->fileDesc.fileName,11);
 	fh->recInfo = recInfo;
 	//fh->fat = this->FAT;
@@ -72,9 +72,6 @@ void FCB::readRecord(char * record , int rec)
 			throw "The file is locked for update!";
 		if (this->mode == MODE::W || this->mode == MODE::E)
 			throw "The file is not open for reading!";
-		if (rec != -1)
-			if (rec >= numOfRecords)
-				throw "Record doesn't exist!";
 		int numOfRecsInSector = 1020 / this->fileDesc.getRecSize();
 		int recSec = (rec / numOfRecsInSector + 1);
 		int recCls = recSec / 2;
@@ -134,7 +131,9 @@ void FCB::addRecord(char * record)
 		if (this->numOfRecords == this->maxRecNum)
 		{
 			this->d->extendFile(string(this->fileDesc.fileName), 1);
-			this->maxRecNum = maxRecNum + 2*(1024 / this->fileDesc.getRecSize());
+			this->FAT = this->d->getFat(string(this->fileDesc.fileName));
+			this->fileDesc.fileSize += 2;
+			this->maxRecNum = maxRecNum + 2*(1020 / this->fileDesc.getRecSize());
 		}
 		int recNr = -1;
 		for (int i = 0; i < 36 && i < maxRecNum; i++)
@@ -146,8 +145,7 @@ void FCB::addRecord(char * record)
 			}
 		if (recNr == -1)
 			throw "Weird error";
-
-				
+	
 		int numOfRecsInSector = 1020 / this->fileDesc.getRecSize();
 		int recSec = (recNr / numOfRecsInSector + 1);
 		int recCls = recSec/2;
@@ -190,7 +188,7 @@ void FCB::addRecord(char * record)
 		numOfRecords++;
 		FileHeader* fh = new FileHeader();
 		this->d->readSector(this->fileDesc.getFileAddr(), (Sector*)fh);
-		fh->fileDesc.eofRecNr = this->fileDesc.eofRecNr;
+		fh->fileDesc.eofRecNr = maxRecNum;
 		strncpy_s(fh->fileDesc.fileName, 12, this->fileDesc.fileName, 11);
 		fh->recInfo = recInfo;
 		//fh->fat = this->FAT;
@@ -214,7 +212,6 @@ void FCB::addRecord(char * record)
 	}
 }
 
-
 void FCB::updateCancel()
 {
 	lock = 0;
@@ -228,11 +225,31 @@ void FCB::deleteRecord(int rec)
 			throw "The file is not locked for update!";
 		if (this->mode != MODE::WR && this->mode!= MODE::W)
 			throw "The file is not open for updating!";
-
 		if (!this->DAT[rec])
 			throw "Record doesn't exist!";
 		if (this->DAT[rec] == 2)
 			throw "File already deleted";
+
+		this->DAT[rec] = 2;
+		
+		for (int i = rec; i < this->recInfo.size; i++)
+			this->recInfo.records[i] = this->recInfo.records[i+1];
+		this->recInfo.size--;
+		this->recInfo.records[this->recInfo.size] = RecEntry();
+#pragma region Update
+		numOfRecords--;
+		FileHeader* fh = new FileHeader();
+		this->d->readSector(this->fileDesc.getFileAddr(), (Sector*)fh);
+		fh->fileDesc.eofRecNr = this->fileDesc.eofRecNr;
+		strncpy_s(fh->fileDesc.fileName, 12, this->fileDesc.fileName, 11);
+		fh->recInfo = recInfo;
+		this->d->writeSector(this->fileDesc.getFileAddr(), (Sector*)fh);
+		if (path >= 14 && path < 28)
+			d->rootDir.msbSector.dirEntry[path - 14] = fileDesc;
+		else if (path > -1 && path < 14)
+			d->rootDir.lsbSector.dirEntry[path] = fileDesc;
+		d->rootDirUpdate = 1;
+#pragma endregion
 	}
 	catch (const char* str)
 	{

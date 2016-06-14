@@ -36,7 +36,7 @@ public:
 	{
 		for (int i = 0; i < size; i++)
 			if (!strcmp(_key.c_str(), records[i].key))
-				return i;
+				return records[i].recNr;
 		return -1;
 	}
 	friend ostream& operator<<(ostream& out, RecInfo& recInfo)
