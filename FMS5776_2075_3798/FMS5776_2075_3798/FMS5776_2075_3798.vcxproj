@@ -134,6 +134,7 @@
     <ClCompile Include="FileHeader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Sector.cpp" />
+    <ClCompile Include="Student.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="VHD.cpp" />
   </ItemGroup>

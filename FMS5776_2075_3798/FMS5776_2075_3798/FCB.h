@@ -20,7 +20,8 @@ public:
 	unsigned int numOfRecords;
 	string lastErrorMessage;
 	int maxRecNum;
-	int DAT[46];
+	int DAT[36];
+	bool loaded;
 	// recInfo _recInfo;
 	FCB();
 	FCB(Disk*);
@@ -29,7 +30,7 @@ public:
 	void closeFile();
 	void flushFile();
 	void readRecord(char*, unsigned int = 0, unsigned int = -1);
-	void addRecord(char*, unsigned int = -1);
+	void addRecord(char*);
 	//void seek(unsigned int, int);
 	void updateCancel();
 	void deleteRecord(int rec);

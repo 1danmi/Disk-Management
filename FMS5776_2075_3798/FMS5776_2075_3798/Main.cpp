@@ -485,7 +485,7 @@ public:
 		string fileName;
 		int recSize;
 		int recNum;
-		int kType;
+		int type;
 		string keyType;
 		int sLevel;
 		int keyOffset;
@@ -503,31 +503,11 @@ public:
 		case 3:
 			cout << "Enter file name:\n";
 			cin >> fileName;
-			cout << "Enter record size:\n";
-			cin >> recSize;
+			cout << "Choose records type:\n";
+			cout << "1. Students\n";
+			cin >> type;
 			cout << "Enter record number:\n";
 			cin >> recNum;
-			cout << "Choose key type:\n";
-			cout << "1. Int\n2. Float\n3. Double\n4. String\n";
-			cin >> kType;
-			switch (kType)
-			{
-			case 1:
-				keyType = "I";
-				break;
-			case 2:
-				keyType = "F";
-				break;
-			case 3:
-				keyType = "D";
-				break;
-			case 4:
-				keyType = "S";
-				break;
-			default:
-				throw "You must choose a number between 1 to 4!";
-				break;
-			}
 			cout << "Choose security level:\n";
 			cout << "1. User" << endl;
 			if (d.currUser.sLevel >= SLEVEL::Administrator)
@@ -537,19 +517,16 @@ public:
 			if (d.currUser.sLevel >= SLEVEL::Owner)
 				cout << "4. Owner" << endl;
 			cin >> sLevel;
-			cout << "Enter key offset:\n";
-			cin >> keyOffset;
-			cout << "Enter key size:\n";
-			cin >> keySize;
-			cout << "Choose Allocation Algorithm:\n";
-			cout << "1. First Fit\n";
-			cout << "2. Best Fit\n";
-			cout << "3. Worse Fit\n";
-			cin >> algo;
-			if (!(algo < 4 && algo>0))
-				throw "You must choose a number between 1 to 3";
 			cout << "Creating file...\n";
-			d.createFile(fileName, string("F"), recSize, recNum, ceil(((double)recNum / (1020 / recSize))) + 1, keyType, (SLEVEL)sLevel, keyOffset, keySize, algo - 1);
+			switch (type)
+			{
+			case(1):
+				d.createFile(fileName, string("F"), 88, ceil(((double)recNum / (1020 / 88)))*(1020/88), ceil(((double)recNum / (1020 / 88))) + 1, string("s"), (SLEVEL)sLevel, 0, 10, 0);
+				break;
+			default:
+				throw "You didn't choose a correct record type!";
+				break;
+			}
 			cout << "File created successfully!\n";
 			break;
 		case 4:
@@ -661,10 +638,19 @@ public:
 class Level3Debug
 {
 public:
-	static void startDebug(Disk& d, int mode)
+	static void startDebug(Disk& d, FCB& fcb, int mode)
 	{
-		FCB* fcb = NULL;
+		Student stu;
 		string fileName;
+		string ID;
+		string firstName;
+		string lastName;
+		string street;
+		string city;
+		string zip;
+		string phone;
+		int grade;
+		int houseNo;
 		switch (mode)
 		{
 		case 1:
@@ -676,13 +662,38 @@ public:
 		case 3:
 			cout << "Enter file name:\n";
 			cin >> fileName;
-			fcb = d.openFile(fileName, MODE::WR);
+			cout << "Opening file...\n";
+			fcb = (*d.openFile(fileName, MODE::WR));
+			cout << "File opened!\n";
 			break;
 		case 4:
-			cout << fcb->recInfo;
+			cout<< "Enter Student ID:\n";
+			cin >> ID;
+			for (int i = 0; i < fcb.recInfo.size; i++)
+				if (!strcmp(fcb.recInfo.records[i].key, ID.c_str()))
+					throw "ID already exist!";
+			cout << "Enter first name:\n";
+			cin >> firstName;
+			cout << "Enter last name:\n";
+			cin >> lastName;
+			cout << "Enter grade:\n";
+			cin >> grade;
+			cout << "Enter street:\n";
+			cin >> street;
+			cout << "Enter house number:\n";
+			cin >> houseNo;
+			cout << "Enter city:\n";
+			cin >> city;
+			cout << "Enter zip code:\n";
+			cin >> zip;
+			cout << "Enter phone number:\n";
+			cin >> phone;
+			cout << "Writing Record...\n";
+			stu = Student(ID, firstName, lastName, grade, street, houseNo, city, zip, phone);
+			fcb.addRecord((char*)& stu);
+			cout << "Record had been written!\n";
 			break;
 		case 5:
-			cout << fcb->DAT << endl;
 			break;
 		case 6:
 			break;
@@ -691,14 +702,14 @@ public:
 		case 8:
 			break;
 		case 9:
-			delete fcb;
+			cout << fcb.recInfo;
 			break;
 		default:
 			break;
 		}
 
 	}
-	static void welcomeDebugLevel3(Disk& d)
+	static void welcomeDebugLevel3(Disk& d, FCB& fcb)
 	{
 		int a;
 		d.mountDisk(string("Disk1.fms"));
@@ -706,14 +717,14 @@ public:
 		
 		cout << "Welcome to Level 3 Debugging Mode!\nWhat would you like to do?\n";
 		cout << "1. Set Disk (level 0)\n";
-		cout << "2. See disk Details\n";
+		cout << "2. Manage Files (level 2)\n";
 		cout << "3. Open File\n";
-		cout << "4. Print Rec Info\n";
+		cout << "4. Add Record\n";
 		cout << "5. \n";
 		cout << "6. \n";
 		cout << "7. \n";
 		cout << "8. \n";
-		cout << "9. \n";
+		cout << "9. Print Rec Info\n";
 		cout << "10. \n";
 		cin >> a;
 		while (a != 10)
@@ -725,7 +736,7 @@ public:
 			else
 			{
 				try {
-					startDebug(d, a);
+					startDebug(d,fcb, a);
 				}
 				catch (const char* str) {
 					cout << str << endl;
@@ -733,14 +744,14 @@ public:
 			}
 			cout << "Welcome to Level 3 Debugging Mode!\nWhat would you like to do?\n";
 			cout << "1. Set Disk (level 0)\n";
-			cout << "2. See disk Details\n";
+			cout << "2. Manage Files (level 2)\n";
 			cout << "3. Open File\n";
-			cout << "4. Print Rec Info\n";
+			cout << "4. Add Record\n";
 			cout << "5. \n";
 			cout << "6. \n";
 			cout << "7. \n";
 			cout << "8. \n";
-			cout << "9. \n";
+			cout << "9. Print Rec Info\n";
 			cout << "10. \n";
 			cin >> a;
 		}
@@ -751,8 +762,9 @@ public:
 int main()
 {	
 	try{
+		FCB fcb;
 		Disk d;
-		Level3Debug::welcomeDebugLevel3(d);
+		Level3Debug::welcomeDebugLevel3(d,fcb);
 		//cout << sizeof(FileHeader) << endl;
 
 	}

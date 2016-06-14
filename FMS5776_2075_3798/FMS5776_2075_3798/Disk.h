@@ -36,7 +36,7 @@ public:
 	//Ctor
 	Disk(void);
 	Disk(string&, string&, char, string&);
-	~Disk(void);
+	//~Disk(void);
 	
 	void createDisk(string&, string&,string&);
 	void mountDisk(string&);

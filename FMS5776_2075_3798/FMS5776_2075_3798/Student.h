@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 using namespace std;
 
 class Student
@@ -13,4 +14,6 @@ public:
 	char city[12];
 	char zipCode[8];
 	char phoneNo[11];
+	Student() {};
+	Student(string& ID, string& firstName, string& lastName, int grade, string& street, int houseNo, string& city, string& zipCode, string& phoneNo);
 };

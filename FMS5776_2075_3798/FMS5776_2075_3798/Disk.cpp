@@ -92,12 +92,12 @@ Disk::Disk(string & dn, string & dow, char flag,string& pwd)
 * SEE ALSO
 *	void unmountDisk(void)
 **************************************************/
-Disk::~Disk(void)
-{
-	if(mounted)
-		unmountDisk();
-	//dskfl.close();
-}
+//Disk::~Disk(void)
+//{
+//	/*if(mounted)
+//		unmountDisk();*/
+//	//dskfl.close();
+//}
 
 /*************************************************
 * FUNCTION
@@ -1173,6 +1173,8 @@ void Disk::createFile(string & fileName, string & recordFormat, unsigned int rec
 			throw "Disk is full!";
 		rootDirUpdate = 1;
 		DATtype fat;
+		if (numOfSecs % 2 == 1)
+			numOfSecs++;
 		alloc(fat, numOfSecs, algo);
 		int i = 0;
 		unsigned int firstSector = -1;
@@ -1429,38 +1431,37 @@ FCB* Disk::openFile(string & fn, MODE io)
 				throw "You don't have access to this file!";
 			readSector(rootDir.lsbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
 		}
-		FCB fcb;
+		FCB* fcb = new FCB(this);
 		
-		fcb.d = this;
-		fcb.path = path;
-		fcb.mode = io;
-		fcb.FAT = (*buffer).fat;
-		fcb.fileDesc = (*buffer).fileDesc;
-		fcb.numOfRecords = (*buffer).fileDesc.getEofRecNr();
+		fcb->path = path;
+		fcb->mode = io;
+		fcb->FAT = (*buffer).fat;
+		fcb->fileDesc = (*buffer).fileDesc;
+		fcb->maxRecNum = (*buffer).fileDesc.getEofRecNr();
+		fcb->recInfo = buffer->recInfo;
+		fcb->numOfRecords = fcb->recInfo.size;
+		for (int i = 0; i <36; i++)
+			fcb->DAT[i] = 0;
+		/*for(int i= fcb->recInfo.size;i<36;i++)
+			fcb->DAT[i] = 3;*/
+		for (int i = 0; i < fcb->recInfo.size; i++)
+			fcb->DAT[fcb->recInfo.records[i].recNr] = 1;
 		
-		fcb.recInfo = buffer->recInfo;
-		
-		fcb.maxRecNum = (fcb.fileDesc.fileSize - 1)*(1024 / fcb.fileDesc.actualRecSize);
-		//fcb.DAT = new int[fcb.maxRecNum];
-		for (int i = 0; i < 46; i++)
-			fcb.DAT[i] = 0;
-		for (int i = 0; i < fcb.recInfo.size; i++)
-			fcb.DAT[fcb.recInfo.records[i].recNr] = 1;
-		if (io == MODE::W || io == MODE::R || io == MODE::WR)
+		/*if (io == MODE::W || io == MODE::R || io == MODE::WR)
 		{
-			fcb.currRecNr = 0;
-			fcb.currSecNr = fcb.fileDesc.getFileAddr()+1;
-			fcb.currRecNrInBuff = 0;
+			fcb->currRecNr = 0;
+			fcb->currSecNr = fcb->fileDesc.getFileAddr()+1;
+			fcb->currRecNrInBuff = 0;
 		}
 		else if (io == MODE::E)
 		{
-			fcb.currRecNr = fcb.fileDesc.getEofRecNr()+1;
-			fcb.currSecNr = fcb.fileDesc.getFileAddr()+fcb.fileDesc.getFileSize();
-			fcb.currRecNrInBuff = 0;
-		}
-
+			fcb->currRecNr = fcb->fileDesc.getEofRecNr()+1;
+			fcb->currSecNr = fcb->fileDesc.getFileAddr()+fcb->fileDesc.getFileSize();
+			fcb->currRecNrInBuff = 0;
+		}*/
+		fcb->loaded = 1;
 		delete buffer;
-		return &fcb;
+		return fcb;
 	}
 	catch (const char* str)
 	{
