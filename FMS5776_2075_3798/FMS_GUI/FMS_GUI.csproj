@@ -145,6 +145,14 @@
     <Resource Include="ic_close_white_48dp_2x.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FMS_adapter\FMS_adapter.csproj">
+      <Project>{d164eceb-5328-46fc-900f-26d026a14d30}</Project>
+      <Name>FMS_adapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FMS_DLL\FMS_DLL.vcxproj">
+      <Project>{b47d5b31-c438-4bd1-ba40-4f3829d56580}</Project>
+      <Name>FMS_DLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WpfPageTransitions\WpfPageTransitions.csproj">
       <Project>{22a46d61-1d40-43a9-802c-b9d43dadd9ec}</Project>
       <Name>WpfPageTransitions</Name>
