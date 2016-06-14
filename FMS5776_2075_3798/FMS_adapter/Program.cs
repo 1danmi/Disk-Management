@@ -32,13 +32,13 @@ namespace FMS_adapter
                 Disk d = new Disk();
                 Console.WriteLine("\nMake Disk:");
                 //Console.WriteLine(ToStringProperty(d.GetVolumeHeader()));
-
-                d.createDisk("disk1", "oshri");
+                
+                d.createDisk("disk1", "oshri", "password");
                 Console.WriteLine("\nCreate Disk:");
                // Console.WriteLine(ToStringProperty(d.GetVolumeHeader()));
 
                 d.mountDisk("disk1");
-                d.format("oshri");
+                d.format();
                 Console.WriteLine("\nFormat Disk:");
                 //Console.WriteLine(ToStringProperty(d.GetVolumeHeader()));
             }
