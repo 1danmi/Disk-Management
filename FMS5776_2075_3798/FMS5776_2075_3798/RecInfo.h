@@ -32,10 +32,10 @@ public:
 	RecEntry records[36];
 	int size;
 	RecInfo(){}
-	int findRecordNr(char* _key)
+	int findRecordNr(string& _key)
 	{
 		for (int i = 0; i < size; i++)
-			if (!strcmp(_key, records[i].key))
+			if (!strcmp(_key.c_str(), records[i].key))
 				return i;
 		return -1;
 	}

@@ -29,13 +29,12 @@ public:
 	RecInfo recInfo;
 	void closeFile();
 	void flushFile();
-	void readRecord(char*, unsigned int = 0, unsigned int = -1);
+	void readRecord(char*, int = -1);
 	void addRecord(char*);
 	//void seek(unsigned int, int);
 	void updateCancel();
 	void deleteRecord(int rec);
 	void updateRecord(char *);
-	int findRecByKey(string&);
 
 	string & GetLastErrorMessage();
 	void SetLastErrorMessage(string lastErrorMessage);

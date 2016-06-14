@@ -33,12 +33,14 @@ FCB::~FCB()
 
 void FCB::closeFile()
 {
+	if (!loaded)
+		throw "No file is open!";
 	if (lock)
 		throw "The file is locked!";
-	flushFile();
+	//flushFile();
 	FileHeader* fh = new FileHeader();
 	this->d->readSector(this->fileDesc.getFileAddr(), (Sector*)fh);
-	fh->fileDesc.eofRecNr = this->fileDesc.eofRecNr;
+	fh->fileDesc.eofRecNr = this->numOfRecords;
 	strncpy_s(fh->fileDesc.fileName,12,this->fileDesc.fileName,11);
 	fh->recInfo = recInfo;
 	//fh->fat = this->FAT;
@@ -50,6 +52,7 @@ void FCB::closeFile()
 	d->rootDirUpdate = 1;
 	d = nullptr;
 	delete fh;
+	loaded = 0;
 }
 
 void FCB::flushFile()
@@ -57,54 +60,54 @@ void FCB::flushFile()
 	this->d->writeSector(this->currSecNr, &(this->buffer));
 }
 
-void FCB::readRecord(char * record , unsigned int update, unsigned int rec)
+void FCB::readRecord(char * record , int rec)
 {
 	try
 	{
+		if (!loaded)
+			throw "No file is open!";
 		if (this->DAT[rec] == 0 || this->DAT[rec] == 2)
 			throw "Record does not exist!";
 		if (lock)
 			throw "The file is locked for update!";
 		if (this->mode == MODE::W || this->mode == MODE::E)
 			throw "The file is not open for reading!";
-		if (update)
-			if (this->mode != MODE::WR)
-				throw "The file is not open for writing!";
 		if (rec != -1)
 			if (rec >= numOfRecords)
 				throw "Record doesn't exist!";
 		int numOfRecsInSector = 1020 / this->fileDesc.getRecSize();
-		int recSec = rec / numOfRecsInSector+1;
+		int recSec = (rec / numOfRecsInSector + 1);
+		int recCls = recSec / 2;
 		int count = -1;
 		int i = 0;
-		while( i < 1600)
+		while (i < 1600)
 		{
 			if (this->FAT[i])
 			{
 				count++;
-				if (count == recSec)
+				if (count == recCls)
 					break;
 			}
 			i++;
 		}
+
 		if (i == 1600)
 			throw "Wrong record number!";
-		if(currSecNr!=i)
+		if (recSec % 2)
+			i = i * 2 + 1;
+		else
+			i *= 2;
+		if (currSecNr != i)
 			d->readSector(i, &(this->buffer));
 
 		currRecNrInBuff = rec%numOfRecsInSector;
 
 		for (unsigned int i = 0; i < this->fileDesc.getRecSize(); i++)
 			record[i] = this->buffer.rawData[currRecNrInBuff*this->fileDesc.getRecSize() + i];
-		if (!update)
-		{
-			if (numOfRecords - currRecNr > 1)
-				this->currRecNrInBuff++;
-			else
-				currRecNr = 0;
-		}
+		if (numOfRecords - currRecNr > 1)
+			this->currRecNrInBuff++;
 		else
-			lock = 1;
+			currRecNr = 0;
 	}
 	catch (const char* str)
 	{
@@ -122,6 +125,8 @@ void FCB::addRecord(char * record)
 	{
 		/*if (lock)
 			throw "the file is locked!";*/
+		if (!loaded)
+			throw "No file is open!";
 		if (this->mode == MODE::R || this->mode == MODE::E)
 			throw "the file is not open for writing!";
 		if (numOfRecords == 36)
@@ -135,6 +140,7 @@ void FCB::addRecord(char * record)
 		for (int i = 0; i < 36 && i < maxRecNum; i++)
 			if (!DAT[i])
 			{
+				DAT[i] = 1;
 				recNr = i;
 				break;
 			}
@@ -181,6 +187,7 @@ void FCB::addRecord(char * record)
 		this->flushFile();
 
 #pragma region Update
+		numOfRecords++;
 		FileHeader* fh = new FileHeader();
 		this->d->readSector(this->fileDesc.getFileAddr(), (Sector*)fh);
 		fh->fileDesc.eofRecNr = this->fileDesc.eofRecNr;
@@ -207,9 +214,6 @@ void FCB::addRecord(char * record)
 	}
 }
 
-//void FCB::seek(unsigned int, int)
-//{
-//}
 
 void FCB::updateCancel()
 {
@@ -269,29 +273,6 @@ void FCB::updateRecord(char * record)
 	{
 		throw "Unknown Exception";
 	}
-}
-
-int FCB::findRecByKey(string & key)
-{
-	if (!strcmp(fileDesc.keyType, "I"))
-	{
-		int convKey = stoi(key, nullptr, 10);
-
-	}
-	else if (!strcmp(fileDesc.keyType, "D"))
-	{
-		double convKey = stod(key);
-	}
-	else if (!strcmp(fileDesc.keyType, "F"))
-	{
-		float convKey = stof(key);
-	}
-	else if (!strcmp(fileDesc.keyType, "S"))
-	{
-		char* tmpKey = new char[fileDesc.keySize];
-		strncpy_s(tmpKey, fileDesc.keySize, key.c_str(), fileDesc.keySize - 1);
-	}
-	return -1;
 }
 
 string& FCB::GetLastErrorMessage() { return this->lastErrorMessage; }

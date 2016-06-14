@@ -640,6 +640,7 @@ class Level3Debug
 public:
 	static void startDebug(Disk& d, FCB& fcb, int mode)
 	{
+		int rec;
 		Student stu;
 		string fileName;
 		string ID;
@@ -660,6 +661,8 @@ public:
 			Level2Debug::welcomeDebugLevel2(d);
 			break;
 		case 3:
+			if (fcb.loaded)
+				throw "You must close the file first!";
 			cout << "Enter file name:\n";
 			cin >> fileName;
 			cout << "Opening file...\n";
@@ -667,6 +670,8 @@ public:
 			cout << "File opened!\n";
 			break;
 		case 4:
+			if (!fcb.loaded)
+				throw "No File is open!";
 			cout<< "Enter Student ID:\n";
 			cin >> ID;
 			for (int i = 0; i < fcb.recInfo.size; i++)
@@ -694,15 +699,28 @@ public:
 			cout << "Record had been written!\n";
 			break;
 		case 5:
+			cout << "Enter Key:\n";
+			cin >> ID;
+			rec = fcb.recInfo.findRecordNr(ID);
+			if (rec == -1)
+				throw "Record is not exist";
+			cout << "Reading record...\n";
+			fcb.readRecord((char*)& stu, rec);
+			cout << stu;
 			break;
 		case 6:
 			break;
 		case 7:
 			break;
 		case 8:
+			if (!fcb.loaded)
+				throw "No file is open!";
+			cout << fcb.recInfo;
 			break;
 		case 9:
-			cout << fcb.recInfo;
+			cout << "Closing File...\n";
+			fcb.closeFile();
+			cout << "File Closed!\n";
 			break;
 		default:
 			break;
@@ -720,12 +738,12 @@ public:
 		cout << "2. Manage Files (level 2)\n";
 		cout << "3. Open File\n";
 		cout << "4. Add Record\n";
-		cout << "5. \n";
-		cout << "6. \n";
+		cout << "5. Read Record\n";
+		cout << "6. Delete Record\n";
 		cout << "7. \n";
-		cout << "8. \n";
-		cout << "9. Print Rec Info\n";
-		cout << "10. \n";
+		cout << "8. Print Rec Info\n";
+		cout << "9. Close File\n";
+		cout << "10. Exit\n";
 		cin >> a;
 		while (a != 10)
 		{
@@ -747,12 +765,12 @@ public:
 			cout << "2. Manage Files (level 2)\n";
 			cout << "3. Open File\n";
 			cout << "4. Add Record\n";
-			cout << "5. \n";
-			cout << "6. \n";
+			cout << "5. Read Record\n";
+			cout << "6. Delete Record\n";
 			cout << "7. \n";
-			cout << "8. \n";
-			cout << "9. Print Rec Info\n";
-			cout << "10. \n";
+			cout << "8. Print Rec Info\n";
+			cout << "9. Close File\n";
+			cout << "10. Exit\n";
 			cin >> a;
 		}
 	}

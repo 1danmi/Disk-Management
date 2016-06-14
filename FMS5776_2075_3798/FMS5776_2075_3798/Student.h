@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 using namespace std;
 
@@ -16,4 +17,5 @@ public:
 	char phoneNo[11];
 	Student() {};
 	Student(string& ID, string& firstName, string& lastName, int grade, string& street, int houseNo, string& city, string& zipCode, string& phoneNo);
+	friend ostream& operator<<(ostream& out, Student& stu);
 };
