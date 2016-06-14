@@ -42,7 +42,7 @@ namespace FMS_adapter
             }
         }
 
-        public object readRec(object dest, uint readForUpdate = 0)
+        public object readRecord(object dest, uint readForUpdate = 0)
         {
             try
             {
