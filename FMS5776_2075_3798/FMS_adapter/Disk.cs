@@ -201,5 +201,37 @@ namespace FMS_adapter
                 throw;
             }
         }
+
+        //level 4
+        public VHD getVHD()
+        {
+            try
+            {
+
+                VHD v = new VHD();
+                int structSize = Marshal.SizeOf(v.GetType()); //Marshal.SizeOf(typeof(Student)); 
+                IntPtr buffer = Marshal.AllocHGlobal(structSize);
+                Marshal.StructureToPtr(v, buffer, true);
+
+                // ... send buffer to dll
+                cppToCsharpAdapter.getVHD(this.myDiskPtr, buffer);
+                Marshal.PtrToStructure(buffer, v);
+
+                // free allocate
+                Marshal.FreeHGlobal(buffer);
+
+                return v;
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
