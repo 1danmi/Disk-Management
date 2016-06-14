@@ -10,17 +10,17 @@
 //#include "FCB.h"
 
 #pragma region Level0
-__declspec(dllexport) void createDisk(Disk* THIS, char* diskName, char* diskOwner, char* pwd) 
+__declspec(dllexport) void createDisk(Disk* THIS, char* &diskName, char*& diskOwner, char* &pwd) 
 { 
 	try 
 	{ 
-		THIS->createDisk(std::string(diskName), std::string(diskOwner),std::string(pwd));
+		THIS->createDisk(string(diskName), string(diskOwner),string(pwd));
 	} 
 	catch (exception ex) 
 	{ 
 		THIS->SetLastErrorMessage(ex.what());   throw ex; } 
 }
-__declspec(dllexport) void mountDisk(Disk* THIS, char* diskName)
+__declspec(dllexport) void mountDisk(Disk* THIS, char* &diskName)
 {
 	try
 	{
@@ -42,7 +42,7 @@ __declspec(dllexport) void unmountDisk(Disk* THIS)
 		THIS->SetLastErrorMessage(ex.what());   throw ex;
 	}
 }
-__declspec(dllexport) void recreateDisk(Disk* THIS, char* diskOwner)
+__declspec(dllexport) void recreateDisk(Disk* THIS, char* &diskOwner)
 {
 	try
 	{

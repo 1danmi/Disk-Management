@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FMS_adapter
 {
-
+    enum SLEVEL { user = 1, Administrator, Super_User, Owner };
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     class VolumeHeader
@@ -90,7 +90,7 @@ namespace FMS_adapter
         public static extern void createDisk(IntPtr THIS, string diskName, string diskOwner, string pwd);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void mountDisk(IntPtr THIS, string diskName);
+        public static extern void mountDisk(IntPtr THIS, string fileName);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void unmountDisk(IntPtr THIS);
@@ -102,28 +102,27 @@ namespace FMS_adapter
 
         // Level 1
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void format(IntPtr THIS, string diskOwner);
+        public static extern void format(IntPtr THIS);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern int howMuchEmpty(IntPtr THIS);
 
-
         //Level 2
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void createFile(IntPtr THIS, string fileName, string fileOwner, string FinalOrVar,
-                                uint recSize, uint fileSize,
-                                string keyType, uint keyOffset, uint keySize = 4, uint algo = 0);
+        public static extern void createFile(IntPtr THIS, string fileName, string recFormat,
+                                uint recSize, uint recNum, uint numOfSecs,
+                                string keyType, SLEVEL slevel, uint keyOffset, uint keySize = 4, uint algo = 0);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void delFile(IntPtr THIS, string fileName, string fileOwner);
+        public static extern void delFile(IntPtr THIS, string fileName);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void extendFile(IntPtr THIS, string fileName, string fileOwner, uint size);
+        public static extern void extendFile(IntPtr THIS, string fileName, uint size);
 
 
         // Level 3
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr openFile(IntPtr THIS, string fileName, string fileOwner, MODE mo);
+        public static extern IntPtr openFile(IntPtr THIS, string fileName, MODE mo);
 
 
         // FCB
@@ -131,10 +130,10 @@ namespace FMS_adapter
         public static extern void closeFile(IntPtr THIS);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void readRec(IntPtr THIS, IntPtr dest, uint readForUpdate = 0);
+        public static extern void readRecord(IntPtr THIS, IntPtr dest, uint readForUpdate = 0);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void writeRec(IntPtr THIS, IntPtr source);
+        public static extern void addRecord(IntPtr THIS, IntPtr source);
 
 
         //[DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
@@ -144,10 +143,10 @@ namespace FMS_adapter
         public static extern void updateRecCancel(IntPtr THIS);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void deleteRec(IntPtr THIS);
+        public static extern void deleteRecord(IntPtr THIS, uint readForUpdate);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void updateRec(IntPtr THIS, IntPtr source);
+        public static extern void updateRecord(IntPtr THIS, IntPtr source);
 
         //extra
         //[DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
