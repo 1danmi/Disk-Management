@@ -236,13 +236,13 @@ extern "C"
 }
 
 // extra
-//
-//__declspec(dllexport)   void  getVolumeHeader(Disk* THIS, VHD* buffer)
-//{
-//	memcpy_s(buffer, sizeof(VHD), &THIS->getVHD(), sizeof(VHD));
-//}
-//
-//string str;
+
+__declspec(dllexport)   void  getVHD(Disk* THIS, VHD* buffer)
+{
+	memcpy_s(buffer, sizeof(VHD), &THIS->getVHD(), sizeof(VHD));
+}
+
+string str;
 //__declspec(dllexport) const char*  getDat(Disk* THIS)
 //{
 //	std::stringstream ss;

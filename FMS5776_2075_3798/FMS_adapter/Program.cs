@@ -26,21 +26,21 @@ namespace FMS_adapter
 
             try
             {
-                int structSize = Marshal.SizeOf(typeof(VolumeHeader));
+                int structSize = Marshal.SizeOf(typeof(VHD));
                 Console.WriteLine("Marshal.SizeOf(typeof(VolumeHeader) == " + structSize);
 
                 Disk d = new Disk();
                 Console.WriteLine("\nMake Disk:");
-                //Console.WriteLine(ToStringProperty(d.GetVolumeHeader()));
-                
+                Console.WriteLine(ToStringProperty(d.getVHD()));
+
                 d.createDisk("disk1", "oshri", "password");
                 Console.WriteLine("\nCreate Disk:");
-               // Console.WriteLine(ToStringProperty(d.GetVolumeHeader()));
+                Console.WriteLine(ToStringProperty(d.getVHD()));
 
                 d.mountDisk("disk1");
                 d.format();
                 Console.WriteLine("\nFormat Disk:");
-                //Console.WriteLine(ToStringProperty(d.GetVolumeHeader()));
+                Console.WriteLine(ToStringProperty(d.getVHD()));
             }
             catch (Exception e)
             {

@@ -15,11 +15,6 @@ public:
 	* SEE ALSO
 	*		---
 	*************************************************/
-	VHD() {};
-	VHD(unsigned int,const char[12],const char[12],const char[10], unsigned int, unsigned int
-		, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int
-		, const char[10], bool, unsigned int);
-	~VHD() {};
 	unsigned int sectorNr;
 	char diskName[12];
 	char diskOwner[12];
@@ -37,4 +32,10 @@ public:
 	char emptyArea[940];
 	friend class TestLevel_0;;
 	friend class Disk;
+
+	VHD() {};
+	VHD(unsigned int, const char[12], const char[12], const char[10], unsigned int, unsigned int
+		, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int
+		, const char[10], bool, unsigned int);
+	~VHD() {};
 };

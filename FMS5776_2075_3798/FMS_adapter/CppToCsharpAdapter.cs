@@ -10,7 +10,7 @@ namespace FMS_adapter
     enum SLEVEL { user = 1, Administrator, Super_User, Owner };
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    class VolumeHeader
+    class VHD
     {
         uint sectorNr;
 
@@ -56,7 +56,7 @@ namespace FMS_adapter
         public bool IsFormated { get { return isFormated; } }
 
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 944)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 940)]
         string emptyArea;
     }
 
@@ -153,8 +153,8 @@ namespace FMS_adapter
         //[return: MarshalAs(UnmanagedType.AnsiBStr)]
         //public static extern string getDat(IntPtr THIS);
 
-        //[DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void getVolumeHeader(IntPtr THIS, IntPtr buffer);
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void getVHD(IntPtr THIS, IntPtr buffer);
 
     }
 }

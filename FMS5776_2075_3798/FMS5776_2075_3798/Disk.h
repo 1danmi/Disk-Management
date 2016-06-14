@@ -90,5 +90,6 @@ public:
 #pragma region Level4
 	string & GetLastErrorMessage();
 	void SetLastErrorMessage(string lastErrorMessage);
+	VHD getVHD();
 #pragma endregion
 };
