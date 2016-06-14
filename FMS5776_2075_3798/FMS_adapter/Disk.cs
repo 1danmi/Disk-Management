@@ -92,11 +92,11 @@ namespace FMS_adapter
 
         //level 1
 
-        public void format(string dow)
+        public void format()
         {
             try
             {
-                cppToCsharpAdapter.format(this.myDiskPtr, dow);
+                cppToCsharpAdapter.format(this.myDiskPtr);
             }
             catch (SEHException)
             {
@@ -128,11 +128,13 @@ namespace FMS_adapter
         }
 
         //level 2
-        public void createFile(string fn, string fo, string ft, uint recLen, uint numOfSecs, string kt, uint ko, uint ks = 0, uint algo = 0)
+        public void createFile(string fileName, string recFormat,
+                                uint recSize, uint recNum, uint numOfSecs,
+                                string keyType, SLEVEL slevel, uint keyOffset, uint keySize = 0, uint algo = 0)
         {
             try
             {
-                cppToCsharpAdapter.createFile(this.myDiskPtr, fn, fo, ft, recLen, numOfSecs, kt, ko, ks = 0, algo);
+                cppToCsharpAdapter.createFile(this.myDiskPtr, fileName, recFormat, recSize, recNum, numOfSecs, keyType, slevel, keyOffset, keySize, algo);
             }
             catch (SEHException)
             {
@@ -145,11 +147,11 @@ namespace FMS_adapter
                 throw;
             }
         }
-        public void delFile(string fn, string fow)
+        public void delFile(string fn)
         {
             try
             {
-                cppToCsharpAdapter.delFile(this.myDiskPtr, fn, fow);
+                cppToCsharpAdapter.delFile(this.myDiskPtr, fn);
             }
             catch (SEHException)
             {
@@ -162,11 +164,11 @@ namespace FMS_adapter
                 throw;
             }
         }
-        public void extendFile(string fn, string fow, uint size)
+        public void extendFile(string fn, uint size)
         {
             try
             {
-                cppToCsharpAdapter.extendFile(this.myDiskPtr, fn, fow, size);
+                cppToCsharpAdapter.extendFile(this.myDiskPtr, fn, size);
             }
             catch (SEHException)
             {
@@ -181,22 +183,23 @@ namespace FMS_adapter
         }
 
         // Level3
-        //public FCB openFile(string fn, string fow, MODE mo)
-        //{
-        //    try
-        //    {
-        //        return cppToCsharpAdapter.openFile(this.myDiskPtr, fn, fow, mo);
-        //    }
-        //    catch (SEHException)
-        //    {
-        //        IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
-        //        string message = Marshal.PtrToStringAnsi(cString);
-        //        throw new Exception(message);
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
+        public FCB openFile(string fn, MODE mo)
+        {
+            try
+            {
+                IntPtr p = cppToCsharpAdapter.openFile(this.myDiskPtr, fn, mo);
+                return new FCB(p);
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
