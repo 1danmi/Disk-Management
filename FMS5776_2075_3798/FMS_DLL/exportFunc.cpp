@@ -3,11 +3,11 @@
 #include <iostream>     // std::cout
 #include <sstream>     
 
-#include "Dir.h"
-#include "VHD.h"
-#include "FileHeader.h"
-#include "Sector.h"
-#include "FCB.h"
+//#include "Dir.h"
+//#include "VHD.h"
+//#include "FileHeader.h"
+//#include "Sector.h"
+//#include "FCB.h"
 
 #pragma region Level0
 __declspec(dllexport) void createDisk(Disk* THIS, char* diskName, char* diskOwner, char* pwd) 
@@ -56,11 +56,11 @@ __declspec(dllexport) void recreateDisk(Disk* THIS, char* diskOwner)
 #pragma endregion
 
 #pragma region Level1
-__declspec(dllexport) void format(Disk* THIS, char* diskOwner)
+__declspec(dllexport) void format(Disk* THIS)
 {
 	try
 	{
-		THIS->format(std::string(diskOwner));
+		THIS->format();
 	}
 	catch (exception ex)
 	{
@@ -81,33 +81,33 @@ __declspec(dllexport) int howMuchEmpty(Disk* THIS)
 #pragma endregion
 
 #pragma region Level2
-__declspec(dllexport) void createFile(Disk* THIS, char* & fn, char* & fo, char* & ft, unsigned int recLen, unsigned int numOfSecs, char* & kt, unsigned int ko, unsigned int ks, unsigned int algo)
+__declspec(dllexport) void createFile(Disk* THIS, char* &fileName, char* & recordFormat, unsigned int recLen, unsigned int recNum, unsigned int numOfSecs, char* & keyType, SLEVEL sLevel, unsigned int keyOffset, unsigned int keySize, unsigned int algo)
 {
 	try
 	{
-		THIS->createFile(std::string(fn), std::string(fo), string(ft), recLen, numOfSecs, string(kt), ko, ks, algo);
+		THIS->createFile(string(fileName), string(recordFormat), recLen, recNum, numOfSecs, string(keyType), sLevel, keyOffset, keySize, algo);
 	}
 	catch (exception ex)
 	{
 		THIS->SetLastErrorMessage(ex.what());   throw ex;
 	}
 }
-__declspec(dllexport) void delFile(Disk* THIS, char* fileName, char* fileOwner)
+__declspec(dllexport) void delFile(Disk* THIS, char* &fileName)
 {
 	try
 	{
-		THIS->delFile(std::string(fileName), std::string(fileOwner));
+		THIS->delFile(string(fileName));
 	}
 	catch (exception ex)
 	{
 		THIS->SetLastErrorMessage(ex.what());   throw ex;
 	}
 }
-__declspec(dllexport) void extendFile(Disk* THIS, char* fileName, char* fileOwner, unsigned int size)
+__declspec(dllexport) void extendFile(Disk* THIS, char* &fileName, unsigned int size)
 {
 	try
 	{
-		THIS->extendFile(std::string(fileName), std::string(fileOwner), size);
+		THIS->extendFile(string(fileName), size);
 	}
 	catch (exception ex)
 	{
@@ -117,11 +117,11 @@ __declspec(dllexport) void extendFile(Disk* THIS, char* fileName, char* fileOwne
 #pragma endregion
 
 #pragma region Level3
-__declspec(dllexport) FCB* openFile(Disk* THIS, char* fileName, char* fileOwner, MODE m)
+__declspec(dllexport) FCB* openFile(Disk* THIS, char* fileName, MODE m)
 {
 	try
 	{
-		THIS->openFile(std::string(fileName), std::string(fileOwner), m);
+		THIS->openFile(string(fileName), m);
 	}
 	catch (exception ex)
 	{
@@ -143,11 +143,11 @@ __declspec(dllexport) void closeFile(FCB* THIS)
 		throw ex;
 	}
 }
-__declspec(dllexport) void readRecord(FCB* THIS, char * record, unsigned int update, unsigned int rec)
+__declspec(dllexport) void readRecord(FCB* THIS, char * record, unsigned int rec)
 {
 	try
 	{
-		THIS->readRecord(record, update, rec);
+		THIS->readRecord(record, rec);
 	}
 	catch (exception ex)
 	{
@@ -155,11 +155,11 @@ __declspec(dllexport) void readRecord(FCB* THIS, char * record, unsigned int upd
 		throw ex;
 	}
 }
-__declspec(dllexport) void writeRecord(FCB* THIS, char * record, unsigned int rec)
+__declspec(dllexport) void addRecord(FCB* THIS, char * record)
 {
 	try
 	{
-		THIS->writeRecord(record, rec);
+		THIS->addRecord(record);
 	}
 	catch (exception ex)
 	{
@@ -181,11 +181,11 @@ __declspec(dllexport) void updateRecord(FCB* THIS, char * record)
 		throw ex;
 	}
 }
-__declspec(dllexport) void deleteRecord(FCB* THIS)
+__declspec(dllexport) void deleteRecord(FCB* THIS, unsigned int rec)
 {
 	try
 	{
-		THIS->deleteRecord();
+		THIS->deleteRecord(rec);
 	}
 	catch (exception ex)
 	{
