@@ -1148,6 +1148,8 @@ void Disk::createFile(string & fileName, string & recordFormat, unsigned int rec
 			throw "You have to sign-in in order to create a new file!";
 		if (sLevel > currUser.sLevel)
 			throw "You can't create new file with higher permission than yours!";
+		if (recNum == 0 || recNum > 36)
+			throw "Record number must be between 1-36";
 		int path =-1;
 		for (int i = 0; i < 14; i++)
 		{

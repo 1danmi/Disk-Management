@@ -709,6 +709,30 @@ public:
 			cout << stu;
 			break;
 		case 6:
+			if (!fcb.loaded)
+				throw "No File is open!";
+			cout << "Enter Student ID:\n";
+			cin >> ID;
+			cout << "Enter first name:\n";
+			cin >> firstName;
+			cout << "Enter last name:\n";
+			cin >> lastName;
+			cout << "Enter grade:\n";
+			cin >> grade;
+			cout << "Enter street:\n";
+			cin >> street;
+			cout << "Enter house number:\n";
+			cin >> houseNo;
+			cout << "Enter city:\n";
+			cin >> city;
+			cout << "Enter zip code:\n";
+			cin >> zip;
+			cout << "Enter phone number:\n";
+			cin >> phone;
+			cout << "Updating Record...\n";
+			stu = Student(ID, firstName, lastName, grade, street, houseNo, city, zip, phone);
+			fcb.updateRecord((char*)& stu);
+			cout << "Record had been updated!\n";
 			break;
 		case 7:
 			cout << "Enter record key:\n";
@@ -747,7 +771,7 @@ public:
 		cout << "3. Open File\n";
 		cout << "4. Add Record\n";
 		cout << "5. Read Record\n";
-		cout << "6. \n";
+		cout << "6. Update Record\n";
 		cout << "7. Delete Record\n";
 		cout << "8. Print Rec Info\n";
 		cout << "9. Close File\n";
@@ -774,7 +798,7 @@ public:
 			cout << "3. Open File\n";
 			cout << "4. Add Record\n";
 			cout << "5. Read Record\n";
-			cout << "6. \n";
+			cout << "6. Update Record\n";
 			cout << "7. Delete Record\n";
 			cout << "8. Print Rec Info\n";
 			cout << "9. Close File\n";

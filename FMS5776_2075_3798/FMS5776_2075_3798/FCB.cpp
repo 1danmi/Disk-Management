@@ -94,8 +94,8 @@ void FCB::readRecord(char * record , int rec)
 			i = i * 2 + 1;
 		else
 			i *= 2;
-		if (currSecNr != i)
-			d->readSector(i, &(this->buffer));
+		
+		d->readSector(i, &(this->buffer));
 
 		currRecNrInBuff = rec%numOfRecsInSector;
 
@@ -168,8 +168,7 @@ void FCB::addRecord(char * record)
 			i = i * 2 + 1;
 		else
 			i *= 2;
-		if (currSecNr != i)
-			d->readSector(i, &(this->buffer));
+		d->readSector(i, &(this->buffer));
 		currSecNr = i;
 		currRecNrInBuff = recNr%numOfRecsInSector;
 		char recKey[12];
@@ -265,21 +264,61 @@ void FCB::updateRecord(char * record)
 {
 	try
 	{
-		if (!lock)
-			throw "The file is not locked for update!";
+		/*if (!lock)
+			throw "The file is not locked for update!";*/
 		if (this->mode != MODE::WR)
 			throw "The file is not open for updating!";
-		int numOfRecs = 1020 / this->fileDesc.getRecSize();
-		this->currSecNr = numOfRecords / numOfRecs;
-		int recNum = numOfRecords%numOfRecs - 1;
-		for (unsigned int i = 0; i < this->fileDesc.getRecSize(); i++)
-			this->buffer.rawData[recNum*this->fileDesc.getRecSize() + i] = record[i];
-		lock = 0;
-		flushFile();
-		if (numOfRecords - currRecNr > 1)
-			this->currRecNr++;
+		char recKey[12];
+		for (int i = 0; i < this->fileDesc.keySize; i++)
+			recKey[i] = record[i + fileDesc.keyOffset];
+		int rec = this->recInfo.findRecordNr(string(recKey));
+		if (rec == -1)
+			throw "Record does not exit!";
+		int numOfRecsInSector = 1020 / this->fileDesc.getRecSize();
+		int recSec = (rec / numOfRecsInSector + 1);
+		int recCls = recSec / 2;
+		int count = -1;
+		int i = 0;
+		while (i < 1600)
+		{
+			if (this->FAT[i])
+			{
+				count++;
+				if (count == recCls)
+					break;
+			}
+			i++;
+		}
+
+		if (i == 1600)
+			throw "Wrong record number!";
+		if (recSec % 2)
+			i = i * 2 + 1;
 		else
-			currRecNr = 0;
+			i *= 2;
+		d->readSector(i, &(this->buffer));
+		currSecNr = i;
+		currRecNrInBuff = rec%numOfRecsInSector;
+		for (unsigned int i = 0; i < this->fileDesc.getRecSize(); i++)
+			this->buffer.rawData[currRecNrInBuff*this->fileDesc.getRecSize() + i] = record[i];
+		this->flushFile();
+
+#pragma region Update
+		numOfRecords++;
+		FileHeader* fh = new FileHeader();
+		this->d->readSector(this->fileDesc.getFileAddr(), (Sector*)fh);
+		fh->fileDesc.eofRecNr = maxRecNum;
+		strncpy_s(fh->fileDesc.fileName, 12, this->fileDesc.fileName, 11);
+		fh->recInfo = recInfo;
+		//fh->fat = this->FAT;
+		this->d->writeSector(this->fileDesc.getFileAddr(), (Sector*)fh);
+		if (path >= 14 && path < 28)
+			d->rootDir.msbSector.dirEntry[path - 14] = fileDesc;
+		else if (path > -1 && path < 14)
+			d->rootDir.lsbSector.dirEntry[path] = fileDesc;
+		d->rootDirUpdate = 1;
+#pragma endregion
+
 		
 	}
 	catch (const char* str)

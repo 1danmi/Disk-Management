@@ -34,7 +34,7 @@ public:
 	//void seek(unsigned int, int);
 	void updateCancel();
 	void deleteRecord(int rec);
-	void updateRecord(char *);
+	void updateRecord(char*);
 
 	string & GetLastErrorMessage();
 	void SetLastErrorMessage(string lastErrorMessage);
