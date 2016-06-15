@@ -74,7 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../FMS5776_2075_3798</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\FMS5776_2075_3798</AdditionalIncludeDirectories>
     </ClCompile>
     <PostBuildEvent>
       <Command>copy "$(LocalDebuggerCommand)" "$(SolutionDir)FMS_adapter\bin\Debug"</Command>

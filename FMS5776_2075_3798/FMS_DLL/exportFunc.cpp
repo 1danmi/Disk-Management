@@ -49,7 +49,7 @@ extern "C"
 			throw ex;
 		}
 	}
-	__declspec(dllexport) void  mountdisk(Disk* THIS, char* fileName)
+	__declspec(dllexport) void  mountDisk(Disk* THIS, char* fileName)
 	{
 		try
 		{
@@ -249,7 +249,7 @@ extern "C"
 
 	// extra
 
-	__declspec(dllexport)   void  getVolumeHeader(Disk* THIS, VHD* buffer)
+	__declspec(dllexport)   void  getVHD(Disk* THIS, VHD* buffer)
 	{
 		memcpy_s(buffer, sizeof(VHD), &THIS->getVHD(), sizeof(VHD));
 	}

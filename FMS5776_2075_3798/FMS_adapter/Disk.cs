@@ -15,7 +15,6 @@ namespace FMS_adapter
         public Disk()
         {
             myDiskPtr = cppToCsharpAdapter.makeDiskObject();
-            //myDiskPtr = cppToCsharpAdapter.makeDiskObject();
         }
         ~Disk()
         {
@@ -39,11 +38,11 @@ namespace FMS_adapter
                 throw;
             }
         }
-        public void mountDisk(string dn)
+        public void mountDisk(string fn)
         {
             try
             {
-                cppToCsharpAdapter.mountDisk(this.myDiskPtr, dn);
+                cppToCsharpAdapter.mountDisk(this.myDiskPtr, fn);
             }
             catch (SEHException)
             {
