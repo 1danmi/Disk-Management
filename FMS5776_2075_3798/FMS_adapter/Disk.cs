@@ -14,7 +14,8 @@ namespace FMS_adapter
         //level 0
         public Disk()
         {
-            this.myDiskPtr = cppToCsharpAdapter.makeDiskObject();
+            myDiskPtr = cppToCsharpAdapter.makeDiskObject();
+            //myDiskPtr = cppToCsharpAdapter.makeDiskObject();
         }
         ~Disk()
         {

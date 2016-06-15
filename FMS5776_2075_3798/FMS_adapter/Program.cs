@@ -11,7 +11,7 @@ namespace FMS_adapter
     class Program
     {
 
-        //List<FCB> fcbList;
+        List<FCB> fcbList;
 
         public static string ToStringProperty(object t)
         {
@@ -27,7 +27,7 @@ namespace FMS_adapter
             try
             {
                 int structSize = Marshal.SizeOf(typeof(VHD));
-                Console.WriteLine("Marshal.SizeOf(typeof(VolumeHeader) == " + structSize);
+                Console.WriteLine("Marshal.SizeOf(typeof(VHD) == " + structSize);
 
                 Disk d = new Disk();
                 Console.WriteLine("\nMake Disk:");
