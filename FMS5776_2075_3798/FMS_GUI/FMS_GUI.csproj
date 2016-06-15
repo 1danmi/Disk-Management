@@ -35,9 +35,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Expression.Prototyping.SketchControls, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="ReachFramework" />
+    <Reference Include="Syncfusion.Linq.Base, Version=14.1451.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Linq.Base451.14.1.0.46\lib\net451\Syncfusion.Linq.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Olap.Base, Version=14.1451.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Olap.Base451.14.1.0.46\lib\net451\Syncfusion.Olap.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.OlapShared.WPF, Version=14.1451.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.OlapShared.WPF451.14.1.0.46\lib\net451\Syncfusion.OlapShared.WPF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Wpf, Version=14.1451.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.WPF451.14.1.0.46\lib\net451\Syncfusion.Shared.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Wpf, Version=14.1451.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Tools.WPF451.14.1.0.46\lib\net451\Syncfusion.Tools.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -47,9 +72,12 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -62,9 +90,14 @@
     <Compile Include="CreateOpenDiskWindow.xaml.cs">
       <DependentUpon>CreateOpenDiskWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DMS.cs" />
-    <Compile Include="UserUserControl.xaml.cs">
-      <DependentUpon>UserUserControl.xaml</DependentUpon>
+    <Compile Include="SignUserControl.xaml.cs">
+      <DependentUpon>SignUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StudentPage.xaml.cs">
+      <DependentUpon>StudentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StudentWindow.xaml.cs">
+      <DependentUpon>StudentWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="ChooseUserPage.xaml">
       <SubType>Designer</SubType>
@@ -100,7 +133,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserUserControl.xaml">
+    <Page Include="SignUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StudentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StudentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -123,6 +164,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Design\projectGuides.guides" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -133,31 +176,36 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Design\" />
-    <Folder Include="Images\" />
+    <Resource Include="ic_close_white_48dp_2x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ic_launch_white_48dp_2x.png" />
+    <Resource Include="Images\ic_launch_white_48dp_2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ic_keyboard_arrow_down_white_48dp_2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ic_close_white_48dp_2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WpfPageTransitions\WpfPageTransitions.csproj">
+      <Project>{22a46d61-1d40-43a9-802c-b9d43dadd9ec}</Project>
+      <Name>WpfPageTransitions</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DiskImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background 1.jpg" />
+    <Resource Include="Images\Background 2.jpg" />
+    <Resource Include="Images\Background 3.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ic_keyboard_arrow_down_white_48dp_2x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ic_close_white_48dp_2x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FMS_adapter\FMS_adapter.csproj">
-      <Project>{d164eceb-5328-46fc-900f-26d026a14d30}</Project>
-      <Name>FMS_adapter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FMS_DLL\FMS_DLL.vcxproj">
-      <Project>{b47d5b31-c438-4bd1-ba40-4f3829d56580}</Project>
-      <Name>FMS_DLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WpfPageTransitions\WpfPageTransitions.csproj">
-      <Project>{22a46d61-1d40-43a9-802c-b9d43dadd9ec}</Project>
-      <Name>WpfPageTransitions</Name>
-    </ProjectReference>
+    <Resource Include="ic_launch_white_48dp_2x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

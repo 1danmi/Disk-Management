@@ -40,11 +40,11 @@
 
 		<!-- Slide -->
 		<Storyboard x:Key="SlideIn" >
-			<ThicknessAnimation Duration="0:0:.75" Storyboard.TargetProperty="Margin" From="-500,0,500,0" To="0" DecelerationRatio=".9" />
+			<ThicknessAnimation Duration="0:0:.7" Storyboard.TargetProperty="Margin" From="0,-500,0,500" To="0" DecelerationRatio=".7" />
 		</Storyboard>
 
 		<Storyboard x:Key="SlideOut">
-			<ThicknessAnimation Duration="0:0:.5" Storyboard.TargetProperty="Margin" To="-500,0,500,0" AccelerationRatio=".9"/>
+			<ThicknessAnimation Duration="0:0:.3" Storyboard.TargetProperty="Margin" To="0,-500,0,500" AccelerationRatio=".7"/>
 		</Storyboard>
 
 		<!-- Grow -->

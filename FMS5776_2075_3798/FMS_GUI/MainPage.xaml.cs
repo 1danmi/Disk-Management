@@ -1,8 +1,8 @@
 ﻿using System;
+using System.IO;
+using Microsoft.Win32;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,8 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Markup;
+using Syncfusion.Windows.Tools.Controls;
+using Syncfusion.Windows.Tools;
+using System.Threading;
+using System.Collections;
+using System.Diagnostics;
+using System.ComponentModel;
+using Syncfusion.Windows.Shared;
+using System.Globalization;
+using System.Windows.Threading;
+using System.Windows.Interop;
 
 namespace FMS_GUI
 {
@@ -21,18 +31,14 @@ namespace FMS_GUI
     public partial class MainPage : Page
     {
         public CreateOpenDiskPage codp { get; set; }
+        public SignUserControl suc { get; set; }
+
         public MainPage()
         {
             InitializeComponent();
             codp = new CreateOpenDiskPage();
             this.codpContentControl.DataContext = this;
-
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            ChooseUserPage usersPage = new ChooseUserPage();
-            this.NavigationService.Navigate(usersPage); 
+            
         }
     }
 }

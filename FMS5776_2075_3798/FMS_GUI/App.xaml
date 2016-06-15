@@ -64,5 +64,30 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="Button" x:Key="CleanButtonStyle">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontFamily" Value="Segoe UI light"/>
+            <Setter Property="FontSize" Value="50"/>
+            <Setter Property="BorderThickness" Value="1,1,1,1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="7" Color="Gray" Opacity="0.5" BlurRadius="5" Direction="215"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect ShadowDepth="3" Color="Gray" Opacity="0.5" BlurRadius="5" Direction="215"/>
+                        </Setter.Value>
+                    </Setter>
+
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Green"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Application.Resources>
 </Application>
