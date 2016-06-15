@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace FMS_adapter
 {
-    enum MODE { W, R, WR, E };
-    class FCB
+    public enum MODE { W, R, WR, E };
+    public class FCB
     {
         private IntPtr myFCBpointer;
 

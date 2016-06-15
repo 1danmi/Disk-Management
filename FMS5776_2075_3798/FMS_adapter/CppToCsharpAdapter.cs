@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace FMS_adapter
 {
-    enum SLEVEL { user = 1, Administrator, Super_User, Owner };
+    public enum SLEVEL { user = 1, Administrator, Super_User, Owner };
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    class VHD
+    public class VHD
     {
         uint sectorNr;
 

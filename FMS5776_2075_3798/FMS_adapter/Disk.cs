@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FMS_adapter
 {
-    class Disk
+    public class Disk
     {
         IntPtr myDiskPtr;
 
