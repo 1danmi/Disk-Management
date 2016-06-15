@@ -20,21 +20,14 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="2.8*"/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
 
 
 
-        <!--<Button x:Name="unknownButton2" Content="Button" Grid.Column="7" Grid.Row="0" />
-        <Button x:Name="unknownButton" Content="Button" Grid.Column="6" Grid.Row="0" />
-        <Button x:Name="outAndUnmountButton" Content="Button" Grid.Column="5" Grid.Row="0" />
-        <Button x:Name="unmountButton" Content="Button" Grid.Column="4" Grid.Row="0"/>
-        <Button x:Name="addRecordButton" Content="Button" Grid.Column="3" Grid.Row="0" />
-        <Button x:Name="addFileButton" Content="Button" Grid.Column="2" Grid.Row="0"/>
-        <Button x:Name="propertiesButton" Content="Button" Grid.Column="1" Grid.Row="0" />-->
-
+      
         <Grid  Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0,25,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>

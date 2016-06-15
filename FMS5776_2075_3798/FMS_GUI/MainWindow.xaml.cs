@@ -39,10 +39,10 @@ namespace FMS_GUI
 
         private void MaximizeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.WindowState == WindowState.Normal)
-                this.WindowState = WindowState.Maximized;
-            else
-                this.WindowState = WindowState.Normal;
+            //if (this.WindowState == WindowState.Normal)
+            //    this.WindowState = WindowState.Maximized;
+            //else
+            //    this.WindowState = WindowState.Normal;
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
