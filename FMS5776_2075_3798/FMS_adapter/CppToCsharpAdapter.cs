@@ -99,6 +99,22 @@ namespace FMS_adapter
         public static extern void recreateDisk(IntPtr THIS, string diskOwner);
 
 
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void addUser(IntPtr THIS, string user, SLEVEL sLevel, string pwd, SLEVEL applicantSLevel);
+
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void signIn(IntPtr THIS, string user, string pwd);
+
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void signOut(IntPtr THIS);
+
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void removeUser(IntPtr THIS, string user, string pwd);
+
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void removeUserSigned(IntPtr THIS, string user, SLEVEL applicantSLevel);
+
+
 
         // Level 1
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]

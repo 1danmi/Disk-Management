@@ -86,6 +86,69 @@ extern "C"
 		}
 	}
 
+	__declspec(dllexport) void  addUser(Disk* THIS, char* user, SLEVEL sLevel, char* pwd, SLEVEL applicantSLevel)
+	{
+		try
+		{
+			THIS->addUser(string(user), sLevel, string(pwd), applicantSLevel);
+		}
+		catch (exception ex)
+		{
+			THIS->SetLastErrorMessage(ex.what());
+			throw ex;
+		}
+	}
+	__declspec(dllexport) void  signIn(Disk* THIS, char* user, char* pwd)
+	{
+		try
+		{
+			THIS->signIn(string(user), string(pwd));
+		}
+		catch (exception ex)
+		{
+			THIS->SetLastErrorMessage(ex.what());
+			throw ex;
+		}
+	}
+	__declspec(dllexport) void  signOut(Disk* THIS)
+	{
+		try
+		{
+			THIS->signOut();
+		}
+		catch (exception ex)
+		{
+			THIS->SetLastErrorMessage(ex.what());
+			throw ex;
+		}
+	}
+	__declspec(dllexport) void  removeUser(Disk* THIS, char* user, char* pwd)
+	{
+		try
+		{
+			THIS->removeUser(string(user), string(pwd));
+		}
+		catch (exception ex)
+		{
+			THIS->SetLastErrorMessage(ex.what());
+			throw ex;
+		}
+	}
+	__declspec(dllexport) void  removeUserSigned(Disk* THIS, char* user, SLEVEL applicantSLevel)
+	{
+		try
+		{
+			THIS->removeUserSigned(string(user), applicantSLevel);
+		}
+		catch (exception ex)
+		{
+			THIS->SetLastErrorMessage(ex.what());
+			throw ex;
+		}
+	}
+
+
+
 	// Level 1
 	__declspec(dllexport) void  format(Disk* THIS)
 	{

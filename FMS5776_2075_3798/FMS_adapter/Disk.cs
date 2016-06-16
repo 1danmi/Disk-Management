@@ -90,6 +90,96 @@ namespace FMS_adapter
             }
         }
 
+        public void addUser(string user, SLEVEL sLevel, string pwd, SLEVEL applicantSLevel)
+        {
+            try
+            {
+                cppToCsharpAdapter.addUser(this.myDiskPtr, user, sLevel, pwd, applicantSLevel);
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public void signIn(string user, string pwd)
+        {
+            try
+            {
+                cppToCsharpAdapter.signIn(this.myDiskPtr, user, pwd);
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public void signOut()
+        {
+            try
+            {
+                cppToCsharpAdapter.signOut(this.myDiskPtr);
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public void removeUser(string user, string pwd)
+        {
+            try
+            {
+                cppToCsharpAdapter.removeUser(this.myDiskPtr, user, pwd);
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public void removeUserSigned(string user, SLEVEL applicantSLevel)
+        {
+            try
+            {
+                cppToCsharpAdapter.removeUserSigned(this.myDiskPtr, user, applicantSLevel);
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+
+
+
         //level 1
 
         public void format()
