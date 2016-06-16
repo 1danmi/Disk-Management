@@ -9,6 +9,7 @@ namespace FMS_adapter
 {
     public class Disk
     {
+        
         IntPtr myDiskPtr;
 
         //level 0

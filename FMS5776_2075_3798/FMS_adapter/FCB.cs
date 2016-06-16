@@ -9,8 +9,54 @@ using System.Threading.Tasks;
 namespace FMS_adapter
 {
     public enum MODE { W, R, WR, E };
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public class FCB
     {
+        //   Disk* d;
+        int path;
+        public int Path { get { return path; } }
+
+        DirEntry fileDesc;
+        public DirEntry FileDesc { get { return fileDesc; } }
+
+        //DATtype FAT;
+        //Sector buffer;
+        uint currRecNr;
+        public uint CurrRecNr { get { return currRecNr; } }
+
+        uint currSecNr;
+        public uint CurrSecNr { get { return currSecNr; } }
+
+        uint currRecNrInBuff;
+        public uint CurrRecNrInBuff { get { return currRecNrInBuff; } }
+
+        bool updateMode;
+        public bool UpdateMode { get { return updateMode; } }
+
+        //bool lock;
+        //public bool Lock { get { return lock; } }
+
+        MODE mode;
+        public MODE Mode { get { return mode; } }
+
+        uint numOfRecords;
+        public uint NumOfRecords { get { return numOfRecords; } }
+
+        //string lastErrorMessage;
+
+        int maxRecNum;
+        public int MaxRecNum { get { return maxRecNum; } }
+
+        //[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 36)]
+        //int dat;
+        //public int DAT { get { return dat; } }
+        
+        bool loaded;
+        public bool Loaded { get { return loaded; } }
+
+        RecInfo recInfo;
+        public RecInfo RecInfo { get { return recInfo; } }
+
         private IntPtr myFCBpointer;
 
         public FCB(IntPtr myFCBpointer)
