@@ -11,13 +11,14 @@ public:
 	DirEntry fileDesc;
 	DATtype fat;
 	RecInfo recInfo;
-	char emptyArea[16] = { 0 };
+	SLEVEL sLevel;
 
+	char emptyArea[16] = { 0 };
 
 	FileHeader() {};
 	FileHeader(unsigned int, DirEntry, DATtype,SLEVEL);
 	~FileHeader() {};
-	SLEVEL sLevel;
+	
 	DATtype getFat();
 	
 };

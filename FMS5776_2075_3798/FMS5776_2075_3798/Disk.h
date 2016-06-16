@@ -81,6 +81,7 @@ public:
 	void delFile(string &);
 	void extendFile(string &, unsigned int);
 	DATtype& getFat(string&);
+	FileHeader& Disk::getFileHeader(string& fileName);
 #pragma endregion
 
 #pragma region Level3

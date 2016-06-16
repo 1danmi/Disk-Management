@@ -283,7 +283,7 @@ extern "C"
 			throw ex;
 		}
 	}
-	__declspec(dllexport) void  deleteRec(FCB* THIS, unsigned int rec)
+	__declspec(dllexport) void  deleteRecord(FCB* THIS, unsigned int rec)
 	{
 		try
 		{

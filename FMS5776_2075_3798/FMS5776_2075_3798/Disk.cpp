@@ -1400,6 +1400,53 @@ DATtype& Disk::getFat(string& fileName)
 	else throw "Unknown error!";
 	delete buffer;
 }
+
+FileHeader& Disk::getFileHeader(string& fileName)
+{
+	if (!mounted)
+		throw "Disk is not mounted!";
+	if (!sign)
+		throw "You have to sign-in in order to extend a file!";
+	int path = -1;
+	for (int i = 0; i < 14; i++)
+	{
+		if (!strcmp(rootDir.lsbSector.dirEntry[i].getFileName(), fileName.c_str()) && rootDir.lsbSector.dirEntry[i].entryStatus == '1')
+		{
+			path = i;
+			break;
+		}
+		else if (!strcmp(rootDir.msbSector.dirEntry[i].getFileName(), fileName.c_str()) && rootDir.msbSector.dirEntry[i].entryStatus == '1')
+		{
+			path = i + 14;
+			break;
+		}
+	}
+	if (path == -1)
+		throw "File does not exist!";
+	FileHeader* buffer = new FileHeader();
+	if (path >= 14 && path < 28)
+	{
+		if (currUser.sLevel > rootDir.msbSector.dirEntry[path - 14].sLevel || !strcmp(currUser.name, rootDir.msbSector.dirEntry[path - 14].getOwnerName()))
+		{
+			readSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)buffer);
+			return *buffer;
+		}
+		else
+			throw "You don't have the right permission to delete this file";
+	}
+	else if (path > -1 && path < 14)
+	{
+		if (currUser.sLevel > rootDir.lsbSector.dirEntry[path - 14].sLevel || !strcmp(currUser.name, rootDir.lsbSector.dirEntry[path - 14].getOwnerName()))
+		{
+			readSector(rootDir.lsbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
+			return *buffer;
+		}
+		else
+			throw "You don't have the right permission to delete this file";
+	}
+	else throw "Unknown error!";
+
+}
 #pragma endregion
 
 #pragma region Level3

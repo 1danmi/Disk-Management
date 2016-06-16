@@ -60,6 +60,86 @@ namespace FMS_adapter
         string emptyArea;
     }
 
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public class DirEntry
+    {
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
+        string fileName;
+        public string FileName { get { return fileName; } }
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
+        string fileOwner;
+        public string FileOwner { get { return fileOwner; } }
+
+        uint fileAddr;
+        public uint FileAddr { get { return fileAddr; } }
+        
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 10)]
+        string crDate;
+        public string CrDate { get { return crDate; } }
+
+
+        uint fileSize;
+        public uint FfileSize { get { return fileSize; } }
+
+        uint eofRecNr;
+        public uint EofRecNr { get { return eofRecNr; } }
+
+        uint actualRecSize;
+        public uint ActualRecSize { get { return actualRecSize; } }
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 10)]
+        string recFormat;
+        public string RecFormat { get { return recFormat; } }
+
+        uint keyOffset;
+        public uint KeyOffset { get { return keyOffset; } }
+
+        uint keySize;
+        public uint KeySize { get { return keySize; } }
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 2)]
+        string keyType;
+        public string KeyType { get { return keyType; } }
+
+        char entryStatus;
+        public char EntryStatus { get { return entryStatus; } }
+
+        SLEVEL sLevel;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public class RecInfo
+    {
+        int recNr;
+        public int RecNr { get { return recNr; } }
+
+        int size;
+        public int Size { get { return size; } }
+
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
+        string key;
+        public string Key { get { return key; } }
+        
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public class FileHeader
+    {
+        uint sectorNr;
+
+        DirEntry fileDesc;
+        public DirEntry FileDesc { get { return fileDesc; } }
+
+        RecInfo recInfo;
+        public RecInfo RecInfo { get { return recInfo; } }
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+        string emptyArea;
+        public string EmptyArea { get { return emptyArea; } }
+    }
+
     class cppToCsharpAdapter
     {
         const string dllPath = "FMS_DLL.dll";
