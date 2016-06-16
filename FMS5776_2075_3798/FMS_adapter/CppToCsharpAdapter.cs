@@ -56,7 +56,7 @@ namespace FMS_adapter
         public bool IsFormated { get { return isFormated; } }
 
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 940)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 944)]
         string emptyArea;
     }
 

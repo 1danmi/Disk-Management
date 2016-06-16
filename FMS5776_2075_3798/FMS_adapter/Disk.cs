@@ -55,7 +55,7 @@ namespace FMS_adapter
                 throw;
             }
         }
-        public void unmountDisk(IntPtr THIS)
+        public void unmountDisk()
         {
             try
             {

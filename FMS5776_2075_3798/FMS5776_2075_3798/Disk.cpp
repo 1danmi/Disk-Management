@@ -166,7 +166,7 @@ void Disk::createDisk(string & dn, string & dow,string& pwd)
 			dskfl.seekp(vhd.addrRootDirCpy * sizeof(Sector));
 			dskfl.write((char*)& rootDir, sizeof(Sector));
 			dskfl.close();
-			mountDisk(fileName);
+			//mountDisk(fileName);
 		}
 		else
 			throw "File Problem!";
@@ -239,8 +239,8 @@ void Disk::unmountDisk(void)
 {
 	try
 	{
-		if (sign)
-			throw "You must sign out first!";
+		/*if (sign)
+			throw "You must sign out first!";*/
 		if (dskfl.is_open())
 		{
 			if (vhdUpdate)
@@ -711,12 +711,12 @@ void Disk::format()
 		throw "File problem!";
 	if (!mounted)
 		throw "No disk is mounted!";
-	if (!sign)
-		throw "You have to be signed in in order to format the disk!";
+	//if (!sign)
+	//	throw "You have to be signed in in order to format the disk!";
 	if (vhd.isFormatted) 
 		throw "Already formated!";
-	if (this->currUser.sLevel != SLEVEL::Owner)
-		throw "You must have owner permissions in order to format the disk!";
+	//if (this->currUser.sLevel != SLEVEL::Owner)
+	//	throw "You must have owner permissions in order to format the disk!";
 	/*if (strcmp(vhd.diskOwner, name.c_str()))
 		throw "Only the disk owner can format the disk!";*/
 	
@@ -741,10 +741,10 @@ void Disk::format()
 	string diskName(vhd.diskName);
 	string userName(currUser.name);
 	string password(currUser.password);
-	signOut();
+	//signOut();
 	unmountDisk();
 	mountDisk(diskName + ".fms");
-	signIn(userName, password);
+	//signIn(userName, password);
 	vhd.isFormatted = 1;
 }
 
