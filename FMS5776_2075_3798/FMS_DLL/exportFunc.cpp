@@ -43,9 +43,9 @@ extern "C"
 		{
 			THIS->createDisk(string(diskName), string(diskOwner),  string(password));
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -55,9 +55,9 @@ extern "C"
 		{
 			THIS->mountDisk(string(fileName));
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -67,9 +67,9 @@ extern "C"
 		{
 			THIS->unmountDisk();
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -79,9 +79,9 @@ extern "C"
 		{
 			THIS->recreateDisk(string(diskOwner));
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -92,9 +92,9 @@ extern "C"
 		{
 			THIS->addUser(string(user), sLevel, string(pwd), applicantSLevel);
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -104,9 +104,9 @@ extern "C"
 		{
 			THIS->signIn(string(user), string(pwd));
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -116,9 +116,9 @@ extern "C"
 		{
 			THIS->signOut();
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -128,9 +128,9 @@ extern "C"
 		{
 			THIS->removeUser(string(user), string(pwd));
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -140,9 +140,9 @@ extern "C"
 		{
 			THIS->removeUserSigned(string(user), applicantSLevel);
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -156,9 +156,9 @@ extern "C"
 		{
 			THIS->format();
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -168,9 +168,9 @@ extern "C"
 		{
 			return THIS->howMuchEmpty();
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -185,9 +185,9 @@ extern "C"
 				recNum, numOfSecs,
 				string(keyType), sLevel, keyOffset, keySize, algo);
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -198,9 +198,9 @@ extern "C"
 		{
 			THIS->delFile(string(fileName));
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -210,9 +210,9 @@ extern "C"
 		{
 			THIS->extendFile(string(fileName), num);
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -225,9 +225,9 @@ extern "C"
 		{
 			return THIS->openFile(string(fileName), openMode);
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -240,9 +240,9 @@ extern "C"
 		{
 			THIS->closeFile();
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -252,9 +252,9 @@ extern "C"
 		{
 			THIS->readRecord(record, rec);
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -264,9 +264,9 @@ extern "C"
 		{
 			THIS->addRecord(record);
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -277,9 +277,9 @@ extern "C"
 		{
 			THIS->updateCancel();
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -289,9 +289,9 @@ extern "C"
 		{
 			THIS->deleteRecord(rec);
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -301,9 +301,9 @@ extern "C"
 		{
 			THIS->updateRecord(record);
 		}
-		catch (exception ex)
+		catch (char* ex)
 		{
-			THIS->SetLastErrorMessage(ex.what());
+			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -314,6 +314,9 @@ extern "C"
 
 	__declspec(dllexport)   void  getVHD(Disk* THIS, VHD* buffer)
 	{
+		
+		int size = sizeof(VHD);
+		
 		memcpy_s(buffer, sizeof(VHD), &THIS->getVHD(), sizeof(VHD));
 	}
 

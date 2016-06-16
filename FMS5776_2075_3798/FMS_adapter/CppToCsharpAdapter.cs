@@ -47,6 +47,9 @@ namespace FMS_adapter
         uint addrDataStart;
         public uint aAddrDataStart { get { return addrDataStart; } }
 
+        uint addrUserSec;
+        public uint AddrUserDate { get { return addrUserSec; } }
+
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 10)]
         string formatDate;
         public string FormatDate { get { return formatDate; } }
@@ -56,7 +59,7 @@ namespace FMS_adapter
         public bool IsFormated { get { return isFormated; } }
 
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 944)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 940)]
         string emptyArea;
     }
 

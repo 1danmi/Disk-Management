@@ -37,7 +37,7 @@ namespace FMS_adapter
                 Console.WriteLine("\nCreate Disk:");
                 Console.WriteLine(ToStringProperty(d.getVHD()));
 
-                d.mountDisk("disk1.fms");
+                d.mountDisk("disk1");
                 d.signIn("oshri", "password");
                 d.format();
                 d.signOut();
