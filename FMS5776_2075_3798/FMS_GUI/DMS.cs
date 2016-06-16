@@ -43,5 +43,27 @@ namespace FMS_GUI
                 throw ex;
             }
         }
+        public FCB lookForFcb(string fn)
+        {
+            try
+            {
+                if (disk == null) throw new Exception("no file");
+                foreach (FCB file in fcbList)
+                {
+                //    if (file.loaded)
+                    {
+
+                    }
+                }
+                //fcb = disk.openFile(fn, mode);
+                return fcb;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }
