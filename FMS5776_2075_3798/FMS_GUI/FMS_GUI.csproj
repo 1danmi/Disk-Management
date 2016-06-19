@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FMS_GUI</RootNamespace>
     <AssemblyName>FMS_GUI</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,9 +36,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiveCharts, Version=0.7.2.2, Culture=neutral, PublicKeyToken=c5935629d38af058, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.7.2.2\lib\portable40-net40+sl5+win8+wp8+wpa81\LiveCharts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.7.2.2, Culture=neutral, PublicKeyToken=3b585c2a5f1a92c1, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.7.2.2\lib\net46\LiveCharts.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Expression.Drawing, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Expression.Prototyping.SketchControls, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="ReachFramework" />
+    <Reference Include="Syncfusion.Data.WPF, Version=14.1460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Linq.Base, Version=14.1451.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Linq.Base451.14.1.0.46\lib\net451\Syncfusion.Linq.Base.dll</HintPath>
       <Private>True</Private>
@@ -50,6 +60,9 @@
       <HintPath>..\packages\Syncfusion.OlapShared.WPF451.14.1.0.46\lib\net451\Syncfusion.OlapShared.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Syncfusion.SfGrid.WPF, Version=14.1460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfInput.WPF, Version=14.1460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfShared.Wpf, Version=14.1460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Wpf, Version=14.1451.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Shared.WPF451.14.1.0.46\lib\net451\Syncfusion.Shared.Wpf.dll</HintPath>
       <Private>True</Private>
@@ -59,9 +72,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -90,7 +105,9 @@
     <Compile Include="CreateOpenDiskWindow.xaml.cs">
       <DependentUpon>CreateOpenDiskWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DMS.cs" />
+    <Compile Include="DiskInfoUserControl.xaml.cs">
+      <DependentUpon>DiskInfoUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SignUserControl.xaml.cs">
       <DependentUpon>SignUserControl.xaml</DependentUpon>
     </Compile>
@@ -109,6 +126,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CreateOpenDiskWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DiskInfoUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -177,9 +198,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ic_close_white_48dp_2x.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\ic_launch_white_48dp_2x.png" />
   </ItemGroup>
   <ItemGroup>
@@ -189,10 +207,6 @@
     <Resource Include="Images\ic_close_white_48dp_2x.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FMS_adapter\FMS_adapter.csproj">
-      <Project>{d164eceb-5328-46fc-900f-26d026a14d30}</Project>
-      <Name>FMS_adapter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WpfPageTransitions\WpfPageTransitions.csproj">
       <Project>{22a46d61-1d40-43a9-802c-b9d43dadd9ec}</Project>
       <Name>WpfPageTransitions</Name>
@@ -207,11 +221,63 @@
     <Resource Include="Images\Background 3.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ic_keyboard_arrow_down_white_48dp_2x.png" />
+    <Resource Include="Images\Create Disk.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ic_launch_white_48dp_2x.png" />
+    <Resource Include="Images\Mount Disk.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Format Disk2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Create Disk %28Custom%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\UnMount Disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Unmount and Sign Out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Open FIle %28Custom%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Close File %28Custom%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Add Record %28Custom%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Remove Record %28Custom%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\UpdateRecord %28Custom%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\updRecord %28Custom%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\eadfa %28Custom%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Add user 2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Remove user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\User INFO.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Change Password.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Sign Out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Password.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="FMS_GUI.DiskInfoUserControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FMS_GUI"
+      mc:Ignorable="d" 
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      d:DesignHeight="600" d:DesignWidth="400" >
+    <Grid Background="White" x:Name="MainGrid" d:DataContext="{d:DesignInstance Type=local:DiskInfo}" Height="600" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="49*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="nameLabel" FontSize="40"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,241" >
+            <ContentControl ContentStringFormat=" {0}" d:IsLocked="True">
+                <Binding Path="Name"  Mode="TwoWay"  />
+            </ContentControl>
+        </Label>
+        <Label x:Name="ownerLabel" FontSize="16"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,192" >
+            <ContentControl ContentStringFormat="   Owner: {0}" d:IsLocked="True">
+                <Binding Path="Owner"  Mode="TwoWay"  />
+            </ContentControl>
+        </Label>
+
+        <Label x:Name="capacityLabel" FontSize="16"  Grid.Column="1"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,150">
+            <ContentControl ContentStringFormat="   Total Capacity: {0} KB" d:IsLocked="True">
+                <Binding Path="Capacity" Mode="TwoWay"  />
+            </ContentControl>
+        </Label>
+        <Label x:Name="freeSpaceLabel" FontSize="16"  Grid.Column="1"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,108">
+            <ContentControl ContentStringFormat="   Free Space: {0} KB" d:IsLocked="True">
+                <Binding Path="FreeSpace" Mode="TwoWay"  />
+            </ContentControl>
+        </Label>
+        <Label x:Name="usedSpaceLabel" FontSize="16"  Grid.Column="1"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,66">
+            <ContentControl ContentStringFormat="   Used Space: {0} KB" d:IsLocked="True">
+                <Binding Path="UsedSpace" Mode="TwoWay"  />
+            </ContentControl>
+        </Label>
+        <lvc:PieChart x:Name="PieChart" Series="{Binding pie}" Grid.Column="1" Grid.Row="1" LegendLocation="Right" InnerRadius="25" StartingRotationAngle="170" />
+        <!--<lvc:PieChart Series="{Binding SeriesCollection}" Grid.Column="1" Grid.Row="1" LegendLocation="Right" />-->
+    </Grid>
+
+</UserControl>

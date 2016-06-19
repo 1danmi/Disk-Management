@@ -29,7 +29,7 @@ namespace FMS_GUI
             MainWindow w = Window.GetWindow(this) as MainWindow;
             var x = w.MainFrame.Content as MainPage;
             x.codpContentControl.Content = null;
-            x.shadowRectangle.Visibility =Visibility.Collapsed;
+            x.shadowRectangle.Visibility = Visibility.Collapsed;
             x.suc = new SignUserControl();
             x.transitionFrame.ShowPage(x.suc);
         }
