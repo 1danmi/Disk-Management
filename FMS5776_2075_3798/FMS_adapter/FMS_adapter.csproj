@@ -52,6 +52,7 @@
     <Compile Include="FCB.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Student.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>

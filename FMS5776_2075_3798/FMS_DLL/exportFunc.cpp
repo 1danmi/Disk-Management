@@ -1,4 +1,5 @@
-#include "Disk.h";
+#include "Disk.h"
+#include "Student.h"
 #include <string>       // std::string
 #include <iostream>     // std::cout
 #include <sstream>     
@@ -230,6 +231,18 @@ extern "C"
 			THIS->SetLastErrorMessage(ex);
 			throw ex;
 		}
+	}
+
+	//Level 4
+	__declspec(dllexport) Student*  makeStudentObject()
+	{
+		return new Student();
+	}
+	__declspec(dllexport) void  deleteStudentObject(Student*& THIS)
+	{
+		if (THIS != NULL)
+			delete  THIS;
+		THIS = NULL;
 	}
 
 

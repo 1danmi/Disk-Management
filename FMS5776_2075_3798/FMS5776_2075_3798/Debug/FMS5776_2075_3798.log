@@ -3,7 +3,7 @@
   Student.cpp
   Sector.cpp
   Main.cpp
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(524): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+c:\users\stesh\documents\visual studio 2015\projects\fms5776_2075_3798\fms5776_2075_3798\fms5776_2075_3798\main.cpp(524): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
   FileHeader.cpp
   FCB.cpp
   Disk.cpp
@@ -11,5 +11,4 @@ d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\m
   Dir.cpp
   DAT.cpp
   Generating Code...
-  FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.exe
-  FMS5776_2075_3798.vcxproj -> D:\Mini-Project in File Management Systems\FMS5776_2075_3798\Debug\FMS5776_2075_3798.pdb (Partial PDB)
+  FMS5776_2075_3798.vcxproj -> C:\Users\Stesh\Documents\Visual Studio 2015\Projects\FMS5776_2075_3798\FMS5776_2075_3798\Debug\FMS5776_2075_3798.lib
