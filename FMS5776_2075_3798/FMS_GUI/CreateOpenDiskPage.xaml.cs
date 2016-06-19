@@ -28,22 +28,35 @@ namespace FMS_GUI
         }
         private void newDiskButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow w = Window.GetWindow(this) as MainWindow;
-            var x = w.MainFrame.Content as MainPage;
-            x.codpContentControl.Content = null;
-            x.shadowRectangle.Visibility = Visibility.Collapsed;
-            x.suc = new SignUserControl(disk);
-            x.transitionFrame.ShowPage(x.suc);
+            try
+            {
+                MainWindow w = Window.GetWindow(this) as MainWindow;
+                var x = w.MainFrame.Content as MainPage;
+                x.codpContentControl.Content = null;
+                x.shadowRectangle.Visibility = Visibility.Collapsed;
+                x.DiskName = this.DiskNameTextBox.Text;
+                string ownerName = this.OwnerNameTextBox.Text;
+                string password = this.DiskPwdBox.Password;
+                x.disk.createDisk(x.DiskName, ownerName, password);
+                x.disk.mountDisk(x.DiskName + ".fms");
+                x.disk.Mounted = true;
+                x.suc = new SignUserControl();
+                x.transitionFrame.ShowPage(x.suc);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        private void openDiskButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow w = Window.GetWindow(this) as MainWindow;
-            var x = w.MainFrame.Content as MainPage;
-            x.codpContentControl.Content = null;
-            x.shadowRectangle.Visibility = Visibility.Collapsed;
-            x.suc = new SignUserControl(disk);
-            x.transitionFrame.ShowPage(x.suc);
-        }
+        //private void openDiskButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    MainWindow w = Window.GetWindow(this) as MainWindow;
+        //    var x = w.MainFrame.Content as MainPage;
+        //    x.codpContentControl.Content = null;
+        //    x.shadowRectangle.Visibility = Visibility.Collapsed;
+        //    x.suc = new SignUserControl();
+        //    x.transitionFrame.ShowPage(x.suc);
+        //}
     }
 }

@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiveCharts, Version=0.7.2.2, Culture=neutral, PublicKeyToken=c5935629d38af058, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.7.2.2\lib\portable40-net40+sl5+win8+wp8+wpa81\LiveCharts.dll</HintPath>
@@ -102,9 +105,6 @@
     <Compile Include="CreateOpenDiskPage.xaml.cs">
       <DependentUpon>CreateOpenDiskPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CreateOpenDiskWindow.xaml.cs">
-      <DependentUpon>CreateOpenDiskWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DiskInfoUserControl.xaml.cs">
       <DependentUpon>DiskInfoUserControl.xaml</DependentUpon>
     </Compile>
@@ -122,10 +122,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CreateOpenDiskPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CreateOpenDiskWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

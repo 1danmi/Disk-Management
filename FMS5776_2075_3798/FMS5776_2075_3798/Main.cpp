@@ -207,7 +207,7 @@ public:
 				try {
 					startDebug(d, a);
 				}
-				catch (const char* str){
+				catch (char* str){
 					cout << str << endl;
 				}
 			}
@@ -457,7 +457,7 @@ public:
 				try {
 					startDebug(d, a);
 				}
-				catch (const char* str) {
+				catch (char* str) {
 					cout << str << endl;
 				}
 			}
@@ -615,7 +615,7 @@ public:
 				try {
 					startDebug(d, a);
 				}
-				catch (const char* str) {
+				catch (char* str) {
 					cout << str << endl;
 				}
 			}
@@ -788,7 +788,7 @@ public:
 				try {
 					startDebug(d,fcb, a);
 				}
-				catch (const char* str) {
+				catch (char* str) {
 					cout << str << endl;
 				}
 			}
@@ -820,7 +820,7 @@ int main()
 		//cout << sizeof(FileHeader) << endl;
 
 	}
-	catch (const char* str){
+	catch (char* str){
 		cout << str << endl;
 	}
 	system("pause");

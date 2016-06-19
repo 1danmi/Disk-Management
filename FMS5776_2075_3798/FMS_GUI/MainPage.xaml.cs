@@ -23,7 +23,7 @@ using System.Globalization;
 using System.Windows.Threading;
 using System.Windows.Interop;
 using FMS_adapter;
-
+using System.Runtime.CompilerServices;
 
 namespace FMS_GUI
 {
@@ -32,76 +32,137 @@ namespace FMS_GUI
     /// </summary>
     public partial class MainPage : Page
     {
+        UserControl info;
         public CreateOpenDiskPage codp { get; set; }
         public SignUserControl suc { get; set; }
-        public UserControl info { get; set; }
+        public UserControl Info {
+            get { return info; }
+            set
+            {
+                info = value;
+                if (info is DiskInfoUserControl)
+                {
+                    this.InfoContentControl.Content = info;
+                }
+            }
+        }
+       
+
         public Disk disk { get; set; }
-        string DiskName { get; set; }
+        public string DiskName { get; set; }
         public MainPage()
         {
             InitializeComponent();
-            //disk = new Disk();
-            info = new DiskInfoUserControl();
-            this.InfoContentControl.DataContext = this;
+            disk = new Disk();
+            //Info = new DiskInfoUserControl(disk);
 
+            this.InfoContentControl.DataContext = this;
+            
         }
 
         private void CreateDiskButton_Click(object sender, RoutedEventArgs e)
         {
-            this.shadowRectangle.Visibility = Visibility.Visible;
-            codp = new CreateOpenDiskPage();
-            this.codpContentControl.DataContext = this;
-            DiskName = codp.DiskNameTextBox.Text;
-            string ownerName = codp.OwnerNameTextBox.Text;
-            string password = codp.DiskNameTextBox.Text;
-            disk.createDisk(DiskName, ownerName, password);
-            disk.mountDisk(DiskName);
-            suc = new SignUserControl(disk);
-            transitionFrame.ShowPage(suc);
+            try
+            {
+                if (disk.Mounted)
+                    throw new Exception("You must unmount the current disk first!");
+                this.shadowRectangle.Visibility = Visibility.Visible;
+                codp = new CreateOpenDiskPage();
+                codpContentControl.Content = codp;
+                this.codpContentControl.DataContext = this;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void MountDiskButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            Microsoft.Win32.OpenFileDialog f = new Microsoft.Win32.OpenFileDialog();
-            f.Filter = "All Files (*)|*|DISK Files (*.fms)|*.fms";
-            if (f.ShowDialog() == true)
+            try
             {
-                var a = new Uri(f.FileName);
-
+                Microsoft.Win32.OpenFileDialog f = new Microsoft.Win32.OpenFileDialog();
+                f.Filter = "All Files (*)|*|DISK Files (*.fms)|*.fms";
+                if (f.ShowDialog() == true)
+                {
+                    //var a = new Uri(f.FileName);
+                    disk.mountDisk(f.FileName);
+                    disk.Mounted = true;
+                }
+                suc = new SignUserControl();
+                transitionFrame.ShowPage(suc);
             }
-            suc = new SignUserControl(disk);
-            transitionFrame.ShowPage(suc);
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
         private void FormatButton_Click(object sender, RoutedEventArgs e)
         {
-            string diskName = "Disk Name";
-            MessageBoxResult format =  MessageBox.Show(
-                "WARNING: Formatting will erase ALL data on this disk.\nTo format the disk, click OK. To quit, click CANCEL.",
-                "Format " + diskName, MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel,MessageBoxOptions.None);
-
-            switch(format)
+            try
             {
-                case MessageBoxResult.OK:
-                    break;
-                case MessageBoxResult.Cancel:
-                    break;
-                default:
-                    break;
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+                string diskName = "Disk Name";
+                MessageBoxResult format = MessageBox.Show(
+                    "WARNING: Formatting will erase ALL data on this disk.\nTo format the disk, click OK. To quit, click CANCEL.",
+                    "Format " + diskName, MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel, MessageBoxOptions.None);
+
+                switch (format)
+                {
+                    case MessageBoxResult.OK:
+                        disk.format();
+                        var inf = new DiskInfoUserControl(disk);
+                        Info = inf;
+                        break;
+                    case MessageBoxResult.Cancel:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
-            suc = new SignUserControl(disk);
-            transitionFrame.ShowPage(suc);
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+                disk.signOut();
+                suc = new SignUserControl();
+                transitionFrame.ShowPage(suc);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void UnmountDiskButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+                disk.signOut();
+                disk.unmountDisk();
+                disk.Mounted = false;
 
+                var inf = new DiskInfoUserControl(disk);
+                Info = inf;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void CreateFileButton_Click(object sender, RoutedEventArgs e)

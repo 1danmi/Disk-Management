@@ -70,7 +70,7 @@ Disk::Disk(string & dn, string & dow, char flag,string& pwd)
 			throw "Invalid parameters!";
 		}
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -117,7 +117,7 @@ void Disk::createDisk(string & dn, string & dow,string& pwd)
 	try
 	{
 		if(this->mounted)
-			throw "You must unmount the currnt disk first!";
+			throw "You must unmount the current disk first!";
 		string fileName = dn + ".fms";
 		dskfl = fstream(fileName, ios::binary | ios::out);
 		//dskfl.open(fileName,ios::binary | ios::in | ios::out);
@@ -171,7 +171,7 @@ void Disk::createDisk(string & dn, string & dow,string& pwd)
 		else
 			throw "File Problem!";
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -194,7 +194,7 @@ void Disk::mountDisk(string & fn)
 	try
 	{
 		if (mounted)
-			throw "Disk already mounted";
+			throw "Disk already mounted!";
 		//dskfl = fstream(fn, ios::binary);
 		dskfl.open(fn, ios::in | ios::out | ios::binary);
 		if (dskfl.is_open())
@@ -270,7 +270,7 @@ void Disk::unmountDisk(void)
 		else
 			throw "File is open!";
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -327,7 +327,7 @@ void Disk::recreateDisk(string & dow)
 		else
 			throw "Disk doesn't exist";
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -395,7 +395,7 @@ void Disk::seekToSector(unsigned int num)
 		this->dskfl.seekp(currDiskSectorNr * 1024);
 		this->dskfl.seekg(currDiskSectorNr * 1024);
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -440,7 +440,7 @@ void Disk::writeSector(unsigned int num, Sector* sec)
 		else
 			throw "File problem!";
 	}
-	catch(const char* str)
+	catch(char* str)
 	{
 		throw str;
 	}
@@ -486,7 +486,7 @@ void Disk::writeSector(Sector* sec)
 			seekToSector(0);
 		}
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -531,7 +531,7 @@ void Disk::readSector(int num, Sector* sec)
 		else
 			throw "File problem!";
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -576,7 +576,7 @@ void Disk::readSector(Sector* sec)
 			seekToSector(0);
 		}
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -765,7 +765,7 @@ unsigned int Disk::howMuchEmpty()
 	if (!mounted)
 		throw "Disk is not mounted!";
 	unsigned int count = 0;
-	for (int i = vhd.addrDataStart; i < 1600; i++)
+	for (int i = 0; i < 1600; i++)
 		if (dat.dat[i])
 			count++;
 	return count;
@@ -1265,7 +1265,7 @@ void Disk::delFile(string & fn)
 		else throw "Unknown error!";
 		delete buffer;
 	}
-	catch (const char* msg)
+	catch (char* msg)
 	{
 		throw msg;
 	}
@@ -1344,7 +1344,7 @@ void Disk::extendFile(string & fn, unsigned int num)
 		else throw "Unknown error!";
 		delete Buffer;
 	}
-	catch (const char* msg)
+	catch (char* msg)
 	{
 		throw msg;
 	}
@@ -1517,7 +1517,7 @@ FCB* Disk::openFile(string & fn, MODE io)
 		delete buffer;
 		return fcb;
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}

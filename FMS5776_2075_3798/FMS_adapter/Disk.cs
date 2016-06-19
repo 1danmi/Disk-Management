@@ -28,7 +28,7 @@ namespace FMS_adapter
         public bool RootDirUpdate { get { return rootDirUpdate; } }
 
         bool mounted;
-        public bool Mounted { get { return mounted; } }
+        public bool Mounted { get { return mounted; } set { mounted = value; } }
 
         //fstream dskfl;
 

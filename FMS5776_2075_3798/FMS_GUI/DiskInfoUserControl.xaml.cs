@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
+using FMS_adapter;
 
 namespace FMS_GUI
 {
@@ -96,7 +97,15 @@ namespace FMS_GUI
             Name = "Disk Name";
             Owner = "Disk Owner";
             Capacity = 3200;
-            FreeSpace = (1600 - 3) * 2;
+            FreeSpace = 3000;
+            UsedSpace = Capacity - FreeSpace;
+        }
+        public DiskInfo(string diskName, string diskOwner, int free)
+        {
+            Name = diskName;
+            Owner = diskOwner;
+            Capacity = 3200;
+            FreeSpace = free * 2;
             UsedSpace = Capacity - FreeSpace;
         }
     }
@@ -108,59 +117,36 @@ namespace FMS_GUI
         public DiskInfo diskInfo { get; set; }
         public SeriesCollection pie { get; set; }
         public SeriesCollection SeriesCollection { get; set; }
-        public DiskInfoUserControl()
+        public DiskInfoUserControl(Disk d)
         {
             InitializeComponent();
-            diskInfo = new DiskInfo();
-
-            //this.ownerLabel.Content = "Disk Owner";
-            this.MainGrid.DataContext = this.diskInfo;
-            this.PieChart.DataContext = this;
-            pie = new SeriesCollection();
-            var free = new PieSeries
+            if (!d.Mounted)
+                this.MainGrid.Visibility = Visibility.Hidden;
+            else
             {
-                Title = "Free Space: " + diskInfo.FreeSpace.ToString() + " KB",
-                Values = new ChartValues<double> { diskInfo.FreeSpace },
-                PushOut = 0, Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f44336"))
-        };
-            var used = new PieSeries
-            {
-                Title = "Used Space: " + diskInfo.UsedSpace.ToString() + " KB",
-                Values = new ChartValues<double> { 500 },
-                PushOut = 0, Fill = Brushes.Gray
-            };
-            pie.Add(free);
-            pie.Add(used);
-            //SeriesCollection = new SeriesCollection
-            //{
-            //    new PieSeries
-            //    {
-            //        Title = "Chrome",
-            //        Values = new ChartValues<double> { 8 },
-            //        PushOut = 15
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Mozilla",
-            //        Values = new ChartValues<double> { 6 }
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Opera",
-            //        Values = new ChartValues<double> { 10 }
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Explorer",
-            //        Values = new ChartValues<double> { 4 }
-            //    }
-            //};
-
-            ////adding values or series will update and animate the chart automatically
-            ////SeriesCollection.Add(new PieSeries());
-            ////SeriesCollection[0].Values.Add(5);
-
-            //DataContext = this;
+                diskInfo = new DiskInfo(d.getVHD().DiskName, d.getVHD().DiskOwner, d.howMuchEmpty(new IntPtr()));
+                //this.ownerLabel.Content = "Disk Owner";
+                this.MainGrid.DataContext = this.diskInfo;
+                this.PieChart.DataContext = this;
+                pie = new SeriesCollection();
+                var free = new PieSeries
+                {
+                    Title = "Free Space: " + diskInfo.FreeSpace.ToString() + " KB",
+                    Values = new ChartValues<double> { diskInfo.FreeSpace },
+                    PushOut = 0,
+                    Fill = Brushes.Gray
+                };
+                var used = new PieSeries
+                {
+                    Title = "Used Space: " + diskInfo.UsedSpace.ToString() + " KB",
+                    Values = new ChartValues<double> { diskInfo.UsedSpace },
+                    PushOut = 0,
+                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f44336"))
+                };
+                pie.Add(free);
+                pie.Add(used);
+            }
+            
         }
     }
 }

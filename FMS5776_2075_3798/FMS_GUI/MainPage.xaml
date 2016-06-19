@@ -202,7 +202,7 @@
                                HorizontalAlignment="Stretch"
                                  ShowsPreview="True"  EnableCollapseButton="True"/>-->
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-            <ContentControl x:Name="InfoContentControl" Content="{Binding info}"/>
+            <ContentControl x:Name="InfoContentControl" Content="{Binding Info}"/>
             <DataGrid x:Name="dataGrid" Grid.Column="2" Grid.ColumnSpan="3" />
             <!--<syncfusion:SfDataGrid Grid.Column="2" Grid.ColumnSpan="3">
                 

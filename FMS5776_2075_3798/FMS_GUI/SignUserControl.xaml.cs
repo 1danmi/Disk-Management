@@ -19,23 +19,28 @@ namespace FMS_GUI
     /// <summary>
     /// Interaction logic for SignUserControl.xaml
     /// </summary>
-    public partial class SignUserControl : UserControl
+    public partial class SignUserControl : UserControl 
     {
         Disk disk { get; set; }
-        public SignUserControl(Disk d)
+        public SignUserControl()
         {
             InitializeComponent();
-            disk = d;
         }
+
+       
 
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                disk.signIn(this.UserNameTextBox.Text, this.passwordBox.Password);
                 MainWindow w = Window.GetWindow(this) as MainWindow;
                 var x = w.MainFrame.Content as MainPage;
+                disk = x.disk;
+                disk.signIn(this.UserNameTextBox.Text, this.passwordBox.Password);
                 x.transitionFrame.UnloadPage(this);
+                var info = new DiskInfoUserControl(disk);
+                x.Info = info;
+               
             }
             catch(Exception ex)
             {

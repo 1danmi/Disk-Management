@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
         <Label x:Name="nameLabel" FontSize="40"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,241" >
             <ContentControl ContentStringFormat=" {0}" d:IsLocked="True">
-                <Binding Path="Name"  Mode="TwoWay"  />
+                <Binding Path="Name"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
             </ContentControl>
         </Label>
         <Label x:Name="ownerLabel" FontSize="16"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,192" >
@@ -32,7 +32,7 @@
 
         <Label x:Name="capacityLabel" FontSize="16"  Grid.Column="1"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,150">
             <ContentControl ContentStringFormat="   Total Capacity: {0} KB" d:IsLocked="True">
-                <Binding Path="Capacity" Mode="TwoWay"  />
+                <Binding Path="Capacity" Mode="TwoWay"   />
             </ContentControl>
         </Label>
         <Label x:Name="freeSpaceLabel" FontSize="16"  Grid.Column="1"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,108">
@@ -45,7 +45,7 @@
                 <Binding Path="UsedSpace" Mode="TwoWay"  />
             </ContentControl>
         </Label>
-        <lvc:PieChart x:Name="PieChart" Series="{Binding pie}" Grid.Column="1" Grid.Row="1" LegendLocation="Right" InnerRadius="25" StartingRotationAngle="170" />
+        <lvc:PieChart x:Name="PieChart" Series="{Binding pie}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" LegendLocation="Top" InnerRadius="25" StartingRotationAngle="180" />
         <!--<lvc:PieChart Series="{Binding SeriesCollection}" Grid.Column="1" Grid.Row="1" LegendLocation="Right" />-->
     </Grid>
 

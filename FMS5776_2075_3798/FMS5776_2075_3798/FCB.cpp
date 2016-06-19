@@ -106,7 +106,7 @@ void FCB::readRecord(char * record , int rec)
 		else
 			currRecNr = 0;
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -201,7 +201,7 @@ void FCB::addRecord(char * record)
 
 
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -250,7 +250,7 @@ void FCB::deleteRecord(int rec)
 		d->rootDirUpdate = 1;
 #pragma endregion
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
@@ -321,7 +321,7 @@ void FCB::updateRecord(char * record)
 
 		
 	}
-	catch (const char* str)
+	catch (char* str)
 	{
 		throw str;
 	}
