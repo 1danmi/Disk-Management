@@ -197,8 +197,6 @@ namespace FMS_adapter
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void removeUserSigned(IntPtr THIS, string user, SLEVEL applicantSLevel);
 
-
-
         // Level 1
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void format(IntPtr THIS);
@@ -247,6 +245,13 @@ namespace FMS_adapter
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void updateRecord(IntPtr THIS, IntPtr source);
 
+        //Level 4
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr makeStudentObject();
+
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void deleteStudentObject(ref IntPtr myStudentPtr);
+
         //extra
         //[DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         //[return: MarshalAs(UnmanagedType.AnsiBStr)]
@@ -254,6 +259,5 @@ namespace FMS_adapter
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void getVHD(IntPtr THIS, IntPtr buffer);
-
     }
 }
