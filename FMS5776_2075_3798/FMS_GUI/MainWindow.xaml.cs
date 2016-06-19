@@ -22,14 +22,12 @@ namespace FMS_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+       
         public MainWindow()
         {
             InitializeComponent();
             MainFrame.Navigate(new MainPage());
-            //CreateOpenDiskWindow codw = new CreateOpenDiskWindow();
-            //codw.Show();
-            //this.IsEnabled = false;
+           
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

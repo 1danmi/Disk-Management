@@ -22,6 +22,8 @@ using Syncfusion.Windows.Shared;
 using System.Globalization;
 using System.Windows.Threading;
 using System.Windows.Interop;
+using FMS_adapter;
+
 
 namespace FMS_GUI
 {
@@ -33,12 +35,12 @@ namespace FMS_GUI
         public CreateOpenDiskPage codp { get; set; }
         public SignUserControl suc { get; set; }
         public UserControl info { get; set; }
-
+        public Disk disk { get; set; }
+        string DiskName { get; set; }
         public MainPage()
         {
             InitializeComponent();
-            //codp = new CreateOpenDiskPage();
-            //this.codpContentControl.DataContext = this;
+            //disk = new Disk();
             info = new DiskInfoUserControl();
             this.InfoContentControl.DataContext = this;
 
@@ -49,6 +51,13 @@ namespace FMS_GUI
             this.shadowRectangle.Visibility = Visibility.Visible;
             codp = new CreateOpenDiskPage();
             this.codpContentControl.DataContext = this;
+            DiskName = codp.DiskNameTextBox.Text;
+            string ownerName = codp.OwnerNameTextBox.Text;
+            string password = codp.DiskNameTextBox.Text;
+            disk.createDisk(DiskName, ownerName, password);
+            disk.mountDisk(DiskName);
+            suc = new SignUserControl(disk);
+            transitionFrame.ShowPage(suc);
         }
 
         private void MountDiskButton_Click(object sender, RoutedEventArgs e)
@@ -61,7 +70,7 @@ namespace FMS_GUI
                 var a = new Uri(f.FileName);
 
             }
-            suc = new SignUserControl();
+            suc = new SignUserControl(disk);
             transitionFrame.ShowPage(suc);
 
         }
@@ -86,7 +95,7 @@ namespace FMS_GUI
 
         private void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
-            suc = new SignUserControl();
+            suc = new SignUserControl(disk);
             transitionFrame.ShowPage(suc);
         }
 

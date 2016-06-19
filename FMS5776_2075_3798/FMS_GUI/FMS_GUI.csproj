@@ -207,6 +207,10 @@
     <Resource Include="Images\ic_close_white_48dp_2x.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FMS_adapter\FMS_adapter.csproj">
+      <Project>{d164eceb-5328-46fc-900f-26d026a14d30}</Project>
+      <Name>FMS_adapter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WpfPageTransitions\WpfPageTransitions.csproj">
       <Project>{22a46d61-1d40-43a9-802c-b9d43dadd9ec}</Project>
       <Name>WpfPageTransitions</Name>
@@ -277,7 +281,9 @@
   <ItemGroup>
     <Resource Include="Images\Password.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Actions-system-log-out-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

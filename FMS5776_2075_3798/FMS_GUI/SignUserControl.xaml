@@ -44,15 +44,27 @@
                     <DropShadowEffect Opacity="0.5" BlurRadius="3"/>
                 </TextBox.Effect>
             </TextBox>
+            <Grid  Grid.Row="6" Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <PasswordBox x:Name="passwordBox" SnapsToDevicePixels="True" UseLayoutRounding="True"  FontSize="18" VerticalContentAlignment="Bottom" Grid.ColumnSpan="2" Password="Password" >
+                    <PasswordBox.Effect >
+                        <DropShadowEffect Opacity="0.5" BlurRadius="3"/>
+                    </PasswordBox.Effect>
+                </PasswordBox>
+                <!--<Border Grid.Column="1" BorderThickness="1" BorderBrush="Black HorizontalAlignment="Right" Margin="0,-2.125,-2.5,-2.25" Width="44.04">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="500" ShadowDepth="500"/>
+                    </Border.Effect>
+                    <Image x:Name="MenuImage" Source="Actions-system-log-out-icon.png" MouseDown="SignInButton_Click" />
+                </Border>-->
 
-            <PasswordBox x:Name="passwordBox" SnapsToDevicePixels="True" UseLayoutRounding="True"  FontSize="18" VerticalContentAlignment="Bottom" Password="Password" Grid.Row="6" Grid.ColumnSpan="3">
-                <PasswordBox.Effect >
-                    <DropShadowEffect Opacity="0.5" BlurRadius="3"/>
-                </PasswordBox.Effect>
-            </PasswordBox>
-
+            </Grid>
         </Grid>
         <Button x:Name="SignInButton" Style="{StaticResource CleanButtonStyle}" Content="Sign In" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="2" FontSize="18" VerticalAlignment="Top" Width="150" Height="30" Click="SignInButton_Click"/>
+
 
 
     </Grid>
