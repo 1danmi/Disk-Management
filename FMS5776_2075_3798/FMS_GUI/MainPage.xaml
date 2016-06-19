@@ -1,12 +1,12 @@
-﻿<Page
+﻿<Page x:Class="FMS_GUI.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FMS_GUI" 
       xmlns:WpfPageTransitions="clr-namespace:WpfPageTransitions;assembly=WpfPageTransitions"
-      
-      xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="FMS_GUI.MainPage"
+      SnapsToDevicePixels="True"
+      xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
       mc:Ignorable="d"
       
       d:DesignHeight="1080" d:DesignWidth="1920"
@@ -23,41 +23,196 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-
-
-
-
-      
         <Grid  Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0,25,0,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <syncfusion:Ribbon Name="MyRibbon"
+            <syncfusion:Ribbon Name="MyRibbon" 
                            BackStageColor="#D24726"
                            BackStageCornerImageVisibility="Collapsed"
                            BackStageHeader="DiskName"
                            EnableMoreCommands="False"
                            Grid.Row="0"
-                           Grid.ColumnSpan="3"
-                           syncfusion:SkinStorage.VisualStyle="Office2013">
+                           syncfusion:SkinStorage.EnableTouch="True"
+                           syncfusion:SkinStorage.VisualStyle="Office2013" Height="Auto" Margin="0,-17.333,0,17.334"  >
                 <syncfusion:Ribbon.QuickAccessToolBar>
                     <syncfusion:QuickAccessToolBar syncfusion:WindowChrome.IsHitTestVisibleInChrome="True"/>
                 </syncfusion:Ribbon.QuickAccessToolBar>
-                <syncfusion:RibbonTab Background="Transparent" Caption="Disk" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
-                    <syncfusion:RibbonBar Focusable="False" Header="Disk"/>
+
+
+                <syncfusion:RibbonTab Background="Transparent" Caption="Disk" IsChecked="True" syncfusion:Ribbon.KeyTip="H" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
+                    <syncfusion:RibbonBar Focusable="False" Header="Disk" 
+                                      syncfusion:Ribbon.KeyTip="FN"
+                                      syncfusion:Ribbon.ShowInMoreCommands="False" >
+                        <syncfusion:RibbonButton x:Name="CreateDiskButton"
+                                            Label="Create Disk"
+                                            LargeIcon="Images/Create Disk (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="CreateDiskButton_Click">
+                        </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton x:Name="MountDiskButton"
+                                            Label="Mount Disk"
+                                            LargeIcon="Images/Mount Disk.png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="MountDiskButton_Click">
+                        </syncfusion:RibbonButton>
+                    </syncfusion:RibbonBar>
+                    <syncfusion:RibbonBar Focusable="False" Header="Format" 
+                                      syncfusion:Ribbon.KeyTip="FN" 
+                                      syncfusion:Ribbon.ShowInMoreCommands="False" >
+                        <syncfusion:RibbonButton x:Name="FormatButton"
+                                            Label="Format"
+                                            LargeIcon="Images/Format Disk2.png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="FormatButton_Click">
+                        </syncfusion:RibbonButton>
+                    </syncfusion:RibbonBar>
+                    <syncfusion:RibbonBar Focusable="False" Header="Exit" 
+                                      syncfusion:Ribbon.KeyTip="FN"
+                                      syncfusion:Ribbon.ShowInMoreCommands="False" >
+                        <syncfusion:RibbonButton x:Name="SignOutButton"
+                                            Label="Sign-Out"
+                                            LargeIcon="Images/Unmount and Sign Out.png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="SignOutButton_Click">
+                        </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton x:Name="UnmountDiskButton"
+                                            Label="Unmount Disk"
+                                            LargeIcon="Images/UnMount Disk.png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="UnmountDiskButton_Click">
+                        </syncfusion:RibbonButton>
+                    </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-                <syncfusion:RibbonTab Background="Transparent" Caption="File" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23"/>
-                <syncfusion:RibbonTab Background="Transparent" Caption="User" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
-                    <syncfusion:RibbonBar Focusable="False" Header="User"/>
+                <syncfusion:RibbonTab Background="Transparent" Caption="File" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23" >
+                    <syncfusion:RibbonBar Focusable="False" Header="File" syncfusion:Ribbon.KeyTip="FN" syncfusion:Ribbon.ShowInMoreCommands="False" >
+                        <syncfusion:RibbonButton x:Name="CreateFileButton"
+                                            Label="Create File"
+                                            LargeIcon="Images/Open FIle (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="CreateFileButton_Click">
+                        </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton x:Name="OpenFileButton"
+                                            Label="Open File"
+                                            LargeIcon="Images/eadfa (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="OpenFileButton_Click">
+                        </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton  x:Name="CloseFileButton"
+                                            Label="Close File"
+                                            LargeIcon="Images/Close File (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="CloseFileButton_Click">
+                        </syncfusion:RibbonButton>
+                    </syncfusion:RibbonBar>
+                    <syncfusion:RibbonBar Focusable="False" Header="Record" 
+                                      syncfusion:Ribbon.KeyTip="FN" 
+                                      syncfusion:Ribbon.ShowInMoreCommands="False" >
+                        <syncfusion:RibbonButton x:Name="AddRecordButoon"
+                                            Label="Add Record"
+                                            LargeIcon="Images/Add Record (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="AddRecordButoon_Click">
+                        </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton x:Name="DeleteRecordButton"
+                                            Label="Delete Record"
+                                            LargeIcon="Images/Remove Record (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="DeleteRecordButton_Click">
+                        </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton x:Name="UpdateRecordButton"
+                                            Label="Update Record"
+                                            LargeIcon="Images/updRecord (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="UpdateRecordButton_Click">
+                        </syncfusion:RibbonButton>
+                    </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
+                <syncfusion:RibbonTab Background="Transparent" Caption="User"  FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
+                    <syncfusion:RibbonBar Focusable="False" Header="Manage" 
+                                      syncfusion:Ribbon.KeyTip="FN"
+                                      syncfusion:Ribbon.ShowInMoreCommands="False" >
+                        <syncfusion:RibbonButton x:Name="AddUserButton"
+                                            Label="Add User"
+                                            LargeIcon="Images/Add user 2.png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="AddUserButton_Click">
+                        </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton x:Name="RemoveUserButton"
+                                            Label="Remove User"
+                                            LargeIcon="Images/Remove user.png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="RemoveUserButton_Click">
+                        </syncfusion:RibbonButton>
+                    </syncfusion:RibbonBar>
+                    <syncfusion:RibbonBar Focusable="False" Header="Current User" 
+                                      syncfusion:Ribbon.KeyTip="FN"
+                                      syncfusion:Ribbon.ShowInMoreCommands="False" >
+                        <syncfusion:RibbonButton x:Name="UserInfoButton"
+                                            Label="User Info"
+                                            LargeIcon="Images/User INFO.png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="UserInfoButton_Click">
+                        </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton x:Name="ChangePasswordButton"
+                                            Label="Change Password"
+                                            LargeIcon="Images/Password.png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="ChangePasswordButton_Click">
+
+                        </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton x:Name="SignOutButton2"
+                                            Label="SignOut"
+                                            LargeIcon="Images/Sign Out.png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="SignOutButton2_Click">
+                        </syncfusion:RibbonButton>
+                    </syncfusion:RibbonBar>
+                </syncfusion:RibbonTab>
+
             </syncfusion:Ribbon>
         </Grid>
 
+        <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,40,0,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <!--<syncfusion:SfGridSplitter Grid.Column="1"
+                               HorizontalAlignment="Stretch"
+                                 ShowsPreview="True"  EnableCollapseButton="True"/>-->
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+            <ContentControl x:Name="InfoContentControl" Content="{Binding info}"/>
+            <DataGrid x:Name="dataGrid" Grid.Column="2" Grid.ColumnSpan="3" />
+            <!--<syncfusion:SfDataGrid Grid.Column="2" Grid.ColumnSpan="3">
+                
+            </syncfusion:SfDataGrid>-->
+        </Grid>
 
-        <Rectangle x:Name="shadowRectangle" Fill="#4C000000" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+        <Rectangle x:Name="shadowRectangle" Fill="#4C000000" Visibility="Collapsed" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
         <WpfPageTransitions:PageTransition  x:Name="transitionFrame" TransitionType="Slide" Grid.ColumnSpan="3" Grid.RowSpan="3" />
         <ContentControl x:Name="codpContentControl" Content="{Binding codp}" Grid.Column="1" Grid.Row="1"/>
+        <!--Fill="#4C000000"-->
     </Grid>
 
 </Page>

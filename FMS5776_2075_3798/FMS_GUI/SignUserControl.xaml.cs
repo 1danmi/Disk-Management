@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FMS_adapter;
 
 namespace FMS_GUI
 {
@@ -20,17 +21,41 @@ namespace FMS_GUI
     /// </summary>
     public partial class SignUserControl : UserControl
     {
-        public SignUserControl()
+        Disk disk { get; set; }
+        public SignUserControl(Disk d)
         {
             InitializeComponent();
+            disk = d;
         }
 
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow w = Window.GetWindow(this) as MainWindow;
-            var x = w.MainFrame.Content as MainPage;
-            x.transitionFrame.UnloadPage(this);
-     
+            try
+            {
+                disk.signIn(this.UserNameTextBox.Text, this.passwordBox.Password);
+                MainWindow w = Window.GetWindow(this) as MainWindow;
+                var x = w.MainFrame.Content as MainPage;
+                x.transitionFrame.UnloadPage(this);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SignInButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                disk.signIn(this.UserNameTextBox.Text, this.passwordBox.Password);
+                MainWindow w = Window.GetWindow(this) as MainWindow;
+                var x = w.MainFrame.Content as MainPage;
+                x.transitionFrame.UnloadPage(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

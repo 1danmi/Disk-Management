@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FMS_adapter;
 
 namespace FMS_GUI
 {
@@ -20,6 +21,7 @@ namespace FMS_GUI
     /// </summary>
     public partial class CreateOpenDiskPage : UserControl
     {
+        Disk disk { get; set; }
         public CreateOpenDiskPage()
         {
             InitializeComponent();
@@ -29,8 +31,8 @@ namespace FMS_GUI
             MainWindow w = Window.GetWindow(this) as MainWindow;
             var x = w.MainFrame.Content as MainPage;
             x.codpContentControl.Content = null;
-            x.shadowRectangle.Visibility =Visibility.Collapsed;
-            x.suc = new SignUserControl();
+            x.shadowRectangle.Visibility = Visibility.Collapsed;
+            x.suc = new SignUserControl(disk);
             x.transitionFrame.ShowPage(x.suc);
         }
 
@@ -40,7 +42,7 @@ namespace FMS_GUI
             var x = w.MainFrame.Content as MainPage;
             x.codpContentControl.Content = null;
             x.shadowRectangle.Visibility = Visibility.Collapsed;
-            x.suc = new SignUserControl();
+            x.suc = new SignUserControl(disk);
             x.transitionFrame.ShowPage(x.suc);
         }
     }

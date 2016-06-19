@@ -22,14 +22,12 @@ namespace FMS_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+       
         public MainWindow()
         {
             InitializeComponent();
             MainFrame.Navigate(new MainPage());
-            //CreateOpenDiskWindow codw = new CreateOpenDiskWindow();
-            //codw.Show();
-            //this.IsEnabled = false;
+           
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -39,10 +37,10 @@ namespace FMS_GUI
 
         private void MaximizeButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (this.WindowState == WindowState.Normal)
-            //    this.WindowState = WindowState.Maximized;
-            //else
-            //    this.WindowState = WindowState.Normal;
+            if (this.WindowState == WindowState.Normal)
+                this.WindowState = WindowState.Maximized;
+            else
+                this.WindowState = WindowState.Normal;
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
