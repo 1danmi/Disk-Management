@@ -45,14 +45,14 @@ namespace FMS_adapter
         public string PhoneNo { get { return phoneNo; } }
 
         IntPtr myStudentPtr;
-        Student()
-        {
-            myStudentPtr = cppToCsharpAdapter.makeStudentObject();
-        }
-        ~Student()
-        {
-            if (myStudentPtr != null)
-                cppToCsharpAdapter.deleteStudentObject(ref myStudentPtr);
-        }
+        //Student()
+        //{
+        //    myStudentPtr = cppToCsharpAdapter.makeStudentObject();
+        //}
+        //~Student()
+        //{
+        //    if (myStudentPtr != null)
+        //        cppToCsharpAdapter.deleteStudentObject(ref myStudentPtr);
+        //}
     }
 }
