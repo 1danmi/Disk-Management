@@ -9,7 +9,34 @@ namespace FMS_adapter
 {
     public class Disk
     {
-        
+        //disk class from c++
+        bool vhdUpdate;
+        public bool VhdUpdate{ get { return vhdUpdate; } }
+
+        DAT dat;
+
+        bool datUpdate;
+        public bool DatUpdate { get { return datUpdate; } }
+
+        User currUser;
+        UsersSec users;
+
+        bool usersUpdate;
+        public bool UsersUpdate { get { return usersUpdate; } }
+
+
+        bool rootDirUpdate;
+        public bool RootDirUpdate { get { return Update; } }
+
+        bool mounted;
+        fstream dskfl;
+        bool sign;
+        unsigned int currDiskSectorNr;
+        //char buffer[sizeof(Sector)];
+        string lastErrorMessage;
+        VHD vhd;
+        RootDir rootDir;
+
         IntPtr myDiskPtr;
 
         //level 0
