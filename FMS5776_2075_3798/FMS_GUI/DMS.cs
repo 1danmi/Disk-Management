@@ -43,5 +43,11 @@ namespace FMS_GUI
                 throw ex;
             }
         }
+        //not needed. just add to list...
+        //public FCB lookForFcb(Disk disk, string fileName)
+        //{
+
+        //    return null;
+        //}
     }
 }

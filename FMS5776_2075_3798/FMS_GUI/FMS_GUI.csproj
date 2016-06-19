@@ -108,6 +108,7 @@
     <Compile Include="DiskInfoUserControl.xaml.cs">
       <DependentUpon>DiskInfoUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DMS.cs" />
     <Compile Include="SignUserControl.xaml.cs">
       <DependentUpon>SignUserControl.xaml</DependentUpon>
     </Compile>
