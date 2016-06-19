@@ -13,7 +13,7 @@ namespace FMS_adapter
         bool vhdUpdate;
         public bool VhdUpdate{ get { return vhdUpdate; } }
 
-        DAT dat;
+        //DAT dat;
 
         bool datUpdate;
         public bool DatUpdate { get { return datUpdate; } }
@@ -24,17 +24,25 @@ namespace FMS_adapter
         bool usersUpdate;
         public bool UsersUpdate { get { return usersUpdate; } }
 
-
         bool rootDirUpdate;
-        public bool RootDirUpdate { get { return Update; } }
+        public bool RootDirUpdate { get { return rootDirUpdate; } }
 
         bool mounted;
-        fstream dskfl;
+        public bool Mounted { get { return mounted; } }
+
+        //fstream dskfl;
+
         bool sign;
-        unsigned int currDiskSectorNr;
-        //char buffer[sizeof(Sector)];
-        string lastErrorMessage;
+        public bool Sign { get { return sign; } }
+
+        uint currDiskSectorNr;
+        public uint CurrDiskSectorNr { get { return currDiskSectorNr; } }
+
+        //string lastErrorMessage;
+
         VHD vhd;
+        public VHD Vhd { get { return vhd; } }
+
         RootDir rootDir;
 
         IntPtr myDiskPtr;
