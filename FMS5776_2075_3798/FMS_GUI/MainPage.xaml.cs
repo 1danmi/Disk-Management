@@ -88,7 +88,7 @@ namespace FMS_GUI
         {
             try
             {
-                Microsoft.Win32.OpenFileDialog f = new Microsoft.Win32.OpenFileDialog();
+                OpenFileDialog f = new OpenFileDialog();
                 f.Filter = "All Files (*)|*|DISK Files (*.fms)|*.fms";
                 if (f.ShowDialog() == true)
                 {
@@ -223,8 +223,8 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
-                if (!fcb.Loaded)
-                    throw new Exception("No file is loaded!");
+                //if (!fcb.Loaded)
+                //    throw new Exception("No file is loaded!");
                 fcb.closeFile();
                 MessageBox.Show("File closed.", "Closing file", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -305,6 +305,9 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                
+                this.removeUserTranstion.ShowPage(new RemoveUserUserControl());
+                
             }
             catch (Exception ex)
             {
@@ -353,5 +356,13 @@ namespace FMS_GUI
 
         #endregion
 
+        private void shadowRectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(this.shadowRectangle.Visibility==Visibility.Visible)
+            {
+                this.shadowRectangle.Visibility = Visibility.Collapsed;
+                this.codpContentControl.Content = null;
+            }
+        }
     }
 }

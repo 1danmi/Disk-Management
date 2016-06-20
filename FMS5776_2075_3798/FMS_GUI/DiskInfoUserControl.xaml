@@ -9,43 +9,52 @@
       d:DesignHeight="600" d:DesignWidth="400" >
     <Grid Background="White" x:Name="MainGrid" d:DataContext="{d:DesignInstance Type=local:DiskInfo}" Height="600" VerticalAlignment="Top">
         <Grid.RowDefinitions>
-            
+
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="31.28"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="31.28"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="31.28"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="31.28"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="200*"/>
             <RowDefinition Height="80*"/>
-            <RowDefinition Height="49*"/>
-            <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="nameLabel" FontSize="40"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,241" >
+        <Label x:Name="nameLabel" FontSize="40"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left"  >
             <ContentControl ContentStringFormat=" {0}" d:IsLocked="True">
                 <Binding Path="Name"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
             </ContentControl>
         </Label>
-        <Label x:Name="ownerLabel" FontSize="16"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,192" >
+        <Label x:Name="ownerLabel" FontSize="16"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2" >
             <ContentControl ContentStringFormat="   Owner: {0}" d:IsLocked="True">
                 <Binding Path="Owner"  Mode="TwoWay"  />
             </ContentControl>
         </Label>
 
-        <Label x:Name="capacityLabel" FontSize="16"  Grid.Column="1"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,150">
+        <Label x:Name="capacityLabel" FontSize="16"  Grid.Column="1"  VerticalAlignment="Bottom" HorizontalAlignment="Left"  Grid.Row="4">
             <ContentControl ContentStringFormat="   Total Capacity: {0} KB" d:IsLocked="True">
                 <Binding Path="Capacity" Mode="TwoWay"   />
             </ContentControl>
         </Label>
-        <Label x:Name="freeSpaceLabel" FontSize="16"  Grid.Column="1"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,108">
+        <Label x:Name="freeSpaceLabel" FontSize="16"  Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="6">
             <ContentControl ContentStringFormat="   Free Space: {0} KB" d:IsLocked="True">
                 <Binding Path="FreeSpace" Mode="TwoWay"  />
             </ContentControl>
         </Label>
-        <Label x:Name="usedSpaceLabel" FontSize="16"  Grid.Column="1"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,66">
+        <Label x:Name="usedSpaceLabel" FontSize="16"  Grid.Column="1" HorizontalAlignment="Left" Grid.Row="8" >
             <ContentControl ContentStringFormat="   Used Space: {0} KB" d:IsLocked="True">
                 <Binding Path="UsedSpace" Mode="TwoWay"  />
             </ContentControl>
         </Label>
-        <lvc:PieChart x:Name="PieChart" Series="{Binding pie}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" LegendLocation="Top" InnerRadius="25" StartingRotationAngle="180" />
+        <lvc:PieChart x:Name="PieChart" Series="{Binding pie}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="10" LegendLocation="Bottom" InnerRadius="25" StartingRotationAngle="180" Margin="0,0.001,0,-0.001" />
         <!--<lvc:PieChart Series="{Binding SeriesCollection}" Grid.Column="1" Grid.Row="1" LegendLocation="Right" />-->
     </Grid>
 

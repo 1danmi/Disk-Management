@@ -23,24 +23,17 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
+
         <Grid  Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0,25,0,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <syncfusion:Ribbon Name="MyRibbon" 
-                           BackStageColor="#D24726"
-                           BackStageCornerImageVisibility="Collapsed"
-                           BackStageHeader="DiskName"
-                           EnableMoreCommands="False"
-                           Grid.Row="0"
-                           syncfusion:SkinStorage.EnableTouch="True"
-                           syncfusion:SkinStorage.VisualStyle="Office2013" Height="Auto" Margin="0,-17.333,0,17.334"  >
+
+            <syncfusion:Ribbon Name="MyRibbon" BackStageColor="#D24726" BackStageCornerImageVisibility="Collapsed" BackStageHeader="DiskName" EnableMoreCommands="False" Grid.Row="0" syncfusion:SkinStorage.EnableTouch="True" syncfusion:SkinStorage.VisualStyle="Office2013" Height="Auto" Margin="0,-17.333,0,17.334" >
                 <syncfusion:Ribbon.QuickAccessToolBar>
                     <syncfusion:QuickAccessToolBar syncfusion:WindowChrome.IsHitTestVisibleInChrome="True"/>
                 </syncfusion:Ribbon.QuickAccessToolBar>
-
-
                 <syncfusion:RibbonTab Background="Transparent" Caption="Disk" IsChecked="True" syncfusion:Ribbon.KeyTip="H" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
                     <syncfusion:RibbonBar Focusable="False" Header="Disk" 
                                       syncfusion:Ribbon.KeyTip="FN"
@@ -90,7 +83,7 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-                <syncfusion:RibbonTab Background="Transparent" Caption="File" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23" IsChecked="True" >
+                <syncfusion:RibbonTab Background="Transparent" Caption="File" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
                     <syncfusion:RibbonBar Focusable="False" Header="File" syncfusion:Ribbon.KeyTip="FN" syncfusion:Ribbon.ShowInMoreCommands="False" >
                         <syncfusion:RibbonButton x:Name="CreateFileButton"
                                             Label="Create File"
@@ -140,7 +133,7 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-                <syncfusion:RibbonTab Background="Transparent" Caption="User" IsChecked="False"  FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
+                <syncfusion:RibbonTab Background="Transparent" Caption="User" IsChecked="True"  FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
                     <syncfusion:RibbonBar Focusable="False" Header="Manage" 
                                       syncfusion:Ribbon.KeyTip="FN"
                                       syncfusion:Ribbon.ShowInMoreCommands="False" >
@@ -186,33 +179,36 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-
             </syncfusion:Ribbon>
-        </Grid>
-
-        <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,40,0,0" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <!--<syncfusion:SfGridSplitter Grid.Column="1"
+            <Grid Grid.Row="1"  Margin="0,-17,0,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <!--<syncfusion:SfGridSplitter Grid.Column="1"
                                HorizontalAlignment="Stretch"
                                  ShowsPreview="True"  EnableCollapseButton="True"/>-->
-            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-            <ContentControl x:Name="InfoContentControl" Content="{Binding Info}"/>
-            <DataGrid x:Name="dataGrid" Grid.Column="2" Grid.ColumnSpan="3" />
-            <!--<syncfusion:SfDataGrid Grid.Column="2" Grid.ColumnSpan="3">
+                <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+                <ContentControl x:Name="InfoContentControl" Content="{Binding Info}"/>
+                <DataGrid x:Name="dataGrid" Grid.Column="2" Grid.ColumnSpan="3" />
+                <!--<syncfusion:SfDataGrid Grid.Column="2" Grid.ColumnSpan="3">
                 
             </syncfusion:SfDataGrid>-->
+            </Grid>
+            <WpfPageTransitions:PageTransition x:Name="removeUserTranstion"  Grid.Row="1" HorizontalAlignment="Left" TransitionType="Fade"  Height="107.5" Margin="50.5,-17.333,0,0"  VerticalAlignment="Top" Width="322.5"/>
+
+
+
         </Grid>
 
-        <Rectangle x:Name="shadowRectangle" Fill="#4C000000" Visibility="Collapsed" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+
+
+        <Rectangle x:Name="shadowRectangle" Fill="#4C000000" Visibility="Collapsed" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3" MouseDown="shadowRectangle_MouseDown"/>
         <WpfPageTransitions:PageTransition  x:Name="transitionFrame" TransitionType="Slide" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
         <ContentControl x:Name="codpContentControl" Content="{Binding codp}" Grid.Column="1" Grid.Row="1"/>
-        <WpfPageTransitions:PageTransition x:Name="removeUserTransiion" HorizontalAlignment="Left" TransitionType="Fade" Height="57.333" Margin="10,-22.333,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="182.667"/>
         <!--Fill="#4C000000"-->
     </Grid>
 

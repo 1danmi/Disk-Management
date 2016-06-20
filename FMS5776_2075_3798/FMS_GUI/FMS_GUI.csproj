@@ -115,6 +115,9 @@
     <Compile Include="NewUserUserControl.xaml.cs">
       <DependentUpon>NewUserUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RemoveUserUserControl.xaml.cs">
+      <DependentUpon>RemoveUserUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SignUserControl.xaml.cs">
       <DependentUpon>SignUserControl.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NewUserUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RemoveUserUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -291,6 +298,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Password.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Actions-system-log-out-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
