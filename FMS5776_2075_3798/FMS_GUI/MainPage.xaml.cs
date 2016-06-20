@@ -34,9 +34,9 @@ namespace FMS_GUI
     {
         UserControl info;
         public CreateOpenDiskPage codp { get; set; }
-        public NewUserUserControl nuuc { get; set; }
         public CreateFilePage cfp { get; set; }
 
+        public NewUserUserControl nuuc { get; set; }
         public SignUserControl suc { get; set; }
         public UserControl Info {
             get { return info; }
