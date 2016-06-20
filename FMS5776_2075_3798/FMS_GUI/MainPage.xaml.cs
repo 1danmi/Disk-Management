@@ -95,6 +95,7 @@ namespace FMS_GUI
                     disk.mountDisk(f.FileName);
                     disk.Mounted = true;
                     DiskName = disk.getVHD().DiskName;
+                    this.dataGrid.ItemsSource = CreateDirEntryList();
                     this.MyRibbon.BackStageHeader = DiskName;
                     suc = new SignUserControl(DiskName);
                     transitionFrame.ShowPage(suc);
@@ -113,7 +114,10 @@ namespace FMS_GUI
             List<DirEntry> dirEntryList = new List<DirEntry>();
             for(int i=0;i<14;i++)
             {
-                if(disk.getRootDir().MsbSector.)
+                if (disk.getRootDir().MsbSector.getDirEntry(i).EntryStatus == '1')
+                    dirEntryList.Add(disk.getRootDir().MsbSector.getDirEntry(i));
+                if (disk.getRootDir().LsbSector.getDirEntry(i).EntryStatus == '1')
+                    dirEntryList.Add(disk.getRootDir().LsbSector.getDirEntry(i));
             }
             return dirEntryList;
 

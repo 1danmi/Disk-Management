@@ -396,8 +396,14 @@ namespace FMS_adapter
         {
             try
             {
-
+                
+               
+                DirEntry de = new DirEntry();
+                int i = Marshal.SizeOf(de.GetType());
+                SectorDir sd = new SectorDir();
+                int j = Marshal.SizeOf(sd.GetType());
                 RootDir rd = new RootDir();
+                
                 int structSize = Marshal.SizeOf(rd.GetType()); //Marshal.SizeOf(typeof(Student)); 
                 IntPtr buffer = Marshal.AllocHGlobal(structSize);
                 Marshal.StructureToPtr(rd, buffer, true);
