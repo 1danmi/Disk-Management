@@ -210,7 +210,7 @@
         </Grid>
 
         <Rectangle x:Name="shadowRectangle" Fill="#4C000000" Visibility="Collapsed" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
-        <WpfPageTransitions:PageTransition  x:Name="transitionFrame" TransitionType="Slide" Grid.ColumnSpan="3" Grid.RowSpan="3" Loaded="transitionFrame_Loaded" />
+        <WpfPageTransitions:PageTransition  x:Name="transitionFrame" TransitionType="Slide" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
         <ContentControl x:Name="codpContentControl" Content="{Binding codp}" Grid.Column="1" Grid.Row="1"/>
         <WpfPageTransitions:PageTransition x:Name="removeUserTransiion" HorizontalAlignment="Left" TransitionType="Fade" Height="57.333" Margin="10,-22.333,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="182.667"/>
         <!--Fill="#4C000000"-->

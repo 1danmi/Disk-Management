@@ -34,7 +34,7 @@ namespace FMS_GUI
     {
         UserControl info;
         public CreateOpenDiskPage codp { get; set; }
-        public CreateFilePage cfp { get; set; }
+        //public CreateFilePage cfp { get; set; }
 
         public NewUserUserControl nuuc { get; set; }
         public SignUserControl suc { get; set; }
@@ -96,6 +96,7 @@ namespace FMS_GUI
                     disk.Mounted = true;
                     DiskName = disk.getVHD().DiskName;
                     this.MyRibbon.BackStageHeader = DiskName;
+                    this.dataGrid.ItemsSource = disk
                     suc = new SignUserControl(DiskName);
                     transitionFrame.ShowPage(suc);
                 }
