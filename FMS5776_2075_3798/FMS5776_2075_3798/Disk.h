@@ -93,6 +93,7 @@ public:
 	void SetLastErrorMessage(string lastErrorMessage);
 	VHD getVHD();
 	User getCU();
+	RootDir getRootDir();
 	DAT getDAT();
 
 #pragma endregion

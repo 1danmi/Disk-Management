@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="FMS_GUI.CreateFileUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FMS_GUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="300">
+    <UserControl.Effect>
+        <DropShadowEffect Opacity="0.7" RenderingBias="Quality" ShadowDepth="7" BlurRadius="10"/>
+    </UserControl.Effect>
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="23*"/>
+                <RowDefinition Height="122*"/>
+                <RowDefinition Height="248*"/>
+                <RowDefinition Height="82*"/>
+                <RowDefinition Height="23*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="121*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="9*"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="label" Content="New File" Grid.Column="2"  HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" FontFamily="Segoe UI Semibold" FontSize="40"/>
+
+            <!--<Button x:Name="openDiskButton" Style="{StaticResource CleanButtonStyle}"  Content="Open Existing Disk" FontSize="20" Grid.Column="1" Margin="0,10,0,60.9" Grid.Row="1" Click="openDiskButton_Click" FontFamily="Segoe UI Semibold" Grid.ColumnSpan="3"/>-->
+            <Button x:Name="newFileButton" Style="{StaticResource CleanButtonStyle}" Content="Create New File" Grid.Column="1" FontSize="20" Margin="0,19.32,0,11.363" Grid.Row="3" Click="newFileButton_Click" FontFamily="Segoe UI Semibold" Grid.ColumnSpan="3"/>
+            <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,-31.5,0,0">
+                <Label x:Name="FileNameLabel" Content="File Name:" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" FontSize="18" VerticalAlignment="Bottom" Padding="0"/>
+                <TextBox x:Name="FileNameTextBox" Text="enter file name..." TextWrapping="Wrap"  VerticalAlignment="Top" FontSize="22" FontFamily="Segoe UI Light"/>
+                <Label x:Name="RecordsNumberLabel" Content="Number of records (1-36):" HorizontalAlignment="Left" FontSize="18" FontFamily="Segoe UI Semibold" VerticalAlignment="Top" Padding="0"/>
+                <TextBox x:Name="RecordsNumberTextBox" Text="1" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="22" FontFamily="Segoe UI Light"/>
+                <Label x:Name="RecordTypeLabel" Content="Record Type:" HorizontalAlignment="Left" FontSize="18" FontFamily="Segoe UI Semibold" VerticalAlignment="Bottom" Padding="0"/>
+                <ComboBox x:Name="RecordTypeComboBox" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="31" SelectionChanged="RecordTypeComboBox_SelectionChanged"/>
+                <Label x:Name="SecLevelLabel" Content="Security level:" HorizontalAlignment="Left" FontSize="18" FontFamily="Segoe UI Semibold" VerticalAlignment="Bottom" Padding="0"/>
+                <ComboBox x:Name="SecLevelComboBox" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="31" SelectionChanged="SecLevelComboBox_SelectionChanged"/>
+
+
+            </StackPanel>
+            <!--<Label x:Name="orLabel" Content="Or:" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,23.388"  Grid.Column="1"   Grid.Row="1" FontSize="20" FontFamily="Segoe UI Semilight" Grid.ColumnSpan="3" />-->
+            <!--<Label x:Name="createNewDiskLabel" Content="Create a new Disk" HorizontalContentAlignment="Center" VerticalAlignment="Bottom"  Grid.Column="1" Grid.Row="1" FontSize="20" FontFamily="Segoe UI Semilight" Grid.ColumnSpan="3"/>-->
+        </Grid>
+    </Border>
+</UserControl>

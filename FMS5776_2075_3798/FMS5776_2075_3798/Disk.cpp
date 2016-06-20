@@ -1535,6 +1535,7 @@ FCB* Disk::openFile(string & fn, MODE io)
 
 	VHD Disk::getVHD() { return this->vhd; }
 	User Disk::getCU() { return this->currUser; }
+	RootDir Disk::getRootDir() { return this->rootDir; }
 	DAT Disk::getDAT() { return this->dat; }
 	
 #pragma endregion

@@ -762,8 +762,8 @@ public:
 	static void welcomeDebugLevel3(Disk& d, FCB& fcb)
 	{
 		int a;
-		d.mountDisk(string("Disk1.fms"));
-		d.signIn(string("Daniel"), string("1234"));
+		d.mountDisk(string("DiskProject.fms"));
+		d.signIn(string("stesh"), string("admin"));
 		fcb = (*d.openFile(string("TestFile"), MODE::WR));
 		cout << "Welcome to Level 3 Debugging Mode!\nWhat would you like to do?\n";
 		cout << "1. Set Disk (level 0)\n";
@@ -814,7 +814,7 @@ int main()
 	try{
 		FCB fcb;
 		Disk d;
-		Level3Debug::welcomeDebugLevel3(d,fcb);
+		Level2Debug::welcomeDebugLevel2(d);
 		//0Level0Debug::welcomeDebugLevel0(d);
 
 		//cout << sizeof(FileHeader) << endl;
