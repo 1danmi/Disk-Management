@@ -96,5 +96,7 @@ public:
 	RootDir getRootDir();
 	DAT getDAT();
 	DirEntry getDirEntry(int);
+
+	
 #pragma endregion
 };

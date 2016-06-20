@@ -37,6 +37,9 @@ public:
 	void updateRecord(char*);
 	bool getLoaded();
 
+	RecEntry getRecEntry(int);
+	unsigned int getRecInfoSize();
+
 	string & GetLastErrorMessage();
 	void SetLastErrorMessage(string lastErrorMessage);
 };
