@@ -331,5 +331,7 @@ void FCB::updateRecord(char * record)
 	}
 }
 
+bool FCB::getLoaded() { return this->loaded; }
+
 string& FCB::GetLastErrorMessage() { return this->lastErrorMessage; }
 void FCB::SetLastErrorMessage(string lastErrorMessage) { this->lastErrorMessage = lastErrorMessage; }
