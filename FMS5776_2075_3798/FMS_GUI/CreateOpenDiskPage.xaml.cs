@@ -40,7 +40,8 @@ namespace FMS_GUI
                 x.disk.createDisk(x.DiskName, ownerName, password);
                 x.disk.mountDisk(x.DiskName + ".fms");
                 x.disk.Mounted = true;
-                x.suc = new SignUserControl();
+                x.MyRibbon.BackStageHeader = x.DiskName;
+                x.suc = new SignUserControl(x.DiskName);
                 x.transitionFrame.ShowPage(x.suc);
             }
             catch (Exception ex)

@@ -109,6 +109,9 @@
       <DependentUpon>DiskInfoUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DMS.cs" />
+    <Compile Include="NewUserUserControl.xaml.cs">
+      <DependentUpon>NewUserUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SignUserControl.xaml.cs">
       <DependentUpon>SignUserControl.xaml</DependentUpon>
     </Compile>
@@ -152,6 +155,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewUserUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SignUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

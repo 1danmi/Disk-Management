@@ -7,14 +7,14 @@ namespace FMS_adapter
     {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
         string name;
-        public string Name { get { return name; } }
+        public string Name { get { return name; } set { name = value; } }
 
         SLEVEL sLevel;
-        public SLEVEL SLevel { get { return sLevel; } }
+        public SLEVEL SLevel { get { return sLevel; } set { sLevel = value; } }
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
         string password;
-        public string Password { get { return password; } }
+        public string Password { get { return password; } set { password = value; } }
     }
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public class UsersSec

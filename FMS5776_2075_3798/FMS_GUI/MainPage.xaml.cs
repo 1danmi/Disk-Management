@@ -34,6 +34,7 @@ namespace FMS_GUI
     {
         UserControl info;
         public CreateOpenDiskPage codp { get; set; }
+        public NewUserUserControl nuuc { get; set; }
         public SignUserControl suc { get; set; }
         public UserControl Info {
             get { return info; }
@@ -91,9 +92,12 @@ namespace FMS_GUI
                     //var a = new Uri(f.FileName);
                     disk.mountDisk(f.FileName);
                     disk.Mounted = true;
+                    DiskName = disk.getVHD().DiskName;
+                    this.MyRibbon.BackStageHeader = DiskName;
+                    suc = new SignUserControl(DiskName);
+                    transitionFrame.ShowPage(suc);
                 }
-                suc = new SignUserControl();
-                transitionFrame.ShowPage(suc);
+                
             }
             catch (Exception ex)
             {
@@ -139,7 +143,7 @@ namespace FMS_GUI
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
                 disk.signOut();
-                suc = new SignUserControl();
+                suc = new SignUserControl(DiskName);
                 transitionFrame.ShowPage(suc);
             }
             catch (Exception ex)
@@ -263,6 +267,10 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                this.shadowRectangle.Visibility = Visibility.Visible;
+                nuuc = new NewUserUserControl();
+                codpContentControl.Content = nuuc;
+                this.codpContentControl.DataContext = this;
 
             }
             catch (Exception ex)

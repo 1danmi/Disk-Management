@@ -92,6 +92,7 @@ public:
 	string & GetLastErrorMessage();
 	void SetLastErrorMessage(string lastErrorMessage);
 	VHD getVHD();
+	User getCU();
 	DAT getDAT();
 
 #pragma endregion

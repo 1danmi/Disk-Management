@@ -332,6 +332,13 @@ extern "C"
 		
 		memcpy_s(buffer, sizeof(VHD), &THIS->getVHD(), sizeof(VHD));
 	}
+	__declspec(dllexport)   void  getCU(Disk* THIS, User* buffer)
+	{
+
+		int size = sizeof(User);
+
+		memcpy_s(buffer, sizeof(User), &THIS->getCU(), sizeof(User));
+	}
 
 	string str;
 	__declspec(dllexport) const char*  getDAT(Disk* THIS)
