@@ -109,6 +109,17 @@ namespace FMS_GUI
 
         }
 
+        private List<DirEntry> CreateDirEntryList()
+        {
+            List<DirEntry> dirEntryList = new List<DirEntry>();
+            for(int i=0;i<14;i++)
+            {
+                if(disk.getRootDir().MsbSector.)
+            }
+            return dirEntryList;
+
+        }
+
         private void FormatButton_Click(object sender, RoutedEventArgs e)
         {
             try
