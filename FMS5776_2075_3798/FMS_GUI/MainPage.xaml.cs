@@ -34,6 +34,8 @@ namespace FMS_GUI
     {
         UserControl info;
         public CreateOpenDiskPage codp { get; set; }
+        public CreateFilePage cfp { get; set; }
+
         public SignUserControl suc { get; set; }
         public UserControl Info {
             get { return info; }
@@ -177,6 +179,7 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                
             }
             catch (Exception ex)
             {

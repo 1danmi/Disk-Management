@@ -102,6 +102,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CreateFileUserControl.xaml.cs">
+      <DependentUpon>CreateFileUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateOpenDiskPage.xaml.cs">
       <DependentUpon>CreateOpenDiskPage.xaml</DependentUpon>
     </Compile>
@@ -119,6 +122,10 @@
       <DependentUpon>StudentWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="ChooseUserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateFileUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -90,7 +90,7 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-                <syncfusion:RibbonTab Background="Transparent" Caption="File" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23" >
+                <syncfusion:RibbonTab Background="Transparent" Caption="File" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23" IsChecked="True" >
                     <syncfusion:RibbonBar Focusable="False" Header="File" syncfusion:Ribbon.KeyTip="FN" syncfusion:Ribbon.ShowInMoreCommands="False" >
                         <syncfusion:RibbonButton x:Name="CreateFileButton"
                                             Label="Create File"
@@ -140,7 +140,7 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-                <syncfusion:RibbonTab Background="Transparent" Caption="User" IsChecked="True"  FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
+                <syncfusion:RibbonTab Background="Transparent" Caption="User" IsChecked="False"  FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
                     <syncfusion:RibbonBar Focusable="False" Header="Manage" 
                                       syncfusion:Ribbon.KeyTip="FN"
                                       syncfusion:Ribbon.ShowInMoreCommands="False" >
@@ -210,7 +210,7 @@
         </Grid>
 
         <Rectangle x:Name="shadowRectangle" Fill="#4C000000" Visibility="Collapsed" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
-        <WpfPageTransitions:PageTransition  x:Name="transitionFrame" TransitionType="Slide" Grid.ColumnSpan="3" Grid.RowSpan="3" />
+        <WpfPageTransitions:PageTransition  x:Name="transitionFrame" TransitionType="Slide" Grid.ColumnSpan="3" Grid.RowSpan="3" Loaded="transitionFrame_Loaded" />
         <ContentControl x:Name="codpContentControl" Content="{Binding codp}" Grid.Column="1" Grid.Row="1"/>
         <!--Fill="#4C000000"-->
     </Grid>
