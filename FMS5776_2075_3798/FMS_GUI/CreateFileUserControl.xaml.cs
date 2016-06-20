@@ -52,6 +52,7 @@ namespace FMS_GUI
                 {
                     throw new Exception("You didn't choose a correct record type");
                 }
+                x.dataGrid.ItemsSource = x.disk.getDirEntryInRootDir();
             }
             catch (Exception ex)
             {

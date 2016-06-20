@@ -170,7 +170,7 @@ namespace FMS_GUI
                 var inf = new DiskInfoUserControl(disk);
                 Info = inf;
 
-                MessageBox.Show("Disk unmounted.", "Unmount Disk", MessageBoxButton.OK, MessageBoxImage.Information);
+                //MessageBox.Show("Disk unmounted.", "Unmount Disk", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -192,6 +192,7 @@ namespace FMS_GUI
                 cfuc = new CreateFileUserControl();
                 codpContentControl.Content = cfuc;
                 this.codpContentControl.DataContext = this;
+               
             }
             catch (Exception ex)
             {
@@ -347,6 +348,14 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                disk.signOut();
+                disk.unmountDisk();
+                disk.Mounted = false;
+                this.dataGrid.ItemsSource = null;
+                var inf = new DiskInfoUserControl(disk);
+                Info = inf;
+
+                //MessageBox.Show("Disk unmounted.", "Unmount Disk", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {

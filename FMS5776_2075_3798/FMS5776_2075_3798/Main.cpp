@@ -814,8 +814,8 @@ int main()
 	try{
 		FCB fcb;
 		Disk d;
-		Level2Debug::welcomeDebugLevel2(d);
-		//0Level0Debug::welcomeDebugLevel0(d);
+		//Level2Debug::welcomeDebugLevel2(d);
+		//Level0Debug::welcomeDebugLevel0(d);
 
 		//cout << sizeof(FileHeader) << endl;
 
