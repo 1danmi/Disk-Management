@@ -15,12 +15,6 @@ namespace FMS_adapter
 
         DirEntry[] dirEntry = new DirEntry[14];
 
-        //DirEntry dirEntry[14];
-        //[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
-        //DirEntry dirEntry;
-        //public DirEntry DirEntry { get { return dirEntry; } }
-
-        //char unUsed[12];
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
         char unUsed;
         public char UnUsed { get { return unUsed; } }

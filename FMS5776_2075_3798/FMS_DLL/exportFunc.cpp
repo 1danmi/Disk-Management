@@ -346,7 +346,7 @@ extern "C"
 
 		memcpy_s(buffer, sizeof(RootDir), &THIS->getRootDir(), sizeof(RootDir));
 	}
-	__declspec(dllexport)   void  getDirEntry(SectorDir* THIS, DirEntry* buffer, int index)
+	__declspec(dllexport)   void  getDirEntry(Disk* THIS, DirEntry* buffer, int index)
 	{
 
 		int size = sizeof(DirEntry);

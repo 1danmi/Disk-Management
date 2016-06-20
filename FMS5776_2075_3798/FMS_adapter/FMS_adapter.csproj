@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="CppToCsharpAdapter.cs" />
     <Compile Include="Dir.cs" />
+    <Compile Include="DirEntry.cs" />
     <Compile Include="Disk.cs" />
     <Compile Include="FCB.cs" />
     <Compile Include="Program.cs" />

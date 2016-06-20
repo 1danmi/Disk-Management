@@ -26,7 +26,10 @@ namespace FMS_adapter
 
             try
             {
-                int structSize = Marshal.SizeOf(typeof(VHD));
+                int structSize = Marshal.SizeOf(typeof(DirEntry));
+                Console.WriteLine("Marshal.SizeOf(typeof(D) DirEntry= " + structSize);
+
+                structSize = Marshal.SizeOf(typeof(VHD));
                 Console.WriteLine("Marshal.SizeOf(typeof(VHD) == " + structSize);
 
                 Disk d = new Disk();

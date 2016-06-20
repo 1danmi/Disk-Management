@@ -9,55 +9,136 @@ namespace FMS_adapter
 {
     public class Disk
     {
-        //disk class from c++
-        bool vhdUpdate;
-        public bool VhdUpdate{ get { return vhdUpdate; } set { VhdUpdate = value; } }
-
-        //DAT dat;
-
-        bool datUpdate;
-        public bool DatUpdate { get { return datUpdate; } set { datUpdate = value; } }
-
-        User currUser;
-        public User CurrUser { get { return currUser; } set { CurrUser = value; } }
-
-        UsersSec users;
-        public UsersSec UsersSec { get { return users; } set { users = value; } }
-
-        bool usersUpdate;
-        public bool UsersUpdate { get { return usersUpdate; } set { usersUpdate = value; } }
-
-        bool rootDirUpdate;
-        public bool RootDirUpdate { get { return rootDirUpdate; } }
-
-        bool mounted;
-        public bool Mounted { get { return mounted; } set { mounted = value; } }
-
-        //fstream dskfl;
-
-        bool sign;
-        public bool Sign { get { return sign; } }
-
-        uint currDiskSectorNr;
-        public uint CurrDiskSectorNr { get { return currDiskSectorNr; } }
-
-        //string lastErrorMessage;
-
-        VHD vhd;
-        public VHD Vhd { get { return vhd; } }
-
-        RootDir rootDir;
-
+        public bool Mounted;
+        public string DiskName;
         IntPtr myDiskPtr;
 
-        //level 0
+
+        public string diskPointer
+        {
+            get
+            {
+                return Marshal.PtrToStringAuto(myDiskPtr);
+            }
+        }
+
+        public List<DirEntry> getDirEntryInRootDir()
+        {
+            try
+            {
+                List<DirEntry> list = new List<DirEntry>();
+                DirEntry dirTemp;
+                int structSize = Marshal.SizeOf(typeof(DirEntry)); //Marshal.SizeOf(typeof(Student)); 
+                IntPtr buffer = Marshal.AllocHGlobal(structSize);
+                // ... send buffer to dll
+                for (int i = 0; i < 28; i++)
+                {
+                    cppToCsharpAdapter.getDirEntry(this.myDiskPtr, buffer, i);
+                    dirTemp = new DirEntry();
+                    Marshal.StructureToPtr(dirTemp, buffer, true);
+                    cppToCsharpAdapter.getDirEntry(this.myDiskPtr, buffer, i);
+                    Marshal.PtrToStructure(buffer, dirTemp);
+                    if (dirTemp.EntryStatus=='1')            
+                        list.Add(dirTemp);
+                }
+                // free allocate
+                Marshal.FreeHGlobal(buffer);
+                return list;
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+
+        }
+
+        public VHD getVHD()
+        {
+            try
+            {
+
+                VHD v = new VHD();
+                int structSize = Marshal.SizeOf(v.GetType()); //Marshal.SizeOf(typeof(Student)); 
+                IntPtr buffer = Marshal.AllocHGlobal(structSize);
+                Marshal.StructureToPtr(v, buffer, true);
+
+                // ... send buffer to dll
+                cppToCsharpAdapter.getVHD(this.myDiskPtr, buffer);
+                Marshal.PtrToStructure(buffer, v);
+
+                // free allocate
+                Marshal.FreeHGlobal(buffer);
+
+                return v;
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public User getCU()
+        {
+            try
+            {
+
+                User u = new User();
+                int structSize = Marshal.SizeOf(u.GetType()); //Marshal.SizeOf(typeof(Student)); 
+                IntPtr buffer = Marshal.AllocHGlobal(structSize);
+                Marshal.StructureToPtr(u, buffer, true);
+
+                // ... send buffer to dll
+                cppToCsharpAdapter.getCU(this.myDiskPtr, buffer);
+                Marshal.PtrToStructure(buffer, u);
+
+                // free allocate
+                Marshal.FreeHGlobal(buffer);
+
+                return u;
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #region Level 0
         public Disk()
         {
             myDiskPtr = cppToCsharpAdapter.makeDiskObject();
         }
         ~Disk()
         {
-            if (myDiskPtr != null) cppToCsharpAdapter.deleteDiskObject(ref myDiskPtr);
+            if (myDiskPtr != null)
+                cppToCsharpAdapter.deleteDiskObject(ref myDiskPtr);
         }
 
         public void createDisk(string dn, string dow, string pwd)
@@ -215,6 +296,7 @@ namespace FMS_adapter
             }
         }
 
+        #endregion
 
 
 
@@ -332,101 +414,80 @@ namespace FMS_adapter
         }
 
         //level 4
-        public VHD getVHD()
-        {
-            try
-            {
-
-                VHD v = new VHD();
-                int structSize = Marshal.SizeOf(v.GetType()); //Marshal.SizeOf(typeof(Student)); 
-                IntPtr buffer = Marshal.AllocHGlobal(structSize);
-                Marshal.StructureToPtr(v, buffer, true);
-
-                // ... send buffer to dll
-                cppToCsharpAdapter.getVHD(this.myDiskPtr, buffer);
-                Marshal.PtrToStructure(buffer, v);
-
-                // free allocate
-                Marshal.FreeHGlobal(buffer);
-
-                return v;
-            }
-            catch (SEHException)
-            {
-                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
-                string message = Marshal.PtrToStringAnsi(cString);
-                throw new Exception(message);
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        public User getCU()
-        {
-            try
-            {
-
-                User u = new User();
-                int structSize = Marshal.SizeOf(u.GetType()); //Marshal.SizeOf(typeof(Student)); 
-                IntPtr buffer = Marshal.AllocHGlobal(structSize);
-                Marshal.StructureToPtr(u, buffer, true);
-
-                // ... send buffer to dll
-                cppToCsharpAdapter.getCU(this.myDiskPtr, buffer);
-                Marshal.PtrToStructure(buffer, u);
-
-                // free allocate
-                Marshal.FreeHGlobal(buffer);
-
-                return u;
-            }
-            catch (SEHException)
-            {
-                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
-                string message = Marshal.PtrToStringAnsi(cString);
-                throw new Exception(message);
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        public RootDir getRootDir()
-        {
-            try
-            {
+      
+        //public RootDir getRootDir()
+        //{
+        //    try
+        //    {
                 
                
-                DirEntry de = new DirEntry();
-                int i = Marshal.SizeOf(de.GetType());
-                SectorDir sd = new SectorDir();
-                int j = Marshal.SizeOf(sd.GetType());
-                RootDir rd = new RootDir();
+        //        DirEntry de = new DirEntry();
+        //        int i = Marshal.SizeOf(de.GetType());
+        //        SectorDir sd = new SectorDir();
+        //        int j = Marshal.SizeOf(sd.GetType());
+        //        RootDir rd = new RootDir();
                 
-                int structSize = Marshal.SizeOf(rd.GetType()); //Marshal.SizeOf(typeof(Student)); 
-                IntPtr buffer = Marshal.AllocHGlobal(structSize);
-                Marshal.StructureToPtr(rd, buffer, true);
+        //        int structSize = Marshal.SizeOf(rd.GetType()); //Marshal.SizeOf(typeof(Student)); 
+        //        IntPtr buffer = Marshal.AllocHGlobal(structSize);
+        //        Marshal.StructureToPtr(rd, buffer, true);
 
-                // ... send buffer to dll
-                cppToCsharpAdapter.getRootDir(this.myDiskPtr, buffer);
-                Marshal.PtrToStructure(buffer, rd);
+        //        // ... send buffer to dll
+        //        cppToCsharpAdapter.getRootDir(this.myDiskPtr, buffer);
+        //        Marshal.PtrToStructure(buffer, rd);
 
-                // free allocate
-                Marshal.FreeHGlobal(buffer);
+        //        // free allocate
+        //        Marshal.FreeHGlobal(buffer);
 
-                return rd;
-            }
-            catch (SEHException)
-            {
-                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
-                string message = Marshal.PtrToStringAnsi(cString);
-                throw new Exception(message);
-            }
-            catch
-            {
-                throw;
-            }
-        }
+        //        return rd;
+        //    }
+        //    catch (SEHException)
+        //    {
+        //        IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+        //        string message = Marshal.PtrToStringAnsi(cString);
+        //        throw new Exception(message);
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
+
+
+        //disk class from c++
+        //bool vhdUpdate;
+        //public bool VhdUpdate{ get { return vhdUpdate; } set { VhdUpdate = value; } }
+
+        ////DAT dat;
+
+        //bool datUpdate;
+        //public bool DatUpdate { get { return datUpdate; } set { datUpdate = value; } }
+
+        //User currUser;
+        //public User CurrUser { get { return currUser; } set { CurrUser = value; } }
+
+        //UsersSec users;
+        //public UsersSec UsersSec { get { return users; } set { users = value; } }
+
+        //bool usersUpdate;
+        //public bool UsersUpdate { get { return usersUpdate; } set { usersUpdate = value; } }
+
+        //bool rootDirUpdate;
+        //public bool RootDirUpdate { get { return rootDirUpdate; } }
+
+
+        //fstream dskfl;
+
+        //bool sign;
+        //public bool Sign { get { return sign; } }
+
+        //uint currDiskSectorNr;
+        //public uint CurrDiskSectorNr { get { return currDiskSectorNr; } }
+
+        //string lastErrorMessage;
+
+        //VHD vhd;
+        //public VHD Vhd { get { return vhd; } }
+
+        //RootDir rootDir;
     }
 }

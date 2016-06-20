@@ -1537,6 +1537,14 @@ FCB* Disk::openFile(string & fn, MODE io)
 	User Disk::getCU() { return this->currUser; }
 	RootDir Disk::getRootDir() { return this->rootDir; }
 	DAT Disk::getDAT() { return this->dat; }
+
+	DirEntry Disk::getDirEntry(int index)
+	{
+		if (index >= 0 && index < 14)
+			return this->rootDir.lsbSector.dirEntry[index];
+		else if(index >= 14 && index < 28)
+			return this->rootDir.msbSector.dirEntry[index-14];
+	}
 	
 #pragma endregion
 
