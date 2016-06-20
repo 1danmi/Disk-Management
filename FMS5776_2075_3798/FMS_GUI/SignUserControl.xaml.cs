@@ -22,9 +22,11 @@ namespace FMS_GUI
     public partial class SignUserControl : UserControl 
     {
         Disk disk { get; set; }
-        public SignUserControl()
+        
+        public SignUserControl(string diskName)
         {
             InitializeComponent();
+            this.diskNameLabel.Content = diskName;
         }
 
        

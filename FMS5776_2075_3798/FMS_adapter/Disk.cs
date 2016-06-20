@@ -11,18 +11,21 @@ namespace FMS_adapter
     {
         //disk class from c++
         bool vhdUpdate;
-        public bool VhdUpdate{ get { return vhdUpdate; } }
+        public bool VhdUpdate{ get { return vhdUpdate; } set { VhdUpdate = value; } }
 
         //DAT dat;
 
         bool datUpdate;
-        public bool DatUpdate { get { return datUpdate; } }
+        public bool DatUpdate { get { return datUpdate; } set { datUpdate = value; } }
 
         User currUser;
+        public User CurrUser { get { return currUser; } set { CurrUser = value; } }
+
         UsersSec users;
+        public UsersSec UsersSec { get { return users; } set { users = value; } }
 
         bool usersUpdate;
-        public bool UsersUpdate { get { return usersUpdate; } }
+        public bool UsersUpdate { get { return usersUpdate; } set { usersUpdate = value; } }
 
         bool rootDirUpdate;
         public bool RootDirUpdate { get { return rootDirUpdate; } }
@@ -347,6 +350,36 @@ namespace FMS_adapter
                 Marshal.FreeHGlobal(buffer);
 
                 return v;
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public User getCU()
+        {
+            try
+            {
+
+                User u = new User();
+                int structSize = Marshal.SizeOf(u.GetType()); //Marshal.SizeOf(typeof(Student)); 
+                IntPtr buffer = Marshal.AllocHGlobal(structSize);
+                Marshal.StructureToPtr(u, buffer, true);
+
+                // ... send buffer to dll
+                cppToCsharpAdapter.getCU(this.myDiskPtr, buffer);
+                Marshal.PtrToStructure(buffer, u);
+
+                // free allocate
+                Marshal.FreeHGlobal(buffer);
+
+                return u;
             }
             catch (SEHException)
             {

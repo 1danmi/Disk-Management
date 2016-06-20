@@ -259,5 +259,8 @@ namespace FMS_adapter
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void getVHD(IntPtr THIS, IntPtr buffer);
+
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void getCU(IntPtr THIS, IntPtr buffer);
     }
 }

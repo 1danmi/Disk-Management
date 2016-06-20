@@ -1534,6 +1534,7 @@ FCB* Disk::openFile(string & fn, MODE io)
 	void Disk::SetLastErrorMessage(string lastErrorMessage) { this->lastErrorMessage = lastErrorMessage; }
 
 	VHD Disk::getVHD() { return this->vhd; }
+	User Disk::getCU() { return this->currUser; }
 	DAT Disk::getDAT() { return this->dat; }
 	
 #pragma endregion
