@@ -339,6 +339,13 @@ extern "C"
 
 		memcpy_s(buffer, sizeof(User), &THIS->getCU(), sizeof(User));
 	}
+	__declspec(dllexport)   void  getCU(Disk* THIS, RootDir* buffer)
+	{
+
+		int size = sizeof(RootDir);
+
+		memcpy_s(buffer, sizeof(RootDir), &THIS->getRootDir(), sizeof(RootDir));
+	}
 
 	string str;
 	__declspec(dllexport) const char*  getDAT(Disk* THIS)
