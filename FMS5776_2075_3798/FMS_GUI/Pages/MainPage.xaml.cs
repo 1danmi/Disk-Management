@@ -60,6 +60,8 @@ namespace FMS_GUI
             
         }
 
+        #region Disk
+
         private void CreateDiskButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -165,61 +167,163 @@ namespace FMS_GUI
             }
         }
 
+        #endregion
+
+        #region File
+
         private void CreateFileButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void OpenFileButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void CloseFileButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
+        #endregion
+
+        #region Record
 
         private void AddRecordButoon_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void DeleteRecordButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void UpdateRecordButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
+        #endregion
+
+        #region User
 
         private void AddUserButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void RemoveUserButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void UserInfoButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void ChangePasswordButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void SignOutButton2_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-       
+        #endregion
+
     }
 }

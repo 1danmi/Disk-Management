@@ -102,39 +102,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CreateOpenDiskPage.xaml.cs">
+    <Compile Include="Pages\CreateOpenDiskPage.xaml.cs">
       <DependentUpon>CreateOpenDiskPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DiskInfoUserControl.xaml.cs">
+    <Compile Include="UserControls\DiskInfoUserControl.xaml.cs">
       <DependentUpon>DiskInfoUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DMS.cs" />
-    <Compile Include="SignUserControl.xaml.cs">
+    <Compile Include="UserControls\SignUserControl.xaml.cs">
       <DependentUpon>SignUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StudentPage.xaml.cs">
+    <Compile Include="Pages\StudentPage.xaml.cs">
       <DependentUpon>StudentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StudentWindow.xaml.cs">
+    <Compile Include="Windows\StudentWindow.xaml.cs">
       <DependentUpon>StudentWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="ChooseUserPage.xaml">
+    <Page Include="Pages\ChooseUserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CreateOpenDiskPage.xaml">
+    <Page Include="Pages\CreateOpenDiskPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DiskInfoUserControl.xaml">
+    <Page Include="UserControls\DiskInfoUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Pages\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -142,25 +142,25 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ChooseUserPage.xaml.cs">
+    <Compile Include="Pages\ChooseUserPage.xaml.cs">
       <DependentUpon>ChooseUserPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SignUserControl.xaml">
+    <Page Include="UserControls\SignUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StudentPage.xaml">
+    <Page Include="Pages\StudentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StudentWindow.xaml">
+    <Page Include="Windows\StudentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -277,9 +277,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Password.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Actions-system-log-out-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
