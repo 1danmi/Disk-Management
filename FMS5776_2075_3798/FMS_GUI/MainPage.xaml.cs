@@ -125,8 +125,8 @@ namespace FMS_GUI
                 {
                     case MessageBoxResult.OK:
                         disk.format();
-                        var inf = new DiskInfoUserControl(disk);
-                        Info = inf;
+                        Info = new DiskInfoUserControl(disk);
+                        
                         this.dataGrid.ItemsSource = disk.getDirEntryInRootDir();
                         break;
                     case MessageBoxResult.Cancel:
@@ -192,7 +192,7 @@ namespace FMS_GUI
                 cfuc = new CreateFileUserControl();
                 codpContentControl.Content = cfuc;
                 this.codpContentControl.DataContext = this;
-               
+                
             }
             catch (Exception ex)
             {
@@ -211,6 +211,37 @@ namespace FMS_GUI
                 //string fileName = ((DirEntry)this.dataGrid.SelectedItem).FileName;
                 FCB fcb = disk.openFile("file001" , MODE.WR);
                      
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void DeleteFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
+                DirEntry r = (DirEntry)this.dataGrid.SelectedItem;
+                MessageBoxResult delete = MessageBox.Show(
+                    "Are you sure that you want to delete " + r.FileName + "?\nThis action cannot be undone!",
+                    "Delete " + r.FileName, MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel, MessageBoxOptions.None);
+
+                switch (delete)
+                {
+                    case MessageBoxResult.OK:
+                        this.disk.delFile(r.FileName);
+                        this.dataGrid.ItemsSource = disk.getDirEntryInRootDir();
+                        Info = new DiskInfoUserControl(disk);
+                        break;
+                    case MessageBoxResult.Cancel:
+                        break;
+                    default:
+                        break;
+                }
+
             }
             catch (Exception ex)
             {
@@ -373,5 +404,7 @@ namespace FMS_GUI
                 this.codpContentControl.Content = null;
             }
         }
+
+        
     }
 }

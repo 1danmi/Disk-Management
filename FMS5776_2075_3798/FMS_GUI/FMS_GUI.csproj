@@ -300,7 +300,10 @@
     <Resource Include="Images\Password.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Actions-system-log-out-icon.png" />
+    <Resource Include="Images\Actions-system-log-out-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Delete File %28Custom%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

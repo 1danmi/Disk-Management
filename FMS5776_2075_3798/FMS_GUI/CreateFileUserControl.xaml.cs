@@ -43,9 +43,11 @@ namespace FMS_GUI
                 x.shadowRectangle.Visibility = Visibility.Collapsed;
                 string fileName = this.FileNameTextBox.Text;
                 int numberOfRecords = Convert.ToInt32(this.RecordsNumberTextBox.Text);
+                if (numberOfRecords > 45)
+                    throw new Exception("File can contain maximum 45 records");
                 if (recordType == recType.Student)
                 {
-                    x.disk.createFile(fileName, "F", 88, (uint)Math.Ceiling(((double)numberOfRecords / (1020 / 88))) * (1020 / 88),
+                    x.disk.createFile(fileName, "F", 88,Math.Min((uint)Math.Ceiling(((double)numberOfRecords / (1020 / 88))) * (1020 / 88),45),
                         (uint)Math.Ceiling(((double)numberOfRecords / (1020 / 88))) + 1 ,"s", slevel, 0, 10, 0);
                 }
                 else
@@ -53,6 +55,7 @@ namespace FMS_GUI
                     throw new Exception("You didn't choose a correct record type");
                 }
                 x.dataGrid.ItemsSource = x.disk.getDirEntryInRootDir();
+                x.InfoContentControl.Content = new DiskInfoUserControl(x.disk);
             }
             catch (Exception ex)
             {

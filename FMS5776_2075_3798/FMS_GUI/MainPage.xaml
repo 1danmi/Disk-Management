@@ -30,11 +30,11 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <syncfusion:Ribbon Name="MyRibbon" BackStageColor="#D24726" BackStageCornerImageVisibility="Collapsed" BackStageHeader="DiskName" EnableMoreCommands="False" Grid.Row="0" syncfusion:SkinStorage.EnableTouch="True" syncfusion:SkinStorage.VisualStyle="Office2013" Height="Auto" Margin="0,-17.333,0,17.334" >
+            <syncfusion:Ribbon Name="MyRibbon" BackStageColor="#D24726" BackStageCornerImageVisibility="Collapsed" BackStageHeader="DiskName" EnableMoreCommands="False" Grid.Row="0" syncfusion:SkinStorage.EnableTouch="True" syncfusion:SkinStorage.VisualStyle="Office2013" Height="Auto" Margin="0,-17.333,0,-7" >
                 <syncfusion:Ribbon.QuickAccessToolBar>
                     <syncfusion:QuickAccessToolBar syncfusion:WindowChrome.IsHitTestVisibleInChrome="True"/>
                 </syncfusion:Ribbon.QuickAccessToolBar>
-                <syncfusion:RibbonTab Background="Transparent" Caption="Disk" IsChecked="True" syncfusion:Ribbon.KeyTip="H" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
+                <syncfusion:RibbonTab Background="Transparent" Caption="Disk" syncfusion:Ribbon.KeyTip="H" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
                     <syncfusion:RibbonBar Focusable="False" Header="Disk" 
                                       syncfusion:Ribbon.KeyTip="FN"
                                       syncfusion:Ribbon.ShowInMoreCommands="False" >
@@ -83,7 +83,7 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-                <syncfusion:RibbonTab Background="Transparent" Caption="File" FocusVisualStyle="{x:Null}" IsChecked="True" Focusable="False" MinWidth="23">
+                <syncfusion:RibbonTab Background="Transparent" IsChecked="True" Caption="File" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
                     <syncfusion:RibbonBar Focusable="False" Header="File" syncfusion:Ribbon.KeyTip="FN" syncfusion:Ribbon.ShowInMoreCommands="False" >
                         <syncfusion:RibbonButton x:Name="CreateFileButton"
                                             Label="Create File"
@@ -99,6 +99,12 @@
                                             syncfusion:Ribbon.KeyTip="CP"
                                               syncfusion:Ribbon.ShowInMoreCommands="False" Click="OpenFileButton_Click">
                         </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton  x:Name="DeleteFileButton"
+                                            Label="Delete File"
+                                            LargeIcon="Images/Delete File (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="DeleteFileButton_Click"/>
                         <syncfusion:RibbonButton  x:Name="CloseFileButton"
                                             Label="Close File"
                                             LargeIcon="Images/Close File (Custom).png"
@@ -133,7 +139,7 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-                <syncfusion:RibbonTab Background="Transparent" Caption="User" IsChecked="True"  FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
+                <syncfusion:RibbonTab Background="Transparent" Caption="User"   FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
                     <syncfusion:RibbonBar Focusable="False" Header="Manage" 
                                       syncfusion:Ribbon.KeyTip="FN"
                                       syncfusion:Ribbon.ShowInMoreCommands="False" >
@@ -180,7 +186,7 @@
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
             </syncfusion:Ribbon>
-            <Grid Grid.Row="1"  Margin="0,-17,0,0" >
+            <Grid Grid.Row="1"  Margin="0,7,0,0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="10"/>
@@ -198,7 +204,7 @@
                 
             </syncfusion:SfDataGrid>-->
             </Grid>
-            <WpfPageTransitions:PageTransition x:Name="removeUserTranstion"  Grid.Row="1" HorizontalAlignment="Left" TransitionType="Fade"  Height="107.5" Margin="50.5,-17.333,0,0"  VerticalAlignment="Top" Width="322.5"/>
+            <WpfPageTransitions:PageTransition x:Name="removeUserTranstion"  Grid.Row="1" HorizontalAlignment="Left" TransitionType="Fade"  Height="107.5" Margin="50.5,7,0,0"  VerticalAlignment="Top" Width="322.5"/>
 
 
 

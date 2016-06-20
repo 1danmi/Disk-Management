@@ -27,11 +27,14 @@ namespace FMS_GUI
         {
             InitializeComponent();
             MainFrame.Navigate(new MainPage());
-           
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            var x = this.MainFrame.Content as MainPage;
+            if (x.disk.Mounted)
+                x.disk.unmountDisk();
+                    
             this.Close();
         }
 
