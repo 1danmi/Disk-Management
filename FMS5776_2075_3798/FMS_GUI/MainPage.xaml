@@ -83,7 +83,7 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-                <syncfusion:RibbonTab Background="Transparent" Caption="File" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
+                <syncfusion:RibbonTab Background="Transparent" Caption="File" FocusVisualStyle="{x:Null}" IsChecked="True" Focusable="False" MinWidth="23">
                     <syncfusion:RibbonBar Focusable="False" Header="File" syncfusion:Ribbon.KeyTip="FN" syncfusion:Ribbon.ShowInMoreCommands="False" >
                         <syncfusion:RibbonButton x:Name="CreateFileButton"
                                             Label="Create File"
@@ -133,7 +133,7 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-                <syncfusion:RibbonTab Background="Transparent" Caption="User" IsChecked="True"  FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
+                <syncfusion:RibbonTab Background="Transparent" Caption="User"   FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
                     <syncfusion:RibbonBar Focusable="False" Header="Manage" 
                                       syncfusion:Ribbon.KeyTip="FN"
                                       syncfusion:Ribbon.ShowInMoreCommands="False" >
