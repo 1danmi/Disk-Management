@@ -35,6 +35,7 @@ public:
 	void updateCancel();
 	void deleteRecord(int rec);
 	void updateRecord(char*);
+	bool getLoaded();
 
 	string & GetLastErrorMessage();
 	void SetLastErrorMessage(string lastErrorMessage);

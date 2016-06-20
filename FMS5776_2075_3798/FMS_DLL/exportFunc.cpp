@@ -353,6 +353,13 @@ extern "C"
 
 		memcpy_s(buffer, sizeof(DirEntry), &THIS->getDirEntry(index), sizeof(DirEntry));
 	}
+	/*__declspec(dllexport)   void  getLoaded(FCB* THIS, int* buffer)
+	{
+
+		int size = sizeof(bool);
+
+		memcpy_s(buffer, sizeof(bool), &THIS->getLoaded(), sizeof(bool));
+	}*/
 
 	string str;
 	__declspec(dllexport) const char*  getDAT(Disk* THIS)

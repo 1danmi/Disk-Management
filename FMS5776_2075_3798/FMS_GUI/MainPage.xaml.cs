@@ -205,19 +205,11 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
-                if (fcb.Loaded)
-                    throw new Exception("You must close the file first");
-                string fileName = ((DirEntry)this.dataGrid.SelectedItem).FileName;
-                fcb = disk.openFile(fileName = "", MODE.WR);
-
-        //if (fcb.loaded)
-        //            throw "You must close the file first!";
-        //        cout << "Enter file name:\n";
-        //        cin >> fileName;
-        //        cout << "Opening file...\n";
-        //        fcb = (*d.openFile(fileName, MODE::WR));
-        //        cout << "File opened!\n";
-        //        break;        
+                //if (fcb.Loaded)
+                //    throw new Exception("You must close the file first");
+                //string fileName = ((DirEntry)this.dataGrid.SelectedItem).FileName;
+                FCB fcb = disk.openFile("file001" , MODE.WR);
+                     
             }
             catch (Exception ex)
             {
@@ -231,6 +223,10 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                if (!fcb.Loaded)
+                    throw new Exception("No file is loaded!");
+                fcb.closeFile();
+                MessageBox.Show("File closed.", "Closing file", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
