@@ -10,6 +10,8 @@ public:
 	SectorDir(void) {};
 	SectorDir(int);
 	~SectorDir() {};
+
+	DirEntry getDirEntry(int);
 };
 
 struct RootDir
@@ -20,4 +22,5 @@ public:
 	RootDir();
 	RootDir(unsigned int, unsigned int);
 	~RootDir(){};
+	
 };

@@ -166,6 +166,8 @@ namespace FMS_GUI
 
                 var inf = new DiskInfoUserControl(disk);
                 Info = inf;
+
+                MessageBox.Show("Disk unmounted.", "Unmount Disk", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
