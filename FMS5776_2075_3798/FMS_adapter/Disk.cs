@@ -392,5 +392,35 @@ namespace FMS_adapter
                 throw;
             }
         }
+        public RootDir getRootDir()
+        {
+            try
+            {
+
+                RootDir rd = new RootDir();
+                int structSize = Marshal.SizeOf(rd.GetType()); //Marshal.SizeOf(typeof(Student)); 
+                IntPtr buffer = Marshal.AllocHGlobal(structSize);
+                Marshal.StructureToPtr(rd, buffer, true);
+
+                // ... send buffer to dll
+                cppToCsharpAdapter.getRootDir(this.myDiskPtr, buffer);
+                Marshal.PtrToStructure(buffer, rd);
+
+                // free allocate
+                Marshal.FreeHGlobal(buffer);
+
+                return rd;
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
