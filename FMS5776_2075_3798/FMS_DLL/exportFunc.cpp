@@ -339,7 +339,7 @@ extern "C"
 
 		memcpy_s(buffer, sizeof(User), &THIS->getCU(), sizeof(User));
 	}
-	__declspec(dllexport)   void  getCU(Disk* THIS, RootDir* buffer)
+	__declspec(dllexport)   void  getRootDir(Disk* THIS, RootDir* buffer)
 	{
 
 		int size = sizeof(RootDir);
