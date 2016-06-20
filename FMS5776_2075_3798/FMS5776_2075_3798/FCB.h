@@ -20,7 +20,7 @@ public:
 	unsigned int numOfRecords;
 	string lastErrorMessage;
 	int maxRecNum;
-	int DAT[36];
+	int DAT[45];
 	bool loaded;
 	// recInfo _recInfo;
 	FCB();

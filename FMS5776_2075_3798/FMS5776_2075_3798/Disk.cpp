@@ -1148,8 +1148,8 @@ void Disk::createFile(string & fileName, string & recordFormat, unsigned int rec
 			throw "You have to sign-in in order to create a new file!";
 		if (sLevel > currUser.sLevel)
 			throw "You can't create new file with higher permission than yours!";
-		if (recNum == 0 || recNum > 36)
-			throw "Record number must be between 1-36";
+		if (recNum == 0 || recNum > 45)
+			throw "Record number must be between 1-45";
 		int path =-1;
 		for (int i = 0; i < 14; i++)
 		{
@@ -1494,9 +1494,9 @@ FCB* Disk::openFile(string & fn, MODE io)
 		fcb->maxRecNum = (*buffer).fileDesc.getEofRecNr();
 		fcb->recInfo = buffer->recInfo;
 		fcb->numOfRecords = fcb->recInfo.size;
-		for (int i = 0; i <36; i++)
+		for (int i = 0; i <45; i++)
 			fcb->DAT[i] = 0;
-		/*for(int i= fcb->recInfo.size;i<36;i++)
+		/*for(int i= fcb->recInfo.size;i<45;i++)
 			fcb->DAT[i] = 3;*/
 		for (int i = 0; i < fcb->recInfo.size; i++)
 			fcb->DAT[fcb->recInfo.records[i].recNr] = 1;

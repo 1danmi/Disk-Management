@@ -6,30 +6,27 @@ class RecEntry
 {
 public:
 	int recNr;
-	int size;
 	char key[12];
 	RecEntry()
 	{
 		recNr = 0;
-		size = 0;
 		strcpy(key, "");
 	}
 	RecEntry(int recNum, char* _key, int size)
 	{
 		recNr = recNum;
-		this->size = size;
 		strncpy_s(this->key, size, _key, size - 1);
 	}
 	friend ostream& operator<<(ostream& out, RecEntry& rec)
 	{
-		out << rec.recNr << "\t" << rec.key << "\t" << rec.size << endl;
+		out << rec.recNr << "\t" << rec.key << "\t" << endl;
 		return out;
 	}
 };
 class RecInfo
 {
 public:
-	RecEntry records[36];
+	RecEntry records[45];
 	int size;
 	RecInfo(){}
 	int findRecordNr(string& _key)

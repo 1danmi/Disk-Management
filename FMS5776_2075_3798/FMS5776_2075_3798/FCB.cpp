@@ -126,7 +126,7 @@ void FCB::addRecord(char * record)
 			throw "No file is open!";
 		if (this->mode == MODE::R || this->mode == MODE::E)
 			throw "the file is not open for writing!";
-		if (numOfRecords == 36)
+		if (numOfRecords == 45)
 			throw "File is full!";
 		if (this->numOfRecords == this->maxRecNum)
 		{
@@ -136,7 +136,7 @@ void FCB::addRecord(char * record)
 			this->maxRecNum = maxRecNum + 2*(1020 / this->fileDesc.getRecSize());
 		}
 		int recNr = -1;
-		for (int i = 0; i < 36 && i < maxRecNum; i++)
+		for (int i = 0; i < 45 && i < maxRecNum; i++)
 			if (!DAT[i])
 			{
 				DAT[i] = 1;

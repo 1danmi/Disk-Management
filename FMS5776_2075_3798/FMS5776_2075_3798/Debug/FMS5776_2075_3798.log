@@ -3,7 +3,7 @@
   Student.cpp
   Sector.cpp
   Main.cpp
-d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(524): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+d:\mini-project in file management systems\fms5776_2075_3798\fms5776_2075_3798\main.cpp(526): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
   FileHeader.cpp
   FCB.cpp
   Disk.cpp

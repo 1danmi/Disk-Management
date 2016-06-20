@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Disk.h"
 #include "Student.h"
+#include <cmath>
+#include <math.h>
 
 using namespace std;
 
@@ -521,7 +523,7 @@ public:
 			switch (type)
 			{
 			case(1):
-				d.createFile(fileName, string("F"), 88, ceil(((double)recNum / (1020 / 88)))*(1020/88), ceil(((double)recNum / (1020 / 88))) + 1, string("s"), (SLEVEL)sLevel, 0, 10, 0);
+				d.createFile(fileName, string("F"), 88,ceil(((double)recNum / (1020 / 88)))*(1020/88), ceil(((double)recNum / (1020 / 88))) + 1, string("s"), (SLEVEL)sLevel, 0, 10, 0);
 				break;
 			default:
 				throw "You didn't choose a correct record type!";
@@ -762,9 +764,9 @@ public:
 	static void welcomeDebugLevel3(Disk& d, FCB& fcb)
 	{
 		int a;
-		d.mountDisk(string("DiskProject.fms"));
-		d.signIn(string("stesh"), string("admin"));
-		fcb = (*d.openFile(string("TestFile"), MODE::WR));
+		d.mountDisk(string("TestDisk.fms"));
+		d.signIn(string("Daniel"), string("1234"));
+		//fcb = (*d.openFile(string("TestFile"), MODE::WR));
 		cout << "Welcome to Level 3 Debugging Mode!\nWhat would you like to do?\n";
 		cout << "1. Set Disk (level 0)\n";
 		cout << "2. Manage Files (level 2)\n";
@@ -814,10 +816,10 @@ int main()
 	try{
 		FCB fcb;
 		Disk d;
-		//Level2Debug::welcomeDebugLevel2(d);
+		Level3Debug::welcomeDebugLevel3(d,fcb);
 		//Level0Debug::welcomeDebugLevel0(d);
 
-		//cout << sizeof(FileHeader) << endl;
+		
 
 	}
 	catch (char* str){
