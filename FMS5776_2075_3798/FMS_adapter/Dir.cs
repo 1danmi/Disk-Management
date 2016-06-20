@@ -13,10 +13,12 @@ namespace FMS_adapter
         int sectorNr;
         public int SectorNr { get { return sectorNr; } }
 
+        DirEntry[] dirEntry = new DirEntry[14];
+
         //DirEntry dirEntry[14];
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
-        DirEntry dirEntry;
-        public DirEntry DirEntry { get { return dirEntry; } }
+        //[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
+        //DirEntry dirEntry;
+        //public DirEntry DirEntry { get { return dirEntry; } }
 
         //char unUsed[12];
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
@@ -56,9 +58,7 @@ namespace FMS_adapter
             }
         }
 
-
-
-    }
+     }
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public class RootDir
     {
