@@ -333,5 +333,12 @@ void FCB::updateRecord(char * record)
 
 bool FCB::getLoaded() { return this->loaded; }
 
+RecEntry FCB::getRecEntry(int index)
+{
+	return this->recInfo.records[index];
+}
+
+unsigned int FCB::getRecInfoSize() { return this->recInfo.size; }
+
 string& FCB::GetLastErrorMessage() { return this->lastErrorMessage; }
 void FCB::SetLastErrorMessage(string lastErrorMessage) { this->lastErrorMessage = lastErrorMessage; }

@@ -361,6 +361,21 @@ extern "C"
 		memcpy_s(buffer, sizeof(bool), &THIS->getLoaded(), sizeof(bool));
 	}*/
 
+	__declspec(dllexport)   void getRecEntry(FCB* THIS, RecEntry* buffer, int index)
+	{
+
+		int size = sizeof(RecEntry);
+
+		memcpy_s(buffer, sizeof(RecEntry), &THIS->getRecEntry(index), sizeof(RecEntry));
+	}
+	__declspec(dllexport)   void getRecInfoSize(FCB* THIS, unsigned int* buffer)
+	{
+
+		int size = THIS->getRecInfoSize();
+		memcpy_s(buffer, sizeof(unsigned int), &size , sizeof(unsigned int));
+		//strncpy_s(buffer,si)
+	}
+
 	string str;
 	__declspec(dllexport) const char*  getDAT(Disk* THIS)
 	{

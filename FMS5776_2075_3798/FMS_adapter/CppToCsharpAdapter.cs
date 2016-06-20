@@ -65,14 +65,10 @@ namespace FMS_adapter
 
     
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public class RecInfo
+    public class RecEntry
     {
         int recNr;
         public int RecNr { get { return recNr; } }
-
-        int size;
-        public int Size { get { return size; } }
-
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
         string key;
@@ -80,21 +76,21 @@ namespace FMS_adapter
         
     }
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public class FileHeader
-    {
-        uint sectorNr;
+    //[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    //public class FileHeader
+    //{
+    //    uint sectorNr;
 
-        DirEntry fileDesc;
-        public DirEntry FileDesc { get { return fileDesc; } }
+    //    DirEntry fileDesc;
+    //    public DirEntry FileDesc { get { return fileDesc; } }
 
-        RecInfo recInfo;
-        public RecInfo RecInfo { get { return recInfo; } }
+    //    RecInfo recInfo;
+    //    public RecInfo RecInfo { get { return recInfo; } }
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
-        string emptyArea;
-        public string EmptyArea { get { return emptyArea; } }
-    }
+    //    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+    //    string emptyArea;
+    //    public string EmptyArea { get { return emptyArea; } }
+    //}
 
     class cppToCsharpAdapter
     {
@@ -221,6 +217,12 @@ namespace FMS_adapter
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void getDirEntry(IntPtr THIS, IntPtr buffer, int index);
+
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void getRecEntry(IntPtr THIS, IntPtr buffer, int index);
+
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void getRecInfoSize(IntPtr THIS, uint buffer);
 
 
     }

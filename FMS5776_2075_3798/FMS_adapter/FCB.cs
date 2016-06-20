@@ -58,7 +58,7 @@ namespace FMS_adapter
         //public RecInfo RecInfo { get { return recInfo; } }
 
         private IntPtr myFCBpointer;
-
+       
         public FCB(IntPtr myFCBpointer)
         {
             this.myFCBpointer = myFCBpointer;
@@ -211,6 +211,86 @@ namespace FMS_adapter
             {
                 throw;
             }
+        }
+
+        public uint getRecInfoSize()
+        {
+            try
+            {
+                uint buffer = 0;
+                cppToCsharpAdapter.getRecInfoSize(myFCBpointer, buffer);
+                return buffer;
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastFcbErrorMessage(this.myFCBpointer);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public RecEntry getRecEntry(int index)
+        {
+            try
+            {
+                RecEntry re = new RecEntry();
+                int structSize = Marshal.SizeOf(re.GetType()); //Marshal.SizeOf(typeof(Student)); 
+                IntPtr buffer = Marshal.AllocHGlobal(structSize);
+                Marshal.StructureToPtr(re, buffer, true);
+
+                // ... send buffer to dll
+                cppToCsharpAdapter.getRecEntry(this.myFCBpointer, buffer, index);
+                Marshal.PtrToStructure(buffer, re);
+
+                // free allocate
+                Marshal.FreeHGlobal(buffer);
+
+                return re;
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myFCBpointer);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public List<RecEntry> getRecEntryList()
+        {
+            try
+            {
+                List<RecEntry> list = new List<RecEntry>();
+                RecEntry recTemp;
+                int structSize = Marshal.SizeOf(typeof(RecEntry)); //Marshal.SizeOf(typeof(Student)); 
+                IntPtr buffer = Marshal.AllocHGlobal(structSize);
+                // ... send buffer to dll
+                int size = (int)getRecInfoSize();
+                for (int i = 0; i < size; i++)
+                {
+                    cppToCsharpAdapter.getRecEntry(this.myFCBpointer, buffer, i);
+                    recTemp = new RecEntry();
+                    Marshal.StructureToPtr(recTemp, buffer, true);
+                    cppToCsharpAdapter.getDirEntry(this.myFCBpointer, buffer, i);
+                    Marshal.PtrToStructure(buffer, recTemp);
+                }
+                // free allocate
+                Marshal.FreeHGlobal(buffer);
+                return list;
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myFCBpointer);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+
         }
     }
 }
