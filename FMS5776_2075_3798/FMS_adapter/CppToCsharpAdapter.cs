@@ -265,5 +265,9 @@ namespace FMS_adapter
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void getRootDir(IntPtr THIS, IntPtr buffer);
+
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void getDirEntry(IntPtr THIS, IntPtr buffer, int index);
+
     }
 }

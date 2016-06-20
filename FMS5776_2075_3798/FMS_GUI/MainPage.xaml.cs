@@ -34,7 +34,7 @@ namespace FMS_GUI
     {
         UserControl info;
         public CreateOpenDiskPage codp { get; set; }
-        //public CreateFilePage cfp { get; set; }
+        public CreateFileUserControl cfuc { get; set; }
 
         public NewUserUserControl nuuc { get; set; }
         public SignUserControl suc { get; set; }
@@ -96,7 +96,6 @@ namespace FMS_GUI
                     disk.Mounted = true;
                     DiskName = disk.getVHD().DiskName;
                     this.MyRibbon.BackStageHeader = DiskName;
-                    this.dataGrid.ItemsSource = CreateDirEntryList();
                     suc = new SignUserControl(DiskName);
                     transitionFrame.ShowPage(suc);
                 }
@@ -178,6 +177,8 @@ namespace FMS_GUI
 
                 var inf = new DiskInfoUserControl(disk);
                 Info = inf;
+
+                MessageBox.Show("Disk unmounted.", "Unmount Disk", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -195,7 +196,10 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
-                
+                this.shadowRectangle.Visibility = Visibility.Visible;
+                cfuc = new CreateFileUserControl();
+                codpContentControl.Content = cfuc;
+                this.codpContentControl.DataContext = this;
             }
             catch (Exception ex)
             {

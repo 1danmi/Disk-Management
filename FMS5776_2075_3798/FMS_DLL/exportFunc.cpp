@@ -346,6 +346,13 @@ extern "C"
 
 		memcpy_s(buffer, sizeof(RootDir), &THIS->getRootDir(), sizeof(RootDir));
 	}
+	__declspec(dllexport)   void  getDirEntry(SectorDir* THIS, DirEntry* buffer, int index)
+	{
+
+		int size = sizeof(DirEntry);
+
+		memcpy_s(buffer, sizeof(DirEntry), &THIS->getDirEntry(index), sizeof(DirEntry));
+	}
 
 	string str;
 	__declspec(dllexport) const char*  getDAT(Disk* THIS)

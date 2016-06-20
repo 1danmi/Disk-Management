@@ -23,6 +23,41 @@ namespace FMS_adapter
         char unUsed;
         public char UnUsed { get { return unUsed; } }
 
+        IntPtr mySectorDirPtr;
+
+        public DirEntry getDirEntry(int index)
+        {
+            try
+            {
+
+                DirEntry de = new DirEntry();
+                int structSize = Marshal.SizeOf(de.GetType()); //Marshal.SizeOf(typeof(Student)); 
+                IntPtr buffer = Marshal.AllocHGlobal(structSize);
+                Marshal.StructureToPtr(de, buffer, true);
+
+                // ... send buffer to dll
+                cppToCsharpAdapter.getDirEntry(this.mySectorDirPtr, buffer, index);
+                Marshal.PtrToStructure(buffer, de);
+
+                // free allocate
+                Marshal.FreeHGlobal(buffer);
+
+                return de;
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.mySectorDirPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+
     }
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public class RootDir

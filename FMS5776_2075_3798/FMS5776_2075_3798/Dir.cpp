@@ -42,3 +42,8 @@ SectorDir::SectorDir(int num)
 		this->dirEntry[i] = DirEntry();
 	}
 }
+
+DirEntry SectorDir::getDirEntry(int i)
+{
+	return this->dirEntry[i];
+}
