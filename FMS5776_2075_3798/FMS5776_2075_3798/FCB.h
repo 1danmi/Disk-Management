@@ -39,8 +39,9 @@ public:
 
 	RecEntry getRecEntry(int);
 	unsigned int getRecInfoSize();
-
+	DirEntry * getfileDesc() { return &fileDesc; }
 	string & GetLastErrorMessage();
 	void SetLastErrorMessage(string lastErrorMessage);
+	int getNumOfRecords();
 };
 

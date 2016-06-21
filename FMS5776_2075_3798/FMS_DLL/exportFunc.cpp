@@ -232,7 +232,25 @@ extern "C"
 			throw ex;
 		}
 	}
+	__declspec(dllexport) void  getfileDesc(FCB* THIS, DirEntry * buffer)
+	{
+		try
+		{
+			if (THIS->getfileDesc() == NULL)
+			{
+				THIS->SetLastErrorMessage("File doesn't exist");
+				throw;
+			}
 
+			memcpy_s(buffer, sizeof(DirEntry), THIS->getfileDesc(), sizeof(DirEntry));
+
+		}
+		catch (exception ex)
+		{
+			THIS->SetLastErrorMessage(ex.what());
+			throw ex;
+		}
+	}
 	//Level 4
 	__declspec(dllexport) Student*  makeStudentObject()
 	{
@@ -368,11 +386,21 @@ extern "C"
 
 		memcpy_s(buffer, sizeof(RecEntry), &THIS->getRecEntry(index), sizeof(RecEntry));
 	}
-	__declspec(dllexport)   void getRecInfoSize(FCB* THIS, unsigned int* buffer)
+	__declspec(dllexport)   unsigned int getRecInfoSize(FCB* THIS)
 	{
 
-		int size = THIS->getRecInfoSize();
-		memcpy_s(buffer, sizeof(unsigned int), &size , sizeof(unsigned int));
+		unsigned int size = THIS->getRecInfoSize();
+		return size;
+		/*memcpy_s(buffer, sizeof(unsigned int), &size , sizeof(unsigned int));*/
+		//strncpy_s(buffer,si)
+	}
+	
+	__declspec(dllexport)   unsigned int getNumOfRecords(FCB* THIS)
+	{
+
+		unsigned int size = THIS->getNumOfRecords();
+		return size;
+		/*memcpy_s(buffer, sizeof(unsigned int), &size , sizeof(unsigned int));*/
 		//strncpy_s(buffer,si)
 	}
 

@@ -14,16 +14,16 @@ User::User(string & name, int sLevel, string & pwd)
 	strncpy_s(this->password, 12, pwd.c_str(), 11);
 	switch (sLevel)
 	{
-	case 0:
+	case 4:
 		this->sLevel = SLEVEL::Owner;
 		break;
-	case 1:
+	case 3:
 		this->sLevel = SLEVEL::Super_User;
 		break;
 	case 2:
 		this->sLevel = SLEVEL::Administrator;
 		break;
-	case 3:
+	case 1:
 		this->sLevel = SLEVEL::user;
 		break;
 	default:

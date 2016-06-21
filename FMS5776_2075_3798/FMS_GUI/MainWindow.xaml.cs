@@ -59,7 +59,8 @@ namespace FMS_GUI
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+               
+                //MessageBox.Show(ex.Message);
             }
         }
 

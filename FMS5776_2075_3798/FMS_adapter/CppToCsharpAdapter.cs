@@ -76,22 +76,8 @@ namespace FMS_adapter
         
     }
 
-    //[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    //public class FileHeader
-    //{
-    //    uint sectorNr;
-
-    //    DirEntry fileDesc;
-    //    public DirEntry FileDesc { get { return fileDesc; } }
-
-    //    RecInfo recInfo;
-    //    public RecInfo RecInfo { get { return recInfo; } }
-
-    //    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
-    //    string emptyArea;
-    //    public string EmptyArea { get { return emptyArea; } }
-    //}
-
+    
+   
     class cppToCsharpAdapter
     {
         const string dllPath = "FMS_DLL.dll";
@@ -99,6 +85,8 @@ namespace FMS_adapter
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern int sum(int a, int b);
 
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void getfileDesc(IntPtr THIS, IntPtr Dir);
 
         // init disk
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
@@ -222,8 +210,28 @@ namespace FMS_adapter
         public static extern void getRecEntry(IntPtr THIS, IntPtr buffer, int index);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void getRecInfoSize(IntPtr THIS, uint buffer);
+        public static extern uint getRecInfoSize(IntPtr THIS);
+        
 
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern uint getNumOfRecords(IntPtr THIS);
+
+
+        //[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+        //public class FileHeader
+        //{
+        //    uint sectorNr;
+
+        //    DirEntry fileDesc;
+        //    public DirEntry FileDesc { get { return fileDesc; } }
+
+        //    RecInfo recInfo;
+        //    public RecInfo RecInfo { get { return recInfo; } }
+
+        //    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+        //    string emptyArea;
+        //    public string EmptyArea { get { return emptyArea; } }
+        //}
 
     }
 }

@@ -33,6 +33,7 @@ namespace FMS_GUI
     public partial class MainPage : Page
     {
         UserControl info;
+        UserControl fileInfo;
         public CreateOpenDiskPage codp { get; set; }
         public CreateFileUserControl cfuc { get; set; }
 
@@ -44,12 +45,23 @@ namespace FMS_GUI
             {
                 info = value;
                 if (info is DiskInfoUserControl)
-                {
                     this.InfoContentControl.Content = info;
-                }
+                else if(info is FileInfoUserControl)
+                    this.InfoContentControl.Content = info;
             }
         }
-       
+        //public UserControl FileInfo
+        //{
+        //    get { return fileInfo; }
+        //    set
+        //    {
+        //        fileInfo = value;
+        //        if (fileInfo is new)
+        //        {
+        //            this.InfoContentControl.Content = info;
+        //        }
+        //    }
+        //}
 
         public Disk disk { get; set; }
         public FCB fcb { get; set; }
@@ -150,6 +162,9 @@ namespace FMS_GUI
                 disk.signOut();
                 suc = new SignUserControl(DiskName);
                 transitionFrame.ShowPage(suc);
+                if (fcb != null && fcb.Loaded)
+                    CloseFileButton_Click(new object(), new RoutedEventArgs());
+                
             }
             catch (Exception ex)
             {
@@ -188,6 +203,9 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                if (fcb != null && fcb.Loaded)
+                    throw new Exception("File already open!");
+
                 this.shadowRectangle.Visibility = Visibility.Visible;
                 cfuc = new CreateFileUserControl();
                 codpContentControl.Content = cfuc;
@@ -206,11 +224,18 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
-                //if (fcb.Loaded)
-                //    throw new Exception("You must close the file first");
-                //string fileName = ((DirEntry)this.dataGrid.SelectedItem).FileName;
-                FCB fcb = disk.openFile("file001" , MODE.WR);
-                     
+                if (fcb != null && fcb.Loaded)
+                    throw new Exception("File already open!");
+                DirEntry r = (DirEntry)this.dataGrid.SelectedItem;
+                if (r == null)
+                    throw new Exception("You must select a file!");
+                fcb = disk.openFile(r.FileName , MODE.WR);
+                fcb.Loaded = true;
+                this.dataGrid.Visibility = Visibility.Hidden;
+                this.recordsDataGrid.Visibility = Visibility.Visible;
+                this.recordsDataGrid.ItemsSource = fcb.getRecEntryList();
+                Info = new FileInfoUserControl(fcb);
+                //this.InfoContentControl = Info;
             }
             catch (Exception ex)
             {
@@ -224,6 +249,8 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                if (fcb != null && fcb.Loaded)
+                    throw new Exception("You must close the file first!");
                 DirEntry r = (DirEntry)this.dataGrid.SelectedItem;
                 MessageBoxResult delete = MessageBox.Show(
                     "Are you sure that you want to delete " + r.FileName + "?\nThis action cannot be undone!",
@@ -255,10 +282,18 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
-                //if (!fcb.Loaded)
-                //    throw new Exception("No file is loaded!");
+                if (fcb == null || !fcb.Loaded)
+                    throw new Exception("No file is open!");
                 fcb.closeFile();
-                MessageBox.Show("File closed.", "Closing file", MessageBoxButton.OK, MessageBoxImage.Information);
+                fcb.Loaded = false;
+                if (recordsDataGrid.Visibility == Visibility.Visible)
+                {
+                    recordsDataGrid.Visibility = Visibility.Hidden;
+                    dataGrid.Visibility = Visibility.Visible;
+                }
+                this.Info = new DiskInfoUserControl(disk);
+                
+                //MessageBox.Show("File closed.", "Closing file", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -276,6 +311,9 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                if (fcb == null || !fcb.Loaded)
+                    throw new Exception("No file is open!");
+
             }
             catch (Exception ex)
             {
@@ -289,6 +327,8 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                if (fcb == null || !fcb.Loaded)
+                    throw new Exception("No file is open!");
             }
             catch (Exception ex)
             {
@@ -302,6 +342,8 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                if (fcb == null || !fcb.Loaded)
+                    throw new Exception("No file is open!");
             }
             catch (Exception ex)
             {
@@ -379,13 +421,14 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                if (!disk.Mounted)
+                    throw new Exception("No disk is mounted!");
                 disk.signOut();
-                disk.unmountDisk();
-                disk.Mounted = false;
-                this.dataGrid.ItemsSource = null;
-                var inf = new DiskInfoUserControl(disk);
-                Info = inf;
-
+                suc = new SignUserControl(DiskName);
+                transitionFrame.ShowPage(suc);
+                if (fcb != null && fcb.Loaded)
+                    CloseFileButton_Click(new object(), new RoutedEventArgs());
+               
                 //MessageBox.Show("Disk unmounted.", "Unmount Disk", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)

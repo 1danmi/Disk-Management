@@ -342,3 +342,8 @@ unsigned int FCB::getRecInfoSize() { return this->recInfo.size; }
 
 string& FCB::GetLastErrorMessage() { return this->lastErrorMessage; }
 void FCB::SetLastErrorMessage(string lastErrorMessage) { this->lastErrorMessage = lastErrorMessage; }
+
+int FCB::getNumOfRecords()
+{
+	return this->numOfRecords;
+}

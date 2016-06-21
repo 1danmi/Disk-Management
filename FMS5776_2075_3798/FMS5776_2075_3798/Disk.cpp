@@ -148,7 +148,7 @@ void Disk::createDisk(string & dn, string & dow,string& pwd)
 
 			rootDir = RootDir(vhd.addrRootDir,vhd.addrRootDir+1);
 			users.sectorNr = vhd.addrUserSec;
-			users.users[0] = User(dow, 0, pwd);
+			users.users[0] = User(dow, 4, pwd);
 			users.numOfUsers = 1;
 			for (int i = 1; i < 5; i++)
 				users.users[i] = User();
@@ -1240,7 +1240,7 @@ void Disk::delFile(string & fn)
 		FileHeader* buffer = new FileHeader();
 		if (path >= 14 && path < 28)
 		{
-			if (currUser.sLevel > rootDir.msbSector.dirEntry[path - 14].sLevel || !strcmp(currUser.name, rootDir.msbSector.dirEntry[path - 14].getOwnerName()))
+			if (currUser.sLevel >= rootDir.msbSector.dirEntry[path - 14].sLevel || !strcmp(currUser.name, rootDir.msbSector.dirEntry[path - 14].getOwnerName()))
 			{
 				rootDir.msbSector.dirEntry[path - 14].setEntryStatus('2'); //2 = deleted
 				readSector(rootDir.msbSector.dirEntry[path - 14].getFileAddr(), (Sector*)buffer);
@@ -1252,7 +1252,7 @@ void Disk::delFile(string & fn)
 		}
 		else if (path > -1 && path < 14)
 		{
-			if (currUser.sLevel > rootDir.lsbSector.dirEntry[path - 14].sLevel || !strcmp(currUser.name, rootDir.lsbSector.dirEntry[path - 14].getOwnerName()))
+			if (currUser.sLevel >= rootDir.lsbSector.dirEntry[path].sLevel || !strcmp(currUser.name, rootDir.lsbSector.dirEntry[path].getOwnerName()))
 			{
 				rootDir.lsbSector.dirEntry[path].setEntryStatus('2');
 				readSector(rootDir.lsbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
@@ -1481,7 +1481,7 @@ FCB* Disk::openFile(string & fn, MODE io)
 		}
 		else if (path > -1 && path < 14)
 		{
-			if (rootDir.lsbSector.dirEntry[path - 14].sLevel > currUser.sLevel)
+			if (rootDir.lsbSector.dirEntry[path].sLevel > currUser.sLevel)
 				throw "You don't have access to this file!";
 			readSector(rootDir.lsbSector.dirEntry[path].getFileAddr(), (Sector*)buffer);
 		}

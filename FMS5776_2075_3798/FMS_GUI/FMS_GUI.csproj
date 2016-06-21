@@ -112,6 +112,9 @@
       <DependentUpon>DiskInfoUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DMS.cs" />
+    <Compile Include="FileInfoUserControl.xaml.cs">
+      <DependentUpon>FileInfoUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewUserUserControl.xaml.cs">
       <DependentUpon>NewUserUserControl.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DiskInfoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FileInfoUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

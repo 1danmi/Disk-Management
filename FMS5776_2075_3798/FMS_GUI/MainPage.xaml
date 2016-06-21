@@ -194,28 +194,28 @@
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <!--<syncfusion:SfGridSplitter Grid.Column="1"
-                               HorizontalAlignment="Stretch"
-                                 ShowsPreview="True"  EnableCollapseButton="True"/>-->
                 <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
                 <ContentControl x:Name="InfoContentControl" Content="{Binding Info}"/>
-                <DataGrid x:Name="dataGrid" Grid.Column="2" Grid.ColumnSpan="3" />
-                <!--<syncfusion:SfDataGrid Grid.Column="2" Grid.ColumnSpan="3">
-                
-            </syncfusion:SfDataGrid>-->
+                <DataGrid x:Name="dataGrid" Grid.Column="2" Grid.ColumnSpan="3">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="OpenFileButton_Click"/>
+                        </Style>
+                    </DataGrid.Resources>
+                </DataGrid>
+                <DataGrid x:Name="recordsDataGrid" Visibility="Hidden"  Grid.Column="2" Grid.ColumnSpan="3">
+                    <!--<DataGrid.Resources>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="OpenFileButton_Click"/>
+                        </Style>
+                    </DataGrid.Resources>-->
+                </DataGrid>
             </Grid>
             <WpfPageTransitions:PageTransition x:Name="removeUserTranstion"  Grid.Row="1" HorizontalAlignment="Left" TransitionType="Fade"  Height="107.5" Margin="50.5,7,0,0"  VerticalAlignment="Top" Width="322.5"/>
-
-
-
         </Grid>
-
-
-
         <Rectangle x:Name="shadowRectangle" Fill="#4C000000" Visibility="Collapsed" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3" MouseDown="shadowRectangle_MouseDown"/>
         <WpfPageTransitions:PageTransition  x:Name="transitionFrame" TransitionType="Slide" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
         <ContentControl x:Name="codpContentControl" Content="{Binding codp}" Grid.Column="1" Grid.Row="1"/>
-        <!--Fill="#4C000000"-->
     </Grid>
 
 </Page>
