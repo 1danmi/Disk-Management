@@ -4,32 +4,34 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FMS_GUI"
+      xmlns:fms ="clr-namespace:FMS_adapter;assembly=FMS_adapter"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="400"
+      d:DesignHeight="700" d:DesignWidth="400"
       Title="StudentPage">
 
-    <Grid Background="White">
+    <Grid x:Name="mainGrid" Background="White" d:DataContext="{d:DesignInstance Type=fms:Student}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="175*"/>
+            <RowDefinition Height="300*"/>
 
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="52*"/>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="52*"/>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="52*"/>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="52*"/>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="52*"/>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="52*"/>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="52*"/>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="71*"/>
-            <RowDefinition Height="30*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="107*"/>
+            <RowDefinition Height="57*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -42,15 +44,50 @@
             </Border.Effect>
         </Border>
 
-        <Label x:Name="IDLabel" Foreground="White" FontSize="35" Content="ID:" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,9.999"/>
-        <Label x:Name="firstLabel" FontSize="25" Content="First Name:"  Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,-0.002"  />
-        <Label x:Name="lastLabel" FontSize="25" Content="Last Name:" Grid.Column="1" Grid.Row="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,-0.002"  />
-        <Label x:Name="gradeLabel" FontSize="25" Content="Grade:" Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,-0.001"  />
-        <Label x:Name="addressLabel" FontSize="25" Content="Address:" Grid.Column="1" Grid.Row="8" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,-0.001"  />
-        <Label x:Name="cityLabel" FontSize="25" Content="City:" Grid.Column="1" Grid.Row="10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,-0.002" />
-        <Label x:Name="zipLabel" FontSize="25" Content="ZIP Code:"    Grid.Column="1" Grid.Row="12" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,-0.002" />
-        <Label x:Name="phoneLabel" FontSize="25" Content="Phone NO:"   Grid.Column="1" Grid.Row="14" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,-0.001" />
-        <Button x:Name="UpdateButton" Style="{StaticResource CleanButtonStyle}" FontSize="25" SnapsToDevicePixels="True" UseLayoutRounding="True" Content="Update" Grid.Column="1" HorizontalAlignment="Right" Margin="0,4.591,2.667,11.556" Grid.Row="17" Width="121"/>
+        <Label x:Name="IDLabel" Foreground="White" FontSize="35"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,9.999">
+            <ContentControl ContentStringFormat="ID: {0}" d:IsLocked="True">
+                <Binding Path="ID"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+            </ContentControl>
+        </Label>
+        <Label x:Name="firstLabel" FontSize="25" Content="First Name:"  Grid.Column="1" Grid.Row="2"  HorizontalAlignment="Left"   />
+        <TextBox x:Name="firstTextBox" IsReadOnly="True" VerticalContentAlignment="Bottom" BorderBrush="Transparent" FontSize="25"   Grid.Column="1" Grid.Row="2" Margin="139.323,0,0.334,0">
+            <Binding Path="FirstName"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+        </TextBox>
+
+        <Label x:Name="lastLabel" FontSize="25" Content="Last Name:" Grid.Column="1" Grid.Row="4"  HorizontalAlignment="Left"/>
+        <TextBox x:Name="lastTextBox" IsReadOnly="True" VerticalContentAlignment="Bottom" BorderBrush="Transparent" FontSize="25"  Grid.Column="1" Grid.Row="4" Margin="131.86,0,7.798,0">
+            <Binding Path="LastName"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+        </TextBox>
+
+        <Label x:Name="gradeLabel" FontSize="25" Content="Grade:" Grid.Column="1" Grid.Row="6"  HorizontalAlignment="Left"   />
+        <TextBox x:Name="gradeTextBox" IsReadOnly="True" VerticalContentAlignment="Bottom" BorderBrush="Transparent" FontSize="25"  Grid.Column="1" Grid.Row="6" Margin="81.777,0,57.881,0" IsReadOnlyCaretVisible="True">
+            <Binding Path="Grade"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+        </TextBox>
+
+        <Label x:Name="addressLabel" FontSize="25" Content="Address:" Grid.Column="1" Grid.Row="8"  HorizontalAlignment="Left"   />
+        <TextBox x:Name="addressTextBox" IsReadOnly="True" VerticalContentAlignment="Bottom" BorderBrush="Transparent" FontSize="25" Grid.Column="1" Grid.Row="8" Margin="103.97,0,82.134,0">
+            <Binding Path="Street"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+        </TextBox>
+        <TextBox x:Name="houseTextBox" IsReadOnly="True" VerticalContentAlignment="Bottom" BorderBrush="Transparent" FontSize="25" Grid.Column="1" Grid.Row="8" Margin="0,0,32.404,0" HorizontalAlignment="Right" Width="49.73">
+            <Binding Path="HouseNo"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+        </TextBox>
+
+        <Label x:Name="cityLabel" FontSize="25" Content="City:" Grid.Column="1" Grid.Row="10"  HorizontalAlignment="Left"  />
+        <TextBox x:Name="cityTextBox" IsReadOnly="True" VerticalContentAlignment="Bottom" BorderBrush="Transparent" FontSize="25" Grid.Column="1" Grid.Row="10" Margin="57.524,0,82.134,0">
+            <Binding Path="City"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+        </TextBox>
+
+        <Label x:Name="zipLabel" FontSize="25" Content="ZIP Code:"    Grid.Column="1" Grid.Row="12"  HorizontalAlignment="Left"  />
+        <TextBox x:Name="zipTextBox" IsReadOnly="True" VerticalContentAlignment="Bottom" BorderBrush="Transparent" FontSize="25" Grid.Column="1" Grid.Row="12" Margin="115.104,0,24.554,0">
+            <Binding Path="ZipCode"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+        </TextBox>
+
+        <Label x:Name="phoneLabel" FontSize="25"  Content="Phone NO:"   Grid.Column="1" Grid.Row="14"  HorizontalAlignment="Left" />
+        <TextBox x:Name="phoneTextBox" IsReadOnly="True" VerticalContentAlignment="Bottom" BorderBrush="Transparent" FontSize="25" Grid.Column="1" Grid.Row="14" Margin="129.83,0,9.828,0">
+            <Binding Path="PhoneNo"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+        </TextBox>
+
+        <Button x:Name="UpdateButton" Style="{StaticResource CleanButtonStyle}" FontSize="25" SnapsToDevicePixels="True" UseLayoutRounding="True" Content="Update" Grid.Column="1" Grid.Row="18" Margin="0,0,-0.333,0" HorizontalAlignment="Right" Height="48" VerticalAlignment="Bottom" Width="157" Click="UpdateButton_Click"/>
 
     </Grid>
 </Page>

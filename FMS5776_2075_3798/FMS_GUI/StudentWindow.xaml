@@ -19,12 +19,12 @@
         <Frame x:Name="MainFrame" BorderBrush="Black" BorderThickness="0,2,0,0" Grid.Row="1"  NavigationUIVisibility="Hidden" Background="White"/>
         <Button x:Name="MinimizeButton" Foreground="White"    HorizontalAlignment="Right" Background="#FF333337" Width="22.375" Grid.Row="0" Margin="0,3.728,58,5" Click="MinimizeButton_Click">
             <Button.Content>
-                <Image Source="ic_keyboard_arrow_down_white_48dp_2x.png" />
+                <Image Source="Images/ic_keyboard_arrow_down_white_48dp_2x.png" />
             </Button.Content>
         </Button>
         <Button x:Name="MaximizeButton" Foreground="White" HorizontalAlignment="Right" Background="#FF333337" Width="22.375" Grid.Row="0" Margin="0,3.728,30.625,5" Click="MaximizeButton_Click">
             <Button.Content>
-                <Image Source="ic_launch_white_48dp_2x.png" RenderTransformOrigin="0.5,0.5">
+                <Image Source="Images/ic_launch_white_48dp_2x.png" RenderTransformOrigin="0.5,0.5">
                     <Image.Style>
                         <Style TargetType="Image">
                             <Style.Triggers>
@@ -48,7 +48,7 @@
         </Button>
         <Button x:Name="CloseButton" Foreground="White"   HorizontalAlignment="Right" Background="#FF333337" Width="22.375" Grid.Row="0" Margin="0,3.728,3.25,5" Click="CloseButton_Click">
             <Button.Content>
-                <Image Source="ic_close_white_48dp_2x.png"/>
+                <Image Source="Images/ic_close_white_48dp_2x.png"/>
             </Button.Content>
         </Button>
     </Grid>

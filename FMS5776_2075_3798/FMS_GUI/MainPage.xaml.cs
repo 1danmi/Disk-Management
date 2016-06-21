@@ -24,6 +24,7 @@ using System.Windows.Threading;
 using System.Windows.Interop;
 using FMS_adapter;
 using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace FMS_GUI
 {
@@ -34,6 +35,7 @@ namespace FMS_GUI
     {
         UserControl info;
         UserControl fileInfo;
+        
         public CreateOpenDiskPage codp { get; set; }
         public CreateFileUserControl cfuc { get; set; }
 
@@ -62,7 +64,6 @@ namespace FMS_GUI
         //        }
         //    }
         //}
-
         public Disk disk { get; set; }
         public FCB fcb { get; set; }
         public string DiskName { get; set; }
@@ -252,6 +253,8 @@ namespace FMS_GUI
                 if (fcb != null && fcb.Loaded)
                     throw new Exception("You must close the file first!");
                 DirEntry r = (DirEntry)this.dataGrid.SelectedItem;
+                if (r == null)
+                    throw new Exception("You must select a file first!");
                 MessageBoxResult delete = MessageBox.Show(
                     "Are you sure that you want to delete " + r.FileName + "?\nThis action cannot be undone!",
                     "Delete " + r.FileName, MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel, MessageBoxOptions.None);
@@ -313,12 +316,21 @@ namespace FMS_GUI
                     throw new Exception("No disk is mounted!");
                 if (fcb == null || !fcb.Loaded)
                     throw new Exception("No file is open!");
-
+                 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        
+        private void openRecord_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (!disk.Mounted)
+                throw new Exception("No disk is mounted!");
+            if (fcb == null || !fcb.Loaded)
+                throw new Exception("No file is open!");
+            
         }
 
         private void DeleteRecordButton_Click(object sender, RoutedEventArgs e)
@@ -329,6 +341,11 @@ namespace FMS_GUI
                     throw new Exception("No disk is mounted!");
                 if (fcb == null || !fcb.Loaded)
                     throw new Exception("No file is open!");
+                RecEntry re = (RecEntry)recordsDataGrid.SelectedItem;
+                if (re == null)
+                    throw new Exception("You must select a record first!");
+                fcb.deleteRecord((uint)re.RecNr);
+                this.recordsDataGrid.ItemsSource = fcb.getRecEntryList(); 
             }
             catch (Exception ex)
             {
@@ -344,6 +361,13 @@ namespace FMS_GUI
                     throw new Exception("No disk is mounted!");
                 if (fcb == null || !fcb.Loaded)
                     throw new Exception("No file is open!");
+                Student stu = new Student();
+                RecEntry re = (RecEntry)recordsDataGrid.SelectedItem;
+                if (re == null)
+                    throw new Exception("You must select a record first!");
+                fcb.readRecord(stu, (uint)re.RecNr);
+                StudentWindow sw = new StudentWindow(true, stu,fcb);
+                sw.Show();
             }
             catch (Exception ex)
             {

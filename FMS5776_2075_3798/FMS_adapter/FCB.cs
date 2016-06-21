@@ -45,7 +45,7 @@ namespace FMS_adapter
             }
         }
 
-        public object readRecord(object dest, uint readForUpdate = 0)
+        public object readRecord(object dest, uint recNum)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace FMS_adapter
                 IntPtr buffer;
                 buffer = Marshal.AllocHGlobal(Marshal.SizeOf(dest.GetType()));
 
-                cppToCsharpAdapter.readRecord(this.myFCBpointer, buffer, readForUpdate);
+                cppToCsharpAdapter.readRecord(this.myFCBpointer, buffer, recNum);
                 Marshal.PtrToStructure(buffer, dest);
 
                 Marshal.FreeHGlobal(buffer);

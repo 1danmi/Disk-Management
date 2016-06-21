@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FMS_adapter;
 
 namespace FMS_GUI
 {
@@ -20,11 +21,29 @@ namespace FMS_GUI
     /// </summary>
     public partial class StudentPage : Page
     {
-        public StudentPage(bool update)
+        FCB fcb { get; set; }
+        Student student { get; set; }
+        public StudentPage(bool update, Student stu,FCB f = null)
         {
             InitializeComponent();
+            fcb = f;
+            if (stu != null)
+                student = stu;
+            else
+            {
+                stu = new Student();
+                this.UpdateButton.Content = "Add";
+            }
+            this.mainGrid.DataContext = student;
             if (update == false)
                 this.UpdateButton.Visibility = Visibility.Hidden;
+            if (update)
+                foreach (Object x in this.mainGrid.Children)
+                    if (x is TextBox)
+                    {
+                        //((TextBox)x).BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#424242"));
+                        ((TextBox)x).IsReadOnly = false;
+                    }
             Random R = new Random();
             int a = R.Next(0, 14);
             switch (a)
@@ -71,6 +90,27 @@ namespace FMS_GUI
                 default:
                     this.TitleBorder.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#9E9E9E"));
                     break;
+            }
+        }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (fcb != null)
+                {
+                    fcb.updateRecord(student);   
+                }
+                else
+                {
+                    fcb.addRecord(student);
+                }
+                StudentWindow sw = Window.GetWindow(this) as StudentWindow;
+                sw.Close();
+            }
+            catch (Exception ex)
+	        {
+                MessageBox.Show(ex.Message);
             }
         }
     }

@@ -256,13 +256,13 @@ extern "C"
 	{
 		return new Student();
 	}
-	__declspec(dllexport) void  deleteStudentObject(Student*& THIS)
+	/*__declspec(dllexport) void  deleteStudentObject(Student*& THIS)
 	{
 		if (THIS != NULL)
 			delete  THIS;
 		THIS = NULL;
 	}
-
+*/
 
 	// FCB
 	__declspec(dllexport) void  closeFile(FCB* THIS)

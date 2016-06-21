@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
 using System.IO;
+using FMS_adapter;
 
 namespace FMS_GUI
 {
@@ -23,10 +24,10 @@ namespace FMS_GUI
     public partial class StudentWindow : Window
     {
 
-        public StudentWindow()
+        public StudentWindow(bool update,Student stu,FCB fcb=null)
         {
             InitializeComponent();
-            this.MainFrame.Navigate(new StudentPage(true));
+            this.MainFrame.Navigate(new StudentPage(update,stu,fcb));
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

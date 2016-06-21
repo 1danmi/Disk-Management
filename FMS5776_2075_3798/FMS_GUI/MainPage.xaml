@@ -204,11 +204,11 @@
                     </DataGrid.Resources>
                 </DataGrid>
                 <DataGrid x:Name="recordsDataGrid" Visibility="Hidden"  Grid.Column="2" Grid.ColumnSpan="3">
-                    <!--<DataGrid.Resources>
+                    <DataGrid.Resources>
                         <Style TargetType="DataGridRow">
-                            <EventSetter Event="MouseDoubleClick" Handler="OpenFileButton_Click"/>
+                            <EventSetter Event="MouseDoubleClick" Handler="openRecord_DoubleClick"/>
                         </Style>
-                    </DataGrid.Resources>-->
+                    </DataGrid.Resources>
                 </DataGrid>
             </Grid>
             <WpfPageTransitions:PageTransition x:Name="removeUserTranstion"  Grid.Row="1" HorizontalAlignment="Left" TransitionType="Fade"  Height="107.5" Margin="50.5,7,0,0"  VerticalAlignment="Top" Width="322.5"/>
