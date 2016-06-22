@@ -21,17 +21,25 @@ namespace FMS_GUI
     /// </summary>
     public partial class StudentPage : Page
     {
+
+        public event Action<bool> uploadEvent;
+
         FCB fcb { get; set; }
         Student student { get; set; }
-        public StudentPage(bool update, Student stu,FCB f = null)
+        MainPage MainPage { get; set; }
+        public StudentPage(bool update, Student stu,FCB f = null,MainPage mw=null)
         {
             InitializeComponent();
             fcb = f;
-            if (stu != null)
+            MainPage = mw;
+            if (stu.ID != null)
                 student = stu;
-            else
+            else if(mw!= null)
             {
-                stu = new Student();
+                this.addIDLabel.Visibility = Visibility.Visible;
+                this.addIDTextBox.Visibility = Visibility.Visible;
+                this.IDLabel.Visibility = Visibility.Hidden;
+                student = new Student();
                 this.UpdateButton.Content = "Add";
             }
             this.mainGrid.DataContext = student;
@@ -97,14 +105,23 @@ namespace FMS_GUI
         {
             try
             {
+
                 if (fcb != null)
                 {
-                    fcb.updateRecord(student);   
+                    if (MainPage == null)
+                        fcb.updateRecord(student);
+                    else
+                    {
+                        fcb.addRecord(student);
+                        this.MainPage.recordsDataGrid.ItemsSource = fcb.getRecEntryList();
+
+                        //if (uploadEvent != null)
+                        //    uploadEvent(true);
+
+                    }
                 }
                 else
-                {
-                    fcb.addRecord(student);
-                }
+                    throw new Exception("Error!");
                 StudentWindow sw = Window.GetWindow(this) as StudentWindow;
                 sw.Close();
             }

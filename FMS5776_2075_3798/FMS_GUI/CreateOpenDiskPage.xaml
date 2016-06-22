@@ -51,9 +51,9 @@
                 <Label x:Name="OwnernamLabel" Content="Disk owner:" Grid.Row="4" HorizontalAlignment="Left" FontSize="18" FontFamily="Segoe UI Semilight" VerticalAlignment="Bottom" Padding="0"/>
                 <Label x:Name="PasswordLabel" Content="Owner Password:" Grid.Row="8" HorizontalAlignment="Left" FontSize="18" FontFamily="Segoe UI Semilight" VerticalAlignment="Bottom" Padding="0"/>
 
-                <TextBox x:Name="DiskNameTextBox" Text="Disk1" Grid.Row="2" TextWrapping="Wrap"  VerticalAlignment="Top" FontSize="22" FontFamily="Segoe UI Light"/>
-                <TextBox x:Name="OwnerNameTextBox" Text="Daniel" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="22" FontFamily="Segoe UI Light"/>
-                <PasswordBox x:Name="DiskPwdBox" Password="1234" Grid.Row="10" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="31.26333"/>
+                <TextBox x:Name="DiskNameTextBox" Grid.Row="2" TextWrapping="Wrap"  VerticalAlignment="Top" FontSize="22" FontFamily="Segoe UI Light"/>
+                <TextBox x:Name="OwnerNameTextBox" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="22" FontFamily="Segoe UI Light"/>
+                <PasswordBox x:Name="DiskPwdBox" Grid.Row="10" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="31.26333"/>
 
 
             </Grid>

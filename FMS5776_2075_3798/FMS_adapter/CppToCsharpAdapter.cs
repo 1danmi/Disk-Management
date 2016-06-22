@@ -134,6 +134,8 @@ namespace FMS_adapter
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void removeUserSigned(IntPtr THIS, string user, SLEVEL applicantSLevel);
 
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void changePassword(IntPtr THIS, string user, string oldPwd, string newPwd);
         // Level 1
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void format(IntPtr THIS);

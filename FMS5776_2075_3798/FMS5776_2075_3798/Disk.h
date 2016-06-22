@@ -57,6 +57,7 @@ public:
 	void signOut();
 	void removeUser(string& user, string& pwd);
 	void removeUserSigned(string& user, SLEVEL applicantSLevel = SLEVEL::user);
+	void changePassword(string& user, string& oldPass, string& newPass);
 #pragma endregion
 
 #pragma region Level1

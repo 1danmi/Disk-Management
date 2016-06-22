@@ -685,6 +685,26 @@ void Disk::removeUserSigned(string & user, SLEVEL applicantSLevel)
 	throw "Account doesn't exist!";
 }
 
+void Disk::changePassword(string& user, string& oldPass, string& newPass)
+{
+	if (!mounted)
+		throw "Disk is not mounted!";
+	if (sign)
+		throw "You  have to log out first!";
+	for (int i = 0; i<users.numOfUsers; i++)
+		if (!strcmp(users.users[i].name, user.c_str()))
+		{
+			if (strcmp(users.users[i].password, oldPass.c_str()))
+				break;
+			else
+			{
+				strncpy_s(users.users[i].password, 12, newPass.c_str(), 11);
+				return;
+			}
+		}
+	throw "Username or Password is incorrect!";
+}
+
 #pragma endregion
 
 #pragma region Level1

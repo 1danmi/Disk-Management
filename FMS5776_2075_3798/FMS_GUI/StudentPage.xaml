@@ -44,11 +44,16 @@
             </Border.Effect>
         </Border>
 
-        <Label x:Name="IDLabel" Foreground="White" FontSize="35"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,9.999">
+        <Label x:Name="IDLabel" Visibility="Visible" Foreground="White" FontSize="35"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,9.999">
             <ContentControl ContentStringFormat="ID: {0}" d:IsLocked="True">
                 <Binding Path="ID"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
             </ContentControl>
         </Label>
+        <Label x:Name="addIDLabel" Visibility="Hidden" Content="ID:" Foreground="White" FontSize="35"  Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,9.999"/>
+        <TextBox x:Name="addIDTextBox" Visibility="Hidden" Background="Transparent" BorderBrush="Transparent" Foreground="White" FontSize="35"  Grid.Column="1" VerticalAlignment="Bottom" Margin="51.44,0,100.04,13.997">
+            <Binding Path="ID"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+        </TextBox>
+
         <Label x:Name="firstLabel" FontSize="25" Content="First Name:"  Grid.Column="1" Grid.Row="2"  HorizontalAlignment="Left"   />
         <TextBox x:Name="firstTextBox" IsReadOnly="True" VerticalContentAlignment="Bottom" BorderBrush="Transparent" FontSize="25"   Grid.Column="1" Grid.Row="2" Margin="139.323,0,0.334,0">
             <Binding Path="FirstName"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>

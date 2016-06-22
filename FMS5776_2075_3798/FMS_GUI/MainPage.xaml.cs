@@ -34,7 +34,6 @@ namespace FMS_GUI
     public partial class MainPage : Page
     {
         UserControl info;
-        UserControl fileInfo;
         
         public CreateOpenDiskPage codp { get; set; }
         public CreateFileUserControl cfuc { get; set; }
@@ -52,18 +51,6 @@ namespace FMS_GUI
                     this.InfoContentControl.Content = info;
             }
         }
-        //public UserControl FileInfo
-        //{
-        //    get { return fileInfo; }
-        //    set
-        //    {
-        //        fileInfo = value;
-        //        if (fileInfo is new)
-        //        {
-        //            this.InfoContentControl.Content = info;
-        //        }
-        //    }
-        //}
         public Disk disk { get; set; }
         public FCB fcb { get; set; }
         public string DiskName { get; set; }
@@ -316,7 +303,12 @@ namespace FMS_GUI
                     throw new Exception("No disk is mounted!");
                 if (fcb == null || !fcb.Loaded)
                     throw new Exception("No file is open!");
-                 
+                Student stu = new Student();
+                StudentWindow sw = new StudentWindow(true, stu, fcb, this);
+                
+                //var x = sw.MainFrame.Content as StudentPage;
+                //x.uploadEvent += updateRecordsdataGrid;
+                sw.Show();
             }
             catch (Exception ex)
             {
@@ -324,13 +316,22 @@ namespace FMS_GUI
             }
         }
         
+        public void updateRecordsdataGrid(bool a)
+        {
+            MessageBox.Show("asdf");
+            //this.recordsDataGrid.ItemsSource = fcb.getRecEntryList();
+        }
         private void openRecord_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (!disk.Mounted)
                 throw new Exception("No disk is mounted!");
             if (fcb == null || !fcb.Loaded)
                 throw new Exception("No file is open!");
-            
+            var stu = new Student();
+            var x = this.recordsDataGrid.SelectedItem as RecEntry;
+            fcb.readRecord(stu, (uint)x.RecNr);
+            StudentWindow sw = new StudentWindow(false, stu);
+            sw.Show();            
         }
 
         private void DeleteRecordButton_Click(object sender, RoutedEventArgs e)

@@ -24,10 +24,12 @@ namespace FMS_GUI
     public partial class StudentWindow : Window
     {
 
-        public StudentWindow(bool update,Student stu,FCB fcb=null)
+        
+
+        public StudentWindow(bool update,Student stu,FCB fcb=null,MainPage mw = null)
         {
             InitializeComponent();
-            this.MainFrame.Navigate(new StudentPage(update,stu,fcb));
+            this.MainFrame.Navigate(new StudentPage(update,stu,fcb,mw));
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

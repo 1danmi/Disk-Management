@@ -147,7 +147,18 @@ extern "C"
 			throw ex;
 		}
 	}
-
+	__declspec(dllexport) void  signIn(Disk* THIS, char* user, char* oldPwd, char* newPwd)
+	{
+		try
+		{
+			THIS->changePassword(string(user), string(oldPwd), string(newPwd));
+		}
+		catch (char* ex)
+		{
+			THIS->SetLastErrorMessage(ex);
+			throw ex;
+		}
+	}
 
 
 	// Level 1

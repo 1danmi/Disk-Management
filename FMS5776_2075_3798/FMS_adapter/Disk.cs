@@ -117,19 +117,6 @@ namespace FMS_adapter
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         #region Level 0
         public Disk()
         {
@@ -295,11 +282,24 @@ namespace FMS_adapter
                 throw;
             }
         }
-
+        public void changePassword(string user, string oldPwd,string newPwd)
+        {
+            try
+            {
+                cppToCsharpAdapter.changePassword(this.myDiskPtr, user, oldPwd, newPwd);
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
         #endregion
-
-
-
 
         //level 1
 
