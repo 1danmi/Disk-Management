@@ -34,12 +34,13 @@ namespace FMS_GUI
     public partial class MainPage : Page
     {
         UserControl info;
-        
+
         public CreateOpenDiskPage codp { get; set; }
         public CreateFileUserControl cfuc { get; set; }
 
         public NewUserUserControl nuuc { get; set; }
         public SignUserControl suc { get; set; }
+        public ChangePasswordUserControl cpuc{get;set;}
         public UserControl Info {
             get { return info; }
             set
@@ -420,6 +421,7 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                userInfoTranstion.ShowPage(new UserInfoUserControl(disk.getCU()));
             }
             catch (Exception ex)
             {
@@ -433,6 +435,10 @@ namespace FMS_GUI
             {
                 if (!disk.Mounted)
                     throw new Exception("No disk is mounted!");
+                this.shadowRectangle.Visibility = Visibility.Visible;
+                cpuc = new ChangePasswordUserControl(disk);
+                codpContentControl.Content = cpuc;
+                this.codpContentControl.DataContext = this;
             }
             catch (Exception ex)
             {

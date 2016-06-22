@@ -689,8 +689,6 @@ void Disk::changePassword(string& user, string& oldPass, string& newPass)
 {
 	if (!mounted)
 		throw "Disk is not mounted!";
-	if (sign)
-		throw "You  have to log out first!";
 	for (int i = 0; i<users.numOfUsers; i++)
 		if (!strcmp(users.users[i].name, user.c_str()))
 		{

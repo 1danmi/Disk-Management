@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:FMS_GUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <local:SLevelToStringConverter x:Key="SLevelToStringConverter"/>
         <Style x:Key="RedRoundCorner" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>

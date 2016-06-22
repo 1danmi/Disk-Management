@@ -147,7 +147,7 @@ extern "C"
 			throw ex;
 		}
 	}
-	__declspec(dllexport) void  signIn(Disk* THIS, char* user, char* oldPwd, char* newPwd)
+	__declspec(dllexport) void  changePassword(Disk* THIS, char* user, char* oldPwd, char* newPwd)
 	{
 		try
 		{

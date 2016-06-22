@@ -26,7 +26,7 @@
         </Viewbox>
         <TextBox x:Name="UserNameTextBox" Grid.Row="3" FontSize="20" Grid.Column="1" FontFamily="Segoe UI Semilight"/>
         <Button x:Name="ContinueButton" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Padding="0" Click="ContinueButton_Click">
-            <Image Source="Actions-system-log-out-icon.png"/>
+            <Image Source="Images/Actions-system-log-out-icon.png"/>
         </Button>
     </Grid>
     </Border>

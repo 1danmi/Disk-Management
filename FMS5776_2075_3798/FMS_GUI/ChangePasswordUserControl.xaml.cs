@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FMS_adapter;
 
 namespace FMS_GUI
 {
@@ -20,9 +21,33 @@ namespace FMS_GUI
     /// </summary>
     public partial class ChangePasswordUserControl : UserControl
     {
-        public ChangePasswordUserControl()
+        public Disk disk { get; set; }
+        public ChangePasswordUserControl(Disk d)
         {
             InitializeComponent();
+            disk = d;
+        }
+
+        private void changePwdButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow w = Window.GetWindow(this) as MainWindow;
+                var x = w.MainFrame.Content as MainPage;
+
+                string oldPwd = this.oldPasswordTextBox.Password;
+                string newPwd = this.newPasswordTextBox.Password;
+                string newConfPwd = this.confirmPwdTextBox.Password;
+                if (newPwd != newConfPwd)
+                    throw new Exception("Password doesn't match!");
+                x.disk.changePassword(x.disk.getCU().Name, oldPwd, newPwd);
+                x.shadowRectangle.Visibility = Visibility.Hidden;
+                x.codpContentControl.Content = null;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

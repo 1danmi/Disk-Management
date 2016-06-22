@@ -83,7 +83,7 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
-                <syncfusion:RibbonTab Background="Transparent" IsChecked="True" Caption="File" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
+                <syncfusion:RibbonTab Background="Transparent"  Caption="File" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
                     <syncfusion:RibbonBar Focusable="False" Header="File" syncfusion:Ribbon.KeyTip="FN" syncfusion:Ribbon.ShowInMoreCommands="False" >
                         <syncfusion:RibbonButton x:Name="CreateFileButton"
                                             Label="Create File"
@@ -196,14 +196,14 @@
                 </Grid.ColumnDefinitions>
                 <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
                 <ContentControl x:Name="InfoContentControl" Content="{Binding Info}"/>
-                <DataGrid x:Name="dataGrid" Grid.Column="2" Grid.ColumnSpan="3">
+                <DataGrid x:Name="dataGrid" IsReadOnly="True" Grid.Column="2" Grid.ColumnSpan="3">
                     <DataGrid.Resources>
                         <Style TargetType="DataGridRow">
                             <EventSetter Event="MouseDoubleClick" Handler="OpenFileButton_Click"/>
                         </Style>
                     </DataGrid.Resources>
                 </DataGrid>
-                <DataGrid x:Name="recordsDataGrid" Visibility="Hidden"  Grid.Column="2" Grid.ColumnSpan="3">
+                <DataGrid x:Name="recordsDataGrid" IsReadOnly="True" Visibility="Hidden"  Grid.Column="2" Grid.ColumnSpan="3">
                     <DataGrid.Resources>
                         <Style TargetType="DataGridRow">
                             <EventSetter Event="MouseDoubleClick" Handler="openRecord_DoubleClick"/>
@@ -212,6 +212,8 @@
                 </DataGrid>
             </Grid>
             <WpfPageTransitions:PageTransition x:Name="removeUserTranstion"  Grid.Row="1" HorizontalAlignment="Left" TransitionType="Fade"  Height="107.5" Margin="50.5,7,0,0"  VerticalAlignment="Top" Width="322.5"/>
+            <WpfPageTransitions:PageTransition x:Name="userInfoTranstion"  Grid.Row="1" HorizontalAlignment="Left" TransitionType="Fade"  Height="151.907" Margin="119.833,7,0,0"  VerticalAlignment="Top" Width="464.499"/>
+
         </Grid>
         <Rectangle x:Name="shadowRectangle" Fill="#4C000000" Visibility="Collapsed" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3" MouseDown="shadowRectangle_MouseDown"/>
         <WpfPageTransitions:PageTransition  x:Name="transitionFrame" TransitionType="Slide" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
