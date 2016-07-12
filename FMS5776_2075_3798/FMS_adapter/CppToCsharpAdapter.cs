@@ -218,6 +218,10 @@ namespace FMS_adapter
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern uint getNumOfRecords(IntPtr THIS);
 
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int debug();
+
+
 
         //[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
         //public class FileHeader

@@ -25,6 +25,7 @@ using System.Windows.Interop;
 using FMS_adapter;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace FMS_GUI
 {
@@ -479,6 +480,31 @@ namespace FMS_GUI
             }
         }
 
-        
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //Uri uri = new Uri("/UserGuide.pdf", UriKind.Relative);
+                //System.Diagnostics.Process.Start(uri.LocalPath);
+                System.Diagnostics.Process.Start("D:\\Mini-Project in File Management Systems\\FMS5776_2075_3798\\FMS_GUI\\bin\\Debug\\UserGuide.pdf");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            //HelpWindow mw = new HelpWindow();
+            //mw.Show();
+        }
+
+        private void TerminalButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Console.exe";
+            using (Process proc = Process.Start(start))
+            {
+                proc.WaitForExit();
+            }
+        }
     }
 }

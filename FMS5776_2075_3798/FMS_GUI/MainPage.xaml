@@ -8,11 +8,18 @@
       SnapsToDevicePixels="True"
       xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
       mc:Ignorable="d"
+      UseLayoutRounding="True"
+      
+        RenderOptions.BitmapScalingMode="HighQuality"
+      RenderOptions.ClearTypeHint="Enabled"
       
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="MainPage">
 
-    <Grid Background="White" d:DataContext="{d:DesignInstance Type={x:Type local:MainPage}}">
+    <Grid UseLayoutRounding="True"
+        RenderOptions.BitmapScalingMode="NearestNeighbor"
+        SnapsToDevicePixels="True"
+        RenderOptions.ClearTypeHint="Enabled" Background="White" d:DataContext="{d:DesignInstance Type={x:Type local:MainPage}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1.2*"/>
             <RowDefinition Height="5*"/>
@@ -24,13 +31,19 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid  Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0,25,0,0">
+        <Grid UseLayoutRounding="True"
+        RenderOptions.BitmapScalingMode="NearestNeighbor"
+        SnapsToDevicePixels="True"
+        RenderOptions.ClearTypeHint="Enabled" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0,25,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="120"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <syncfusion:Ribbon Name="MyRibbon" BackStageColor="#D24726" BackStageCornerImageVisibility="Collapsed" BackStageHeader="DiskName" EnableMoreCommands="False" Grid.Row="0" syncfusion:SkinStorage.EnableTouch="True" syncfusion:SkinStorage.VisualStyle="Office2013" Height="Auto" Margin="0,-17.333,0,-7" >
+            <syncfusion:Ribbon Name="MyRibbon" UseLayoutRounding="True"
+        RenderOptions.BitmapScalingMode="NearestNeighbor"
+        SnapsToDevicePixels="True"
+        RenderOptions.ClearTypeHint="Enabled" BackStageColor="#D24726" BackStageCornerImageVisibility="Collapsed" BackStageHeader="DiskName" EnableMoreCommands="False" Grid.Row="0" syncfusion:SkinStorage.EnableTouch="True" syncfusion:SkinStorage.VisualStyle="Office2013" Height="Auto" Margin="0,-17.333,0,-7" >
                 <syncfusion:Ribbon.QuickAccessToolBar>
                     <syncfusion:QuickAccessToolBar syncfusion:WindowChrome.IsHitTestVisibleInChrome="True"/>
                 </syncfusion:Ribbon.QuickAccessToolBar>
@@ -185,8 +198,43 @@
                         </syncfusion:RibbonButton>
                     </syncfusion:RibbonBar>
                 </syncfusion:RibbonTab>
+                <syncfusion:RibbonTab Background="Transparent" Caption="Help" FocusVisualStyle="{x:Null}" Focusable="False" MinWidth="23">
+                    <syncfusion:RibbonBar Focusable="False" Header="Help" 
+                                      syncfusion:Ribbon.KeyTip="FN"
+                                      syncfusion:Ribbon.ShowInMoreCommands="False" >
+                        <syncfusion:RibbonButton x:Name="HelpButton" SnapsToDevicePixels="True"
+                                            Label="Help"
+                                            LargeIcon="Apps-Help-icon (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                              syncfusion:Ribbon.ShowInMoreCommands="False" Click="HelpButton_Click" >
+                        </syncfusion:RibbonButton>
+                        <syncfusion:RibbonButton x:Name="InfoButton"
+                                            Label="About"
+                                            LargeIcon="Apps-Help-Info-icon (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP">
+                        </syncfusion:RibbonButton>
+                    </syncfusion:RibbonBar>
+                    <syncfusion:RibbonBar Focusable="False" Header="Debug" 
+                                      syncfusion:Ribbon.KeyTip="FN"
+                                      syncfusion:Ribbon.ShowInMoreCommands="False" >
+                        <syncfusion:RibbonButton x:Name="TerminalButton"
+                                            Label="Terminal"
+                                            LargeIcon="Apps-Terminal-Pc-104-icon (Custom).png"
+                                            SizeForm="Large" FontSize="12"
+                                            syncfusion:Ribbon.KeyTip="CP"
+                                            syncfusion:Ribbon.ShowInMoreCommands="False" Click="TerminalButton_Click">
+                        </syncfusion:RibbonButton>
+                       
+                    </syncfusion:RibbonBar>
+                </syncfusion:RibbonTab>
+
             </syncfusion:Ribbon>
-            <Grid Grid.Row="1"  Margin="0,7,0,0" >
+            <Grid UseLayoutRounding="True"
+        RenderOptions.BitmapScalingMode="NearestNeighbor"
+        SnapsToDevicePixels="True"
+        RenderOptions.ClearTypeHint="Enabled" Grid.Row="1"  Margin="0,7,0,0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="10"/>

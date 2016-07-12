@@ -1,0 +1,19 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FMS_GUI"
+      xmlns:PdfViewer="clr-namespace:Syncfusion.Windows.PdfViewer;assembly=Syncfusion.PdfViewer.WPF" x:Class="FMS_GUI.HelpPage"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="HelpPage" SnapsToDevicePixels="True">
+
+    <Grid Background="White">
+
+
+        <!--<PdfViewer:PdfViewerControl x:Name="pdfviewer" TextOptions.TextFormattingMode="Display" ShowToolbar="False" RenderOptions.BitmapScalingMode="HighQuality"  EnableNotificationBar="True" SnapsToDevicePixels="True"/>-->
+        <WebBrowser Source="a.pdf"/>
+
+    </Grid>
+</Page>

@@ -13,6 +13,23 @@ namespace FMS_adapter
         public string DiskName;
         IntPtr myDiskPtr;
 
+        public void debug()
+        {
+            try
+            {
+                cppToCsharpAdapter.debug();
+            }
+            catch (SEHException)
+            {
+                IntPtr cString = cppToCsharpAdapter.getLastDiskErrorMessage(this.myDiskPtr);
+                string message = Marshal.PtrToStringAnsi(cString);
+                throw new Exception(message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         public string diskPointer
         {

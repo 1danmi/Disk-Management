@@ -764,8 +764,8 @@ public:
 	static void welcomeDebugLevel3(Disk& d, FCB& fcb)
 	{
 		int a;
-		d.mountDisk(string("TestDisk.fms"));
-		d.signIn(string("Daniel"), string("1234"));
+		//d.mountDisk(string("TestDisk.fms"));
+		//d.signIn(string("Daniel"), string("1234"));
 		//fcb = (*d.openFile(string("TestFile"), MODE::WR));
 		cout << "Welcome to Level 3 Debugging Mode!\nWhat would you like to do?\n";
 		cout << "1. Set Disk (level 0)\n";
@@ -817,10 +817,6 @@ int main()
 		FCB fcb;
 		Disk d;
 		Level3Debug::welcomeDebugLevel3(d,fcb);
-		//Level0Debug::welcomeDebugLevel0(d);
-
-		
-
 	}
 	catch (char* str){
 		cout << str << endl;

@@ -1,5 +1,6 @@
 #include "Disk.h"
 #include "Student.h"
+#include  "Main.cpp"
 #include <string>       // std::string
 #include <iostream>     // std::cout
 #include <sstream>     
@@ -424,4 +425,15 @@ extern "C"
 		return str.c_str();
 	}
 
+	__declspec(dllexport) void  debug()
+	{
+		try
+		{
+			main();
+		}
+		catch (char* ex)
+		{
+			throw ex;
+		}
+	}
 }
