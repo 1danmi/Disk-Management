@@ -14,6 +14,7 @@
 
         <!--<PdfViewer:PdfViewerControl x:Name="pdfviewer" TextOptions.TextFormattingMode="Display" ShowToolbar="False" RenderOptions.BitmapScalingMode="HighQuality"  EnableNotificationBar="True" SnapsToDevicePixels="True"/>-->
         <WebBrowser Source="a.pdf"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="316,164,0,0" Width="291" Height="255.96" VerticalAlignment="Top"/>
 
     </Grid>
 </Page>
