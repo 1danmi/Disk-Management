@@ -39,7 +39,7 @@
             <Viewbox Grid.Row="2" Grid.ColumnSpan="3" >
                 <Label x:Name="diskNameLabel" Content="Disk Name" HorizontalContentAlignment="Center" FontSize="35" Foreground="White" Grid.Row="2" Grid.ColumnSpan="3" FontFamily="Segoe UI Semilight"  />
             </Viewbox>
-            <TextBox Grid.Row="4" SnapsToDevicePixels="True" Text="Daniel" UseLayoutRounding="True" FontSize="18" x:Name="UserNameTextBox" VerticalContentAlignment="Bottom" TextWrapping="Wrap"  Grid.ColumnSpan="3" >
+            <TextBox Grid.Row="4" SnapsToDevicePixels="True" UseLayoutRounding="True" FontSize="18" x:Name="UserNameTextBox" VerticalContentAlignment="Bottom" TextWrapping="Wrap"  Grid.ColumnSpan="3" >
                 <TextBox.Effect >
                     <DropShadowEffect Opacity="0.5" BlurRadius="3"/>
                 </TextBox.Effect>
@@ -49,7 +49,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <PasswordBox x:Name="passwordBox" Password="1234" SnapsToDevicePixels="True" UseLayoutRounding="True"  FontSize="18" VerticalContentAlignment="Bottom" Grid.ColumnSpan="2" >
+                <PasswordBox x:Name="passwordBox" SnapsToDevicePixels="True" UseLayoutRounding="True"  FontSize="18" VerticalContentAlignment="Bottom" Grid.ColumnSpan="2" >
                     <PasswordBox.Effect >
                         <DropShadowEffect Opacity="0.5" BlurRadius="3"/>
                     </PasswordBox.Effect>
