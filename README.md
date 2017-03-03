@@ -20,5 +20,4 @@ width="49%"/></a>
 width="49%"/></a><br/><br/>
 <a href='https://postimg.org/image/a8m7a2m73/' target='_blank'><img src='https://s19.postimg.org/r953iqz8j/image.png' border='0' alt="9"
 width="49%"/></a> 
-<br /><a target='_blank' href='https://postimage.org/'>img host</a><br /><br />
-<br/><br/>
+<br />
