@@ -5,7 +5,7 @@ The main logic and operation are written in C++, and the UI in C# using WPF. <br
 We used <a href="https://msdn.microsoft.com/en-us/library/system.runtime.interopservices.marshal(v=vs.110).aspx">Marshal</a> in order to work with the unmanaged code in our WPF UI application.<br />
 
 To compile the project:
-  - Make sure you have MS Visual Studio 2015 or higher with all the C++ libraries install.
+  - Make sure you have MS Visual Studio 2015 or higher with all the C++ libraries installed.
   - Make sure that all the nuget package are installed with the latest version
   - Build the projects exactly in this order:
       - FMS5776_2075_3798
