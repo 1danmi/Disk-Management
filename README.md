@@ -12,7 +12,7 @@ To compile the project:
       - FMS_DLL
       - FMS_Adapter
       - FMS_GUI
-  - The reason for that is the fact that we couldn't find a way to force pre-compilation of the native code before the C#.
+  - The reason for that is the fact that we couldn't find a way to force pre-compilation of the native code before the C# code.
 
 There is still no input validation in the UI, so make sure you are typing the right values.
 
